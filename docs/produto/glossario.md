@@ -329,6 +329,7 @@ módulos **não está fechada aqui** — fechar é do catálogo de módulos.
 | `CSG` | módulo | Condicional | reservado |
 | `EMI` | módulo | Emissão de documento fiscal | reservado |
 | `APU` | módulo | Apuração e obrigação acessória | reservado |
+| `PRV` | **provedor** | Operação do provedor — o quinto escopo (`operacao-do-provedor.md`) | reservado |
 
 As linhas de `PER` para baixo foram acrescentadas por `catalogo-de-modulos.md` (T-0001, passo 2), que
 é onde a **lista de módulos** e a fronteira de cada um vivem; este arquivo continua sendo o registro
@@ -392,4 +393,4 @@ núcleo. Nenhum código ou regra numerada os citava.
 ## 7. Lacunas do vocabulário
 
 - `[[LACUNA-GLO-001: quando um cliente (tenant) tem estabelecimentos em fusos diferentes, qual fuso decide vigência de regra, "hoje", turno e fechamento — o do estabelecimento ou o do cliente? Os dois estão declarados hoje, em arquivos diferentes. **Dono:** humano; é a mesma pergunta 3 do fim de `operacao-offline-e-sincronizacao.md`]]`
-- `[[LACUNA-GLO-002 — **reduzida em 2026-08-22**, e a redução foi conferida termo por termo: a spec do núcleo existe (`RN-NUC-001` a `RN-NUC-025`, em `nucleo-venda.md`, `nucleo-caixa-e-turno.md`, `nucleo-publicacao-e-texto.md`, `papeis-e-permissoes.md`, `papeis-atribuicao-e-delegacao.md`). Ganharam regra: `order_item_note` (`RN-NUC-016`), `pending_operation_queue` (`RN-NUC-001`), `published_artifact` (`RN-NUC-013`), `work_list` (`RN-OFF-012` + `RN-NUC-020`). **Continua sem regra numerada apenas `service_mode`** — nenhuma das 25 regras do núcleo o cita, e o modo de atendimento é declarado no pedido sem que nada diga o que acontece quando ele falta ou muda. **Dono:** `produto`]]`
+- `[[LACUNA-GLO-002 — **reduzida em 2026-08-22**, e a redução foi conferida termo por termo: a spec do núcleo existe (`RN-NUC-001` a `RN-NUC-025`, em `nucleo-venda.md`, `nucleo-caixa-e-turno.md`, `nucleo-publicacao-e-texto.md`, `papeis-e-permissoes.md`, `papeis-atribuicao-e-delegacao.md`). Ganharam regra: `order_item_note` (`RN-NUC-016`), `pending_operation_queue` (`RN-NUC-001`), `published_artifact` (`RN-NUC-013`), `work_list` (`RN-OFF-012` + `RN-NUC-020`). **FECHADA em 2026-08-23:** o resíduo era `service_mode`, e ele passou a ser regido por `RN-NUC-048` (`fatos-de-operacao-dominios-fechados.md` §3) — domínio fechado do núcleo, ausência não é valor (a venda não conclui sem modo), cada fato carrega o modo vigente no instante dele, valor novo só por alteração daquela regra com o teste dos três negócios, e efeito sobre preço/encargo/tributo é do módulo dono. Nada foi renomeado e a linha de §1.3 não muda]]`

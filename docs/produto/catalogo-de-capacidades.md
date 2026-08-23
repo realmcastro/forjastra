@@ -55,6 +55,25 @@ Falta **qualquer um** → a entrada vai para §7 (`Candidatas não desenvolvidas
    Item que dependa disso é pergunta para o humano. Também não se especifica tela, tabela, coluna,
    endpoint ou bloco aqui — nem se decide prioridade, ordem de construção ou corte de MVP.
 
+**O campo 6 não admite `provedor`, e a recusa é de 2026-08-23 (T-0004, passo 7).** A pergunta surgiu de um
+caso real: *predição para nós* — derivar algo do ambiente dos clientes para **sugerir melhoria** a um deles
+— não tem módulo dono, e o campo 6 admite `nucleo | modulo:<cod> | vertical:<cod>`. **Não** se acrescenta um
+quarto valor, e a razão não é formal. **Necessidade preservada:** suportar, faturar, diagnosticar e sugerir
+melhoria é legítimo, foi decidido em 2026-08-23 e não se recusa. **Mecanismo recusado:** hospedá-la aqui,
+por três defeitos que ele cria de uma vez — este arquivo é, pelo cabeçalho, **o que o dono do negócio
+escolhe ligar**, e capacidade nossa não é escolhida por ele, o que esvazia o campo 11 (`opt-in`) e o campo
+10 (`DESLIGADA`); a numeração é `CAP-<COD_MODULO>-<nnn>`, e `PRV` está registrado em `glossario.md` §4.3
+como **escopo**, não como módulo — `CAP-PRV-nnn` seria colisão de espécie no identificador; e o roadmap que
+agenda daqui é o do **produto**, não o do nosso negócio, que é a mistura que `RN-PRV-002` existe para
+fechar. **Mecanismo nosso:** o que nós entregamos ao cliente tem endereço próprio e é **regra vigente**, não
+candidata — `RN-PRV-021` (sugestão), `RN-PRV-017` (nada carrega forma de outro cliente), `RN-PRV-019`
+(a superfície) —, e o que ainda é comercial é `LACUNA-PRV-004` (interno × vendável), do humano. **Por que é
+melhor, e como se prova:** o lado nosso fica sujeito a trilha, cláusula de contrato e default fechado de
+autorização, que este catálogo não tem e não deveria ter; prova-se buscando `CAP-PRV-` no repositório →
+**zero**, e encontrando cada exigência correspondente como `RN-PRV-`. **Se o humano responder que "sugerir
+melhoria" é vendável** (`LACUNA-PRV-004`), a pergunta reabre — passa a existir algo que o cliente escolhe
+contratar —, e aí o lugar dela é decisão de `catalogo-de-modulos.md`, não desta seção.
+
 ## 2. Método — como se procura capacidade nova numa vertical
 
 É o entregável mais durável daqui: a próxima ficha estende a lista sem consultar ninguém. Os seis
@@ -125,6 +144,39 @@ negado em D1, D2 e D3 (`RN-OFF-007`). É essa divisão que deixa a capacidade ex
 **CENÁRIO** operador de caixa de posto · portador de conta de terceiro apresenta itens de conveniência junto com o abastecimento · conta com regra "só combustível" publicada ·
 o sistema aceita o combustível e recusa o resto na mesma tentativa, dizendo por quê · o operador vê o que passa e o que não passa e oferece pagamento imediato da diferença ·
 venda fecha com dois meios · **infeliz** regra publicada errada → papel autorizado libera como exceção registrada, e corrigir a regra é do pagador, não do balcão.
+
+### CAP-REL-001 — Decidir compra, produção e escala antes de o período começar, sabendo o quanto a antecipação erra
+`candidata` · `escopo: modulo:REL` · `arcaico: não` · `opt-in: sim` · `pessoa: não`
+**NECESSIDADE** quem decide quanto comprar, quanto produzir e quanta gente escalar decidir **antes** do período, com o tamanho do próprio erro à vista — em vez de decidir de memória e descobrir o erro pela sobra ou pela falta.
+**ACEITE** nenhuma antecipação é apresentada sem, ao lado dela, o **erro medido** sobre períodos **fechados que não participaram da derivação**, na **unidade da decisão** (quantidade do item, não percentual solto); e ela **deixa de ser apresentada** quando esse erro ultrapassa o limite declarado por quem toma a decisão — sem limite declarado, ela não é apresentada.
+**ELIMINA / INFORMA** informa a decisão que hoje é inteiramente palpite ("acho que sai", "normalmente vende"); não elimina trabalho manual nenhum, e a entrada declara isso em vez de inflar o campo.
+**CUSTO QUE CRIA** três, e o terceiro é o que morde: a antecipação tem de ser **registrada antes** do período que ela antecipa (fato novo, e é a única parte irrecuperável); o erro tem de ser medido e exibido, e erro exibido reduz a confiança que o número aparentava ter; e a capacidade **se retira sozinha** quando o erro reprova — recurso que some sem explicação treina desconfiança, então a retirada é declarada com o motivo.
+**OBSTÁCULO** o erro é dominado por contexto que o produto não tem (clima, evento, feriado, o que o vizinho fez) e por assimetria: faltar e sobrar não custam igual, e em perecível um erro médio bom esconde os dois. Nada disso é escolha de mecanismo — é o que a medida mostra, e é por isso que o aceite exige a medida antes da apresentação.
+**CONEXÃO** classe 2 por default (`RN-OFF-008`): é leitura de agregado no servidor, logo **não existe** sem contato — e não precisa existir, porque a frescura é de **dias** (`RN-REL-002`); nunca é superfície de operação.
+**EXIGE** o fato de venda no grão do **item** (já existe, `fatos-de-operacao.md` §3) · o **registro da antecipação antes do período**, que hoje não existe · a medida de erro sobre período fechado. Nenhum hardware. Depende de `LACUNA-REL-001` (teto de janela) como todo relatório da semente.
+**DESLIGADA** `REL` responde sobre o que **já aconteceu**, exatamente como hoje; nenhuma antecipação é composta e nenhuma decisão existente muda.
+**OPERA/TREINO** quem decide compra ou produção — `owner`, e `manager` no recorte dele por delegação nomeada (`RN-NUC-021`); a autorização depende da célula que `LACUNA-NUC-037` ainda não criou. O treino real é **ler o erro**, e é o único que a capacidade exige.
+**CENÁRIO** dona de padaria · véspera do dia de maior saída · dois ciclos fechados de venda no grão do item · o sistema apresenta a quantidade antecipada por item **com o erro medido dos ciclos anteriores, na unidade de cada item** · ela vê antecipação e erro no mesmo lugar, e vê quais itens têm erro grande demais para decidir por ali · decide compra item a item, usando a antecipação onde o erro é aceitável · **infeliz** o erro medido de um item ultrapassa o limite que ela declarou → aquele item **não** recebe antecipação, diz por quê, e a decisão dele volta a ser dela, sem número nenhum fingindo apoiá-la.
+
+**Duas coisas que esta entrada declara e não decide.** (1) **Ela muda a fronteira de `REL`**: hoje
+`modulos/relatorios.md` §1 põe "projeção do que vai acontecer" **fora** do módulo, com a palavra "hoje" —
+agendar esta capacidade altera aquela linha e o propósito do módulo, **na mesma passada**, e isso é custo
+declarado, não descoberta futura. (2) **Quem fixa o limite de erro** é `PERGUNTAS: para humano`: existe um
+limite default nosso, ou a capacidade não liga até o cliente declarar o dele? O aceite acima já o atribui a
+**quem toma a decisão** (`PN-20`: o cliente mexe no que é dele), o que sobrevive às duas respostas — o que
+falta é saber se há default, e default é número.
+
+**Conferência `PN`, e os que morderam.** `PN-16` — a antecipação **propõe**, nunca executa compra nem
+produção. `PN-13` — o cálculo é do backend, nunca do manifesto nem do terminal. `PN-07`/`PN-08` — a
+antecipação não edita fato nem reescreve período fechado, e o erro é medido contra o período **sob a regra
+que vigia nele**. `PN-20` — o limite de erro é de quem decide. Os demais não a alcançam: nenhuma parte dela
+está no caminho crítico do caixa, ela não é tela, não é fork por cliente e não coleta dado de pessoa.
+
+**O lado nosso da mesma coisa já é regra vigente, e não é candidato.** Quando a antecipação chega ao
+cliente numa **sugestão nossa**, valem `RN-PRV-021` (a) a (d) desde 2026-08-23: sustentação enumerável e
+do mesmo cliente, registro, marca de sustentação alterada quando um fato sustentador é corrigido, e a
+natureza de projeção acompanhando o **valor** — não o artefato — com o erro medido ao lado. Se esta
+capacidade for agendada, a `RN-REL-nnn` que a expandir é **escrita para casar com aquela**, não inventada.
 
 ## 4. Vertical `RES` — restaurante / alimentação servida
 
@@ -289,7 +341,11 @@ Filtro pendente ou dependência não construída. Não são recusadas e não sã
   de quem está sentado: a previsão é distribuição, não relógio, e apresentá-la como relógio engana quem
   espera na porta. Volta quando `CAP-COZ-001` provar que faixa medida é aceita em operação.
 - **Prever quanto produzir antes do movimento começar** (`COZ`/`EST`) — o palpite atual carrega contexto
-  (tempo, evento, feriado) que o sistema não tem, e erro em perecível é irreversível.
+  (tempo, evento, feriado) que o sistema não tem, e erro em perecível é irreversível. **Acrescentado em
+  2026-08-23:** o freio deixou de ser opinião e passou a ser **medida** — o aceite de `CAP-REL-001` exige
+  erro medido sobre período fechado fora da derivação, na unidade da decisão, antes de qualquer
+  apresentação. Continua aqui, e não vira entrada, por outro campo: o **dono do módulo** difere (produção ×
+  relatório de gestão) e duas entradas com a mesma necessidade sob dois nomes é catálogo duplicado.
 - **Propor o complemento cabível ao pedido** (`PRM`) — propor é permitido (`PN-16`), mas sem dado de
   combinação medido a proposta é chute com aparência de recomendação.
 - **O cliente-final pagar o próprio consumo em aberto sem intermediário** (`PGO` com `MSA`) — depende de

@@ -271,4 +271,7 @@ Aberta em 2026-08-23, pela varredura de conformidade de `RN-NUC-039`:
   escopo (estabelecimento × cliente) já está decidido por `RN-REL-006`. Quando fechar, entra como bloco
   próprio desta matriz, com uma linha por escopo e não por relatório — relatório novo não deve exigir
   célula nova. **Dono:** humano; `seguranca` antes, porque agregado é o caminho de vazamento que schema
-  correto não pega (`RN-REL-006`, motivo).
+  correto não pega (`RN-REL-006`, motivo). **Acrescentado em 2026-08-23:** as **duas** linhas candidatas
+  (uma por escopo), com valor em branco e com o que já está decidido em volta, estão em
+  `matriz-celulas-a-valorar.md` §2 — que **não é matriz** e cujas células não entram na contagem da §8
+  deste arquivo. Valoradas, elas migram para cá como bloco próprio, na mesma passada, e a cópia de lá sai.

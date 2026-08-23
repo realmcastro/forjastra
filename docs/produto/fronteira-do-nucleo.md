@@ -8,7 +8,7 @@ aparece no PDV de quem não é daquele ramo, e só sai com ciclo expand/contract
 **todos** disto? Se um dos três não precisa, não é núcleo. Não vale responder "mas seria bom para
 todos" — a pergunta é se a operação dos três **quebra** sem aquilo.
 
-## 1. Os quatro escopos, e o que cada um pode conter
+## 1. Os seis escopos, e o que cada um pode conter
 
 | Escopo | O que é | Contém código próprio? |
 |---|---|---|
@@ -16,6 +16,8 @@ todos" — a pergunta é se a operação dos três **quebra** sem aquilo.
 | **Módulo** | Capacidade ativável por cliente, sem deploy dedicado e sem alterar o núcleo. | Sim. |
 | **Vertical (ramo)** | **Receita**: quais módulos ligar, com que configuração padrão, e o vocabulário do ramo. | **Não.** |
 | **Cliente** | **Valores**: configuração daquele cliente dentro dos módulos que ele tem. | **Não.** |
+| **Plataforma** | O **mecanismo** que faz um produto servir N clientes e N ramos: isolamento por cliente, registro de módulo ativo, manifesto de tela, ciclo de migration, provisionamento. | Sim. |
+| **Provedor** | O **nosso negócio**: operar, sustentar, faturar e melhorar a Forja para N clientes (`operacao-do-provedor.md`). | Sim — e **se é a mesma aplicação do PDV é decisão aberta** (`D-01`/`D-02`). |
 
 A linha que mais evita discussão futura: **vertical não é implementação.** Se um comportamento do
 ramo não cabe em nenhum módulo, isso não autoriza "código de restaurante" — é sinal de que falta um
@@ -23,9 +25,22 @@ módulo ou de que a fronteira de um módulo existente está errada. Mesma coisa 
 de cliente que exige código é **dívida declarada**, com regra numerada, escopo `cliente:<id>` e a
 regra geral que ela supera citada. Nunca é o caminho fácil.
 
-Distinção paralela: **plataforma ≠ núcleo de venda.** Isolamento por cliente, registro de módulos
-ativos, manifesto de tela e ciclo de migration são plataforma — não descem para módulo nem para
-vertical, e também não são "regra de venda".
+**As duas últimas linhas entraram em 2026-08-23, e a ausência delas era defeito, não economia.**
+`plataforma` já era usada como valor de escopo em §2.1 sem ter linha aqui, e o quinto escopo estava
+anunciado em prosa em quatro arquivos sem endereço nenhum (`RN-EMI-040`, `RN-REL-006`,
+`papeis-e-permissoes.md:189`, `modulos/relatorios-semente-de-perguntas.md:186`). O que cada uma **pode**
+e **nunca pode** conter:
+
+- **Plataforma** — pode conter o mecanismo multi-cliente e multi-ramo. **Nunca** desce para módulo nem
+  para vertical, e **nunca** é "regra de venda": `plataforma ≠ núcleo de venda`.
+- **Provedor** — pode conter papel nosso, o que observamos para operar, a nossa trilha e a contagem que
+  só existe somando clientes. **Nunca** contém regra de venda, capacidade ativável por cliente, papel de
+  cliente, nem alcance a fato de negócio de cliente sem autorização declarada (`RN-PRV-001`,
+  `RN-PRV-010`). E **nunca** herda o nome "plataforma": são espécies diferentes, e o nome errado aqui
+  viaja para nome de coluna na Fase 1 (`RN-PRV-002`).
+
+Os dois **não descem** e **não sobem**: nada em `plataforma` ou em `provedor` vira módulo, vertical ou
+configuração de cliente, e nenhum item de venda sobe para eles por conveniência de lugar.
 
 ## 2. O resultado do teste, item por item
 
@@ -137,7 +152,13 @@ Independentemente de qualquer pedido de cliente ou de conveniência de módulo:
 
 ## 4. Como classificar um item novo
 
-Na ordem, parando no primeiro "sim":
+**Antes da lista, uma pergunta que a lista não faz — e é ela que o teste dos três negócios responde
+errado.** *Isto é mecanismo multi-cliente, ou é do nosso negócio?* Se é mecanismo → **plataforma**; se é
+nosso → **provedor**; e nenhum dos dois entra na lista abaixo. Sem essa pergunta primeiro, "isolamento de
+dado por cliente" responde **sim** aos três negócios e a lista o classifica como núcleo, que é o erro que
+§2.1 já não comete na prática e a lista permitia no papel.
+
+Depois, na ordem, parando no primeiro "sim":
 
 1. Os três negócios do teste **quebram** sem isto? → **núcleo**.
 2. Dá para ligar e desligar sem tocar no núcleo, e alguém opera bem sem isto? → **módulo**.

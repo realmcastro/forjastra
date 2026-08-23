@@ -13,8 +13,11 @@ rota, componente ou stack — e nada aqui decide prioridade, prazo ou escopo com
 | saber se uma ideia é recusada, e por quê | [postura-nova-geracao.md](postura-nova-geracao.md) |
 | achar o módulo dono de um assunto | [catalogo-de-modulos.md](catalogo-de-modulos.md) |
 | saber como o sistema opera sem rede | [operacao-offline-e-sincronizacao.md](operacao-offline-e-sincronizacao.md) |
+| saber **que fato** se registra no instante em que acontece | [fatos-de-operacao.md](fatos-de-operacao.md) e os três irmãos |
 | saber **quem pode** praticar uma operação | [matriz-operacao-papel.md](matriz-operacao-papel.md) e os dois irmãos |
 | saber **o que um papel vê** na tela | [superficie-por-papel.md](superficie-por-papel.md) |
+| saber o que **nós** vemos do cliente, e o que libera cada parte | [superficie-do-provedor.md](superficie-do-provedor.md) |
+| **valorar célula** — o que está esperando decisão do humano | [matriz-celulas-a-valorar.md](matriz-celulas-a-valorar.md) |
 
 ## Convenções que valem para todo arquivo daqui
 
@@ -52,12 +55,54 @@ rota, componente ou stack — e nada aqui decide prioridade, prazo ou escopo com
 - [postura-auditoria-pn.md](postura-auditoria-pn.md) — tabela derivada: confere de relance que nenhum
   `PN` recusa **capacidade** sem uma saída declarada. Divergiu? vale o `PN`, não a tabela.
 
+### Operação do provedor — três arquivos, um conjunto (`RN-PRV-001` a `010`, `015` a `017`)
+O **quinto escopo**: o nosso negócio, que não é núcleo, módulo, vertical nem cliente. Nada **neste
+conjunto** é superfície (ela é o conjunto seguinte), e os dois papéis novos não são coluna de matriz de
+cliente (`provider_support` é, e permanece).
+- [operacao-do-provedor.md](operacao-do-provedor.md) — o escopo `provedor`, a desambiguação da palavra
+  "plataforma", os três papéis nossos e os dois **eixos de alcance** (ler × mutar).
+- [operacao-do-provedor-alcance.md](operacao-do-provedor-alcance.md) — irmão com o mesmo peso: o que o
+  suporte muda, a interação com o cliente-final, a **decisão de 2026-08-23** sobre o administrador geral,
+  o consentimento por cláusula de contrato e o que **nunca** se entrega a um cliente (valor, ordenação ou
+  comparação derivada de outro). **As lacunas dos três moram aqui** (§4).
+- [operacao-do-provedor-autorizacao.md](operacao-do-provedor-autorizacao.md) — irmão com o mesmo peso: as
+  duas travas que o escopo **não herda de ninguém** — operação sem célula é negada a todo papel nosso, e
+  ato nosso nunca se sustenta em autoridade do cliente.
+
+### Superfície do provedor — um arquivo (`RN-PRV-018` a `020`)
+- [superficie-do-provedor.md](superficie-do-provedor.md) — o que **nós** vemos: a administração de
+  metadado (o que é legítimo sob qualquer resposta), o que **não** entra e por quê (pico por
+  estabelecimento, artefato de observação corrente, janela declarada sem retenção), e a tabela de **o que
+  cada trava libera** — que é a resposta a "quais telas vão existir" na forma que sobrevive a `D-01`/`D-02`.
+  Nada aqui é tela, bloco ou gráfico.
+
+### Fatos de operação — quatro arquivos, um conjunto (`RN-NUC-041` a `049`, `RN-PRV-011` a `014` e `021`)
+O que se registra **no instante em que acontece**, porque fato não capturado no instante é
+**irrecuperável** — a única parte que migration não conserta depois. Grão aqui é **candidato**: o
+veredito é do `arquiteto-dados`.
+- [fatos-de-operacao.md](fatos-de-operacao.md) — o que a operação do **cliente** produz: caminho de
+  venda no grão do item, a disciplina do grão, conectividade e os marcos que dão tempo. **As lacunas e as
+  perguntas dos quatro moram aqui** (§7).
+- [fatos-de-operacao-provedor.md](fatos-de-operacao-provedor.md) — irmão com o mesmo peso: o que os
+  **papéis nossos** praticam (a leitura é fato de igual peso ao ato), o ciclo de vida do cliente, do
+  módulo, do schema e do terminal, e a **sugestão** nossa ao cliente — sustentação enumerável do mesmo
+  cliente, e projeção que nunca chega com a autoridade do fato (`RN-PRV-021`).
+- [fatos-de-operacao-dominios-fechados.md](fatos-de-operacao-dominios-fechados.md) — irmão com o mesmo
+  peso: o **fato de recusa** e as três listas fechadas de valor — motivo de recusa (sem ele, "módulo não
+  usado" é invisível), motivo de **cancelamento** e **modo de atendimento**. Enumeração só estreita algo
+  se nascer com o campo.
+- [fatos-de-operacao-retencao-e-descarte.md](fatos-de-operacao-retencao-e-descarte.md) — irmão com o
+  mesmo peso: **o fato depois do instante**. A ordem de sacrifício do recurso local do terminal
+  (`RN-NUC-046`) e a relação entre retenção e janela de leitura (`RN-NUC-049`) — o mesmo defeito em duas
+  escalas de tempo, a perda chegando ao leitor com a cara de ausência.
+
 ### Catálogos
 - [catalogo-de-modulos.md](catalogo-de-modulos.md) — todos os módulos previstos, inclusive de verticais
   que ainda não atendemos: código, escopo justificado, ativação, expõe/exige e **o que acontece com o
   cliente que tem o módulo desligado**.
-- [catalogo-de-capacidades.md](catalogo-de-capacidades.md) — as 10 capacidades **candidatas** (nenhuma
-  nasce aceita) mais o **método** de procurar capacidade nova numa vertical. É a metade que se agenda.
+- [catalogo-de-capacidades.md](catalogo-de-capacidades.md) — as 11 capacidades **candidatas** (nenhuma
+  nasce aceita) mais o **método** de procurar capacidade nova numa vertical. É a metade que se agenda. O
+  campo de escopo **não** admite `provedor`, e a recusa está escrita na §1.
 - [receitas-por-vertical.md](receitas-por-vertical.md) — que módulos cada ramo liga (`RES`, `PST`,
   `VAR`), com o que é do ramo e o que só parecia ser. Vertical não tem código e não é ativável.
 
@@ -88,6 +133,10 @@ decisão **nega** — não é comportamento aprovado.
 - [matriz-operacao-papel-modulos.md](matriz-operacao-papel-modulos.md) — papel de núcleo em operação de
   **módulo** (`033`), as operações de `MSA`, `COZ`, `PCF`, `ATI`, `FIS`, `EMI` e da vertical, o **eixo de
   leitura** (§7) e a contagem consolidada (§8). **As lacunas de célula moram aqui** (§9).
+- [matriz-celulas-a-valorar.md](matriz-celulas-a-valorar.md) — **não é uma quarta matriz**: é a folha de
+  valoração, com linha **candidata** e valor de célula em **branco** — a matriz do escopo `provedor` (14
+  linhas) e as duas linhas de `REL` que `LACUNA-NUC-037` esperava. Célula em branco **não** é `?`, e nada
+  dela entra na contagem da §8 acima.
 
 ### Superfície por papel — dois arquivos, um conjunto (`RN-NUC-034` a `036`)
 - [superficie-por-papel.md](superficie-por-papel.md) — o que cada papel **vê**: origem do que aparece

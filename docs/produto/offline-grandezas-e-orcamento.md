@@ -119,6 +119,9 @@ Cada linha é uma grandeza que alguma decisão depende de conhecer. **Nenhuma te
 | plataforma | clientes por instância | contagem | `performance` | humano |
 | plataforma | terminais reconectando no pico de volta | por segundo | `performance` | humano (`RN-OFF-031`, `LACUNA-OFF-013`) |
 | caminho crítico | adicionar item, **medido sob drenagem no teto** | ms | `performance` | humano (`RN-OFF-030`) |
+| fato | custo do registro durável de **um** fato no caminho crítico, sob drenagem no teto | ms | `performance` | humano (é o operando que falta ao freio (a) de `RN-NUC-041`) |
+| fato | fatos de operação **por lançamento** — o multiplicador não é 1 e não é conhecido | contagem | `performance` | `produto` (o grão, `RN-NUC-041`) |
+| fato | espaço de fato de diagnóstico retido, por terminal | bytes | `performance` | humano (`LACUNA-NUC-039`) |
 | caminho crítico | apresentar a contagem de pendências | ms | `performance` | `ui` |
 | caminho crítico | detectar perda de contato | ms | `performance` | humano |
 | retaguarda | itens na lista de trabalho (`RN-OFF-012`) | contagem | `performance` | humano |
@@ -127,6 +130,21 @@ Cada linha é uma grandeza que alguma decisão depende de conhecer. **Nenhuma te
 Leitura obrigatória: as três linhas de **caminho crítico** e a de **tempo até fila zero** são as que o
 auditor não pode medir em repouso (`RN-OFF-030`); a linha de **terminais reconectando** é a única cujo
 dono **não** pode ser o cliente (`RN-OFF-031`).
+
+**As três linhas do grupo `fato` entraram em 2026-08-23 (`CST-01`, `CST-07`), e é por elas que um freio
+existente passa a ser exercitável.** `RN-NUC-041` admite dois freios ao grão fino do fato de operação, e o
+único técnico é **custo medido**; ele estava inalcançável porque **os dois operandos não tinham nome** —
+quanto custa registrar um fato no caminho crítico, e quantos fatos um lançamento produz. Freio
+inalcançável não protege nada: o grão acaba decidido por default no primeiro código, que é o desfecho que
+`RN-NUC-041` existe para impedir. As três **não têm valor** aqui e nenhuma vira constante.
+
+**Nota de unidade, mesma data — o teto e o enchimento não se contam na mesma coisa.** O teto de
+`RN-OFF-014` conta **vendas concluídas pendentes**; o fato de diagnóstico ocupa o **mesmo** recurso local
+do terminal e **não** entra nessa contagem. A defesa existe e é por outro caminho (`RN-OFF-015`, margem de
+recurso; `RN-NUC-046`, ordem de sacrifício com descarte contado), então isto **não** é buraco — é teto e
+enchimento medidos em unidades diferentes, o que faz "quanto falta para apertar" não ter resposta única.
+As duas grandezas convivem na tabela acima e se medem separadamente. Unificar a unidade é alteração de
+`RN-OFF-014`, cujo arquivo dono é `operacao-offline-e-sincronizacao.md`, e **não se faz aqui**.
 
 ## 3. Lacunas
 

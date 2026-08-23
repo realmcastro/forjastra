@@ -1,11 +1,11 @@
 ---
 name: decision-d-03-sao-tres-eixos-nao-uma-decisao
-description: D-03 (identidade e auth) é ortogonal em três eixos — residência do sujeito, mecanismo de prova, chegada do tenant — e é por isso que a decisão mais antiga do projeto nunca fechava; ela SEGUE ABERTA, com uma pergunta única para o humano
+description: D-03 (identidade e auth) é ortogonal em três eixos — residência do sujeito, mecanismo de prova, chegada do tenant — e é por isso que a decisão mais antiga do projeto nunca fechava; ela SEGUE ABERTA, com uma pergunta única para o humano, e o terceiro eixo já perdeu uma opção para o escopo `provedor`
 type: decision
 escopo: plataforma
 camada: backend
 data: 2026-08-23
-relaciona: [[reference-dossies-de-decisao-de-arquitetura]], [[decision-tenancy-schema-por-cliente]]
+relaciona: [[reference-dossies-de-decisao-de-arquitetura]], [[decision-tenancy-schema-por-cliente]], [[decision-quinto-escopo-provedor]], [[gotcha-nenhuma-superficie-nossa-enumera-clientes-para-escolher]]
 tarefa: T-0003
 ---
 
@@ -31,6 +31,21 @@ caso de **borda** ou caso de **venda**?
 **Agravante concreto de B, medido em consequência e não em preferência:** filtro de tenant errado na
 projeção do conjunto de identificação não vaza "quem existe" — vaza o **meio de identificar** pessoas
 de outro cliente para um dispositivo físico de terceiro.
+
+**Restrição acrescentada em 2026-08-23 (T-0004, achado `PRV-15`) — o terceiro eixo já perdeu uma opção,
+e quem fechar `D-03` precisa saber disso antes de decidir.** Para papel de escopo `provedor`
+([[decision-quinto-escopo-provedor]]), a família de respostas em que **o cliente-alvo chega no pedido**
+está **eliminada** por regra vigente (`RN-PRV-004` b): o alvo é resolvido antes, fora do pedido;
+identificador que o pedido carregue no máximo **confirma**, e divergência é **recusa**. Isso não escolhe o
+mecanismo — restringe o espaço de escolha, e restringir espaço é trabalho de spec. Consequência hoje: o ato
+nosso que nomeia cliente **não acontece** (falha fechado), e a inoperância é o desfecho declarado, não uma
+pendência ([[gotcha-a-trava-que-nunca-cai-nao-e-a-inercia]]). Quem fechar `D-03` por uma opção que faz o
+tenant chegar no pedido está contrariando regra vigente, e a regra não está neste registro por acaso: sem
+esta linha, ela existiria só numa `RN-PRV` que quem lê `D-03` não abre.
+
+**Agravante novo, do mesmo dia:** com **mutação** em jogo, `D-03` deixou de ser só "ler no cliente errado"
+e passou a ser **escrever** no cliente errado — irreversível pelas regras append-only do próprio desenho, e
+alterando a fatura do cliente. A opção **B** ficou mais cara do que era.
 
 **Como aplicar:** ninguém presume um eixo para destravar trabalho (`00-nucleo.md` §3). `RN-OFF-032` é
 satisfeita nas três opções — reter a habilitação de vender o terminal é fato exigido em qualquer
