@@ -5,7 +5,7 @@ type: reference
 escopo: plataforma
 camada: backend
 data: 2026-08-23
-relaciona: [[decision-d-03-sao-tres-eixos-nao-uma-decisao]]
+relaciona: [[decision-d-03-sao-tres-eixos-nao-uma-decisao]], [[decision-stack-node-typescript-estrito]], [[state-d-02-arranjo-b-ou-d]]
 tarefa: T-0003
 ---
 
@@ -15,9 +15,10 @@ tarefa: T-0003
   por formato de tela — a classe **sem** custódia (dispositivo do cliente-final, display de leitura à
   distância, **toda a retaguarda**) é grande e o navegador a serve bem. Escolha real entre arranjo
   **B** (código-base único, cascas por alvo com capacidade declarada) e **D** (web única + acompanhante
-  nativo só no Windows). Recomendação de servidor: **Go**, com o risco nomeado — sem exaustividade
-  verificada pelo compilador num produto feito de listas fechadas, e duas linguagens com a regra de
-  convergência em dois lugares.
+  nativo só no Windows). **Atualizado em 2026-08-26:** a §2 foi reescrita — a linguagem de D-01 está
+  fechada em **Node + TypeScript estrito** ([[decision-stack-node-typescript-estrito]]), e o risco
+  número um passou a ser `R-08` (drenagem que não compete com o caixa, fora do laço principal, com
+  prova medida antes da Fase 2).
 - `docs/arquitetura/d-03-identidade-opcoes.md` — ver [[decision-d-03-sao-tres-eixos-nao-uma-decisao]].
 - `docs/arquitetura/fiscal/` — três dossiês de pesquisa fiscal (IBS/CBS, emissão própria, base de
   cálculo e gorjeta), cada afirmação com URL oficial. É a fonte quando aparecer pergunta de fisco:

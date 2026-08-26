@@ -9,6 +9,14 @@
 > envelhece em silêncio. Nenhum número de desempenho de linguagem, biblioteca ou runtime aparece aqui.
 > Prefixo `LACUNA-STK-` é local deste dossiê e não pertence à numeração de `docs/produto/**`.
 
+> **Atualização de 2026-08-26 — parte deste dossiê já foi decidida.** A **linguagem** de D-01 está
+> fechada: **Node + TypeScript estrito, nos dois lados**
+> (`memory/plataforma/decision-stack-node-typescript-estrito.md`). A §2 abaixo foi **reescrita** para
+> avaliar a stack escolhida contra a §1, e não mais para escolher entre candidatas: o que era o custo
+> que fechava a avaliação anterior (exaustividade não verificada pelo compilador) deixou de existir, e
+> o que era vantagem da candidata anterior (concorrência cancelável para R-08) virou o risco que
+> precisa de prova. **D-02 continua ABERTA** e é a §3.3: arranjo **B** ou **D**.
+
 ## A resposta direta
 
 **"Um binário para os três alvos" não sobrevive aos requisitos que este projeto já escreveu.** O que
@@ -92,77 +100,75 @@ Isto vale para **qualquer** linguagem escolhida, e é a metade de D-01 que costu
   operação de dados com tenant ausente caindo em default (`backend.md` §1); e cruzar schema, inclusive
   em relatório — consolidado é agregação no `platform` (R-13).
 
-### 2.2 Go contra os requisitos
+### 2.2 Node + TypeScript estrito contra os requisitos
 
-**Onde ele resolve bem, e é honesto dizer que resolve:**
+**Onde ele resolve bem, e é o motivo pelo qual a escolha é melhor do que parecia:**
 
-- **R-08 e `RN-OFF-031`** (a soma de pendências drenando ao mesmo tempo em N clientes × M terminais) é
-  o problema mais bem servido por Go neste sistema: é um problema de **concorrência controlada e
-  cancelável** — leque de trabalhadores por agregado, limite global, prioridade cedível ao caminho
-  crítico, interrupção na fronteira de agregado sem perder progresso. É o feijão com arroz da
-  linguagem, com cancelamento propagado por contexto explícito, e o cancelamento é **o** requisito de
-  R-08(b).
-- **R-13/R-14 na prática:** a comunidade Go convergiu para acesso a Postgres **SQL-primeiro** — o que
-  significa que o desenho que R-14 exige (SQL versionado + executor próprio) é o **caminho normal**
-  ali, não a exceção que se paga com atrito contra o framework. Driver nativo de Postgres maduro, sem
-  dependência de C, é fato verificável no ecossistema; **não afirmo nada sobre desempenho dele** (não
-  medi, e `00-nucleo.md` §4 proíbe).
-- **Operação:** binário estático único, sem runtime a instalar no servidor, torna
-  `PN-19`/reprodutibilidade de instalação um problema menor, e o custo de operar N schemas com um
-  processo enxuto é baixo em esforço humano — que é o recurso escasso aqui.
-- **`00-nucleo.md` §8 e `coder.md` §3:** erro explícito em cada fronteira combina com "erro nunca é
-  engolido". Nesta base de regras isso é vantagem, não cerimônia.
+- **R-10 e R-11 param de depender de disciplina.** Este repositório é feito de enumerações fechadas:
+  quatro classes de convergência, três domínios de falha, três desfechos por domínio (`RN-OFF-002`),
+  estados do documento fiscal, sete itens que a fila nunca contém (`RN-OFF-023`), vocabulário fechado
+  de blocos SDUI. União discriminada com verificação de exaustividade (`never` no braço impossível)
+  faz **cada** uma dessas listas emitir erro de compilação quando alguém acrescenta um caso e esquece
+  um lugar. `RN-OFF-008` manda o default ser **falha fechado**, e falha fechado precisa ser
+  **garantido**, não lembrado: aqui ele passa a ser garantido pelo compilador.
+- **Uma linguagem, e é ela que dissolve o custo mais caro do produto.** O **núcleo do cliente** (fila,
+  cunhagem de identidade, faixa, repouso confidencial, trilha do ato, máquina de drenagem — R-01 a
+  R-09) é o software mais difícil deste sistema. Com servidor e cliente na mesma linguagem,
+  `packages/contracts` e `packages/sdui` são **um tipo só**, e as regras de R-07/R-09/R-10 existem em
+  **um** lugar — não em dois, com divergência aparecendo como venda duplicada ou fila que não drena. A
+  bateria `C-01`…`C-10` de `operacao-offline-e-sincronizacao.md` §7 continua obrigatória, mas como
+  teste de conformidade, não como ponte entre duas implementações da mesma regra.
+- **R-11 do lado do cliente é natural aqui.** Parse tolerante que **nunca lança**, com guardas
+  nomeadas e despacho **tipado** (proibido mapa `kind → Component` genérico, `ui.md` §1), é escrito com
+  tipo estreitado em vez de reflexão. O compilador continua checando props no ponto de resolução
+  dinâmica, que é exatamente o que a regra pede.
 
 **Onde ele cobra caro, especificamente neste projeto:**
 
-- **R-10 e R-11 pedem enumeração fechada verificada pelo compilador, e Go não tem.** Este repositório
-  é feito de enumerações fechadas: quatro classes de convergência, três domínios de falha, três
-  desfechos por domínio (`RN-OFF-002`), estados do documento fiscal, sete itens que a fila nunca
-  contém (`RN-OFF-023`), vocabulário fechado de blocos SDUI. Sem tipo-soma e sem verificação de
-  exaustividade, **nenhuma** dessas listas ganha um erro de compilação quando alguém acrescenta um
-  caso e esquece um lugar. O default é *falha fechado* (`RN-OFF-008`), e falha fechado precisa ser
-  **garantido**, não lembrado. Isso é mitigável (fronteira de despacho única, teste de exaustividade
-  gerado, `default` que recusa), mas é **trabalho recorrente de disciplina** e ele deve ser orçado
-  como tal, não descoberto depois.
-- **Dinheiro sem tipo nativo.** `numeric`/decimal exato é dependência externa ou inteiro em centavos
-  disciplinado à mão. Combina com `dados.md`, mas a proibição de ponto flutuante passa a ser vigilância
-  de revisão em cada conversão, inclusive na serialização do contrato.
-- **O custo grande: Go não é o cliente.** Escolher Go no servidor é escolher **duas linguagens** no
-  produto, porque nenhum dos quatro espaços de R-12 tem em Go um caminho de interface que eu recomende.
-  Consequência concreta, e é a que dói: o **núcleo do cliente** (fila, cunhagem de identidade,
-  faixa, repouso confidencial, trilha do ato, máquina de drenagem — R-01 a R-09) é o software mais
-  difícil deste sistema, e ele **não** será código compartilhado com o servidor. Toda regra de
-  convergência existirá em dois lugares, em duas linguagens, e a divergência entre elas é um defeito
-  que aparece como venda duplicada ou fila que não drena. Mitigação real: contrato executável em
-  `packages/contracts` + bateria de conformidade rodada nos dois lados a partir dos **mesmos** casos
-  (os cenários `C-01`…`C-10` de `operacao-offline-e-sincronizacao.md` §7 já são essa bateria escrita).
-  Isso é orçamento, não observação.
+- **R-08 é o risco número um, e era a vantagem da candidata que não foi escolhida.** A soma de
+  pendências drenando ao mesmo tempo em N clientes × M terminais (`RN-OFF-031`) é um problema de
+  **concorrência controlada e cancelável**: leque de trabalhadores por agregado, limite global,
+  prioridade **cedível** ao caminho crítico, interrupção na fronteira de agregado sem perder
+  progresso. Nada disso vem de graça num laço de eventos único — é `worker_threads` ou processo
+  separado, e o cancelamento não é propagado pela linguagem: é desenho nosso, explícito, em cada
+  fronteira. **É factível e precisa de prova medida antes da Fase 2**, com a fila no teto e drenando,
+  não depois.
+- **SQL-primeiro é escolha contra a gravidade do ecossistema.** R-14 exige SQL versionado como insumo
+  e executor de migration **nosso**, com ledger por `(schema, version)` no `platform`, `checksum` que
+  detecta edição e retomada no schema 7 de 20. Aqui o caminho normal do ecossistema é o oposto: ORM
+  que traz motor de migration próprio, e que R-14 obriga a **desligar** — desligar o motor é abrir mão
+  de metade do motivo pelo qual se escolhe um ORM. O risco concreto é ele entrar por inércia e o
+  ledger virar um por banco. A metade "ORM/query builder" de D-01 **continua aberta** (§2.1) e fecha
+  com essa restrição declarada, não apesar dela.
+- **Dinheiro sem tipo nativo.** Não há decimal exato na linguagem: é inteiro em menor unidade
+  disciplinado à mão ou biblioteca decimal. `dados.md` §3 já obriga a **uma** escolha para todo o
+  sistema, registrada como `decision`; o que a stack acrescenta é que a proibição de ponto flutuante
+  passa a ser vigilância de revisão em **cada** conversão, inclusive na serialização do contrato, onde
+  o padrão da linguagem é justamente o tipo proibido.
+- **A fronteira nativa de E1 se paga de todo jeito.** O alvo mais exigente (E1 Windows, R-01 a R-05)
+  depende de invólucro nativo e de módulos nativos para assinatura, periférico e repouso
+  confidencial — dentro do alvo que **menos** tolera surpresa. Isto não é objeção à linguagem: é
+  exatamente a pergunta única de §3.3, e é por isso que D-02 continua aberta com D-01 já fechada.
+- **Runtime a operar no servidor.** Não há binário estático único: versão de runtime instalada e
+  reprodutibilidade de instalação (`PN-19`) passam a ser trabalho de operação declarado, não
+  consequência gratuita da escolha.
 
-### 2.3 Duas alternativas, para o custo de oportunidade ficar à vista
+### 2.3 O que foi recusado, e o preço que sobra
 
-Não estão aqui para vencer. Estão porque **as duas dissolvem exatamente o custo que fecha §2.2**, e o
-humano precisa ver o preço de recusar isso.
+Registrado porque decisão sem alternativa recusada não é decisão, e porque o preço abaixo **não
+desaparece** com a escolha feita — ele muda de lugar.
 
-- **.NET/C#.** Atrativo único neste projeto: é a plataforma em que o **terminal Windows** (R-01 a
-  R-04) e o servidor podem ser **a mesma linguagem**, o que faz o núcleo do cliente virar biblioteca
-  compartilhada de verdade. Tem tipo-soma? Não como Rust, mas tem correspondência de padrão com
-  verificação de exaustividade em mais casos que Go, e tem decimal nativo — atende R-10 e "dinheiro"
-  com menos disciplina manual. Preço: runtime a operar no servidor, ecossistema que empurra para
-  ORM com motor de migration próprio (que R-14 obriga a **desligar**, e desligar o motor é abrir mão
-  do motivo pelo qual se escolheu o ORM), e cultura de framework mais opinativa — o risco aqui é
-  R-13 ser "resolvido" por configuração de contexto por tenant que esconde onde o schema foi decidido.
-- **TypeScript/Node.** Atrativo único: é a plataforma em que `packages/contracts` e `packages/sdui`
-  podem ser **um tipo só**, compartilhado entre servidor e cliente web/móvel, com união discriminada
-  e exaustividade verificada — o que serve R-10 e R-11 melhor que qualquer outra opção desta lista.
-  Preço, e é grande: o alvo mais exigente (E1 Windows, R-01 a R-05) fica dependente de um invólucro
-  nativo e de módulos nativos para assinatura, periférico e repouso confidencial — ou seja, você paga
-  a fronteira nativa **de todo jeito**, só que dentro do alvo que menos tolera surpresa; e o perfil de
-  concorrência de R-08/`RN-OFF-031` (leque cancelável com prioridade) é o menos natural dos três.
-- **Nota, não opção:** **Rust** é a única stack em que o núcleo do cliente poderia ser **um** artefato
-  servindo os três alvos (desktop, biblioteca para móvel, WebAssembly) **e** o servidor, com tipo-soma
-  e exaustividade. É a resposta mais forte no papel a R-01…R-11 e a mais fraca em velocidade de equipe
-  e contratação. Só entra em pauta se a resposta do humano em §7 sobre tamanho e perfil de time
-  sustentar; caso contrário é romance de arquitetura e o custo aparece no prazo.
+- **.NET/C#.** Atrativo único neste projeto: era a plataforma em que o **terminal Windows** (R-01 a
+  R-04) e o servidor podiam ser a mesma linguagem, com decimal nativo e correspondência de padrão
+  verificada. Recusado porque a linguagem escolhida entrega **a mesma** unificação — e mais larga: ela
+  cobre servidor, terminal, móvel, dispositivo do cliente-final e retaguarda, não apenas servidor e
+  Windows. O preço que sobra é o decimal (acima) e o fato de que a fronteira nativa de E1 continua
+  existindo nos dois mundos.
+- **Nota, não opção:** **Rust** seria a única stack em que o núcleo do cliente poderia ser **um**
+  artefato servindo os três alvos (desktop, biblioteca para móvel, WebAssembly) **e** o servidor, com
+  tipo-soma e exaustividade. É a resposta mais forte no papel a R-01…R-11 e a mais fraca em velocidade
+  de equipe e contratação. Fica registrada como o teto teórico contra o qual a escolha feita se mede,
+  não como pauta.
 
 ### 2.4 O que não muda com a escolha de D-01
 
@@ -303,10 +309,12 @@ requisito nos quatro arranjos** — "um binário só" economiza operação, não
   reescrever do sistema, porque não guarda estado que o negócio não possa perder.
 - Sistema de design: `docs/design/**` já nasceu agnóstico, e tokens/grade atravessam qualquer framework.
 
-**Ordem de decisão que decorre disso, e é a única recomendação de processo aqui:** decidir **D-02 antes
-ou junto com D-01**, nunca depois. O item 1 acima é o mais irreversível e é de D-02; se D-01 fechar
-primeiro em Go, D-02 já herda "duas linguagens" como fato consumado (§2.2, último ponto) — o que pode
-até ser a escolha certa, mas precisa ser **escolha**, não consequência.
+**Ordem de decisão — e o que aconteceu de fato.** A recomendação era decidir **D-02 antes ou junto com
+D-01**, nunca depois, porque o item 1 acima é o mais irreversível e é de D-02. D-01 fechou primeiro, em
+2026-08-26, e o efeito temido **não** se materializou: o risco de fechar D-01 antes era D-02 herdar
+"duas linguagens" como fato consumado, e a linguagem escolhida é a mesma nos dois lados em **qualquer**
+arranjo de §3.3. O que segue valendo é o inverso: D-02 continua aberta, e é ela que carrega o
+irreversível — nenhum código de produto do cliente sai antes da resposta de §3.3.
 
 ---
 
@@ -314,19 +322,19 @@ até ser a escolha certa, mas precisa ser **escolha**, não consequência.
 
 **Recomendo, e o humano decide.**
 
-**D-01 — Go, com camada de dados SQL-primeiro e executor de migration próprio.** Fundamento: R-08 e
-`RN-OFF-031` são o problema de servidor mais difícil que este produto tem, e são o que Go serve melhor;
-R-14 já obriga a construir o executor de migration em qualquer stack, o que **anula** a vantagem do ORM
-com motor próprio e converte "Go tem ORM fraco" de desvantagem em não-questão; e o custo de operação de
-um binário único importa numa carteira de clientes pequenos e médios, que é a premissa da tenancy
-(`decision-tenancy-schema-por-cliente.md`). **Risco principal nomeado: R-10/R-11 sem exaustividade
-verificada pelo compilador** — o produto é feito de listas fechadas e o default é falha fechado; isso
-tem de ser comprado com fronteira de despacho única e teste de exaustividade, orçado desde o começo.
-**Segundo risco: duas linguagens no produto**, com a regra de convergência existindo em dois lugares
-(§2.2) — mitigável por bateria de conformidade a partir dos cenários `C-01`…`C-10`, mas nunca eliminável.
-**Não recomendo Go se** a resposta de §7 indicar equipe pequena com forte domínio de .NET **e** decisão
-por terminal nativo em .NET: nesse caso o núcleo compartilhado entre servidor e terminal vale mais que
-tudo que Go entrega aqui, e o risco principal passa a ser ORM com motor de migration ligado por inércia.
+**D-01 — a linguagem está FECHADA (2026-08-26): Node + TypeScript estrito nos dois lados**, com camada
+de dados **SQL-primeiro** e **executor de migration próprio**. Fundamento registrado em
+`memory/plataforma/decision-stack-node-typescript-estrito.md`: R-10 e R-11 deixam de depender de
+disciplina e passam a ser verificados pelo compilador, e o núcleo do cliente (R-01…R-09 — o software
+mais difícil deste sistema) deixa de existir em duas linguagens. R-14 já obrigava a construir o
+executor de migration em **qualquer** stack, o que anula a vantagem do ORM com motor próprio.
+**Risco principal nomeado: R-08 / `RN-OFF-031`** — drenagem que não compete com o caixa, com
+prioridade cedível e cancelamento na fronteira de agregado, exige trabalho de fundo fora do laço
+principal (`worker_threads` ou processo separado) e precisa de **prova medida antes da Fase 2**, com a
+fila no teto. **Segundo risco: ORM com motor de migration entrando por inércia** e o ledger virando um
+por banco em vez de um por `(schema, version)`.
+**O que de D-01 continua ABERTO, e este documento não fecha:** ORM/query builder e framework HTTP —
+reversíveis (§4), e a fechar com a restrição de §2.1 declarada.
 
 **D-02 — duas classes de cliente (§3.1), um código-base, e a escolha entre B e D.** Recomendo **B** como
 padrão e **D** como candidato sério que depende de duas respostas de §7. Fundamento de B: o alvo E1 é o

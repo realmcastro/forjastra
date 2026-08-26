@@ -152,8 +152,8 @@ pelo gancho. **Nunca varra `memory/` inteiro.**
 
 | # | Decisão | Estado |
 |---|---|---|
-| D-01 | Stack de backend e ORM/query builder | **ABERTA** — a discutir com o humano |
-| D-02 | Framework de frontend do cliente SDUI | **ABERTA** — regra de UI nasce agnóstica |
+| D-01 | Stack de backend e ORM/query builder | **PARCIAL** — linguagem **FECHADA**: Node + TypeScript estrito nos dois lados → [[decision-stack-node-typescript-estrito]]. **ABERTOS:** ORM/query builder e framework HTTP |
+| D-02 | Framework de frontend do cliente SDUI | **ABERTA** — regra de UI nasce agnóstica. A pergunta é arranjo **B** ou **D** → [[state-d-02-arranjo-b-ou-d]] |
 | D-03 | Estratégia de auth e identidade (por cliente vs global) | **ABERTA** |
 | D-04 | Convenção de PK, timestamps e soft delete | **ABERTA** — proposta do `arquiteto-dados`, Fase 1 |
 
