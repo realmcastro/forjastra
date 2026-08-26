@@ -1,11 +1,12 @@
 ---
 name: state-pendencias-abertas-2026-08-23
-description: a fila do que falta depois de T-0001..T-0004 — uma pauta única para o humano em quatro blocos (frases de regra · células a valorar · decisões de arquitetura · comercial e legal), ordenada por alavanca, mais os resíduos com dono; cada linha sai daqui ao ser resolvida, e o registro inteiro quando esvaziar
+description: a pauta única do humano — as dez lacunas do board com data de vencimento (§0, a primeira morde em 2026-09-02) mais os quatro blocos sem data (frases de regra · células a valorar · decisões de arquitetura · comercial e legal); cada linha sai daqui ao ser resolvida, e o registro inteiro quando esvaziar
 type: state
 escopo: plataforma
 camada: processo
 data: 2026-08-23
-tarefa: T-0004
+atualizado: 2026-08-26 (T-0006 — fusão da pauta do board)
+tarefa: T-0004, T-0006
 ---
 
 Substitui a versão de T-0003 (mesma data). A **narrativa** está nas fichas `T-0001` a `T-0004`
@@ -19,6 +20,53 @@ que se responde**, e nada avança por cima dele.
 `LACUNA-NUC-038` (3.1 — perde valor **todo dia**) → `D-04` + **dinheiro** (3.2 e 3.3 — a Fase 1 não abre)
 → `D-06` (ii) (3.4 — a primeira migration não é escrevível) → **terminal-alvo** (3.5 — o mais barato de
 todos, e destrava toda medição) → `LACUNA-NUC-037` (2.1 — uma linha de tabela solta seis relatórios).
+
+**Desde 2026-08-26 a pauta tem calendário, e ele é de outros dez itens.** Os cinco acima seguem sendo os
+de maior alavanca **técnica**; os dez de §0 são os que **vencem em data**, o primeiro em 2026-09-02. As
+duas listas não competem: a de cima diz o que trava mais trabalho, a de baixo diz o que decide sozinho se
+ninguém falar.
+
+---
+
+## 0. As dez do board — a única parte da pauta com data de vencimento
+
+Vieram da revisão do backlog `SPR` contra a spec (T-0006). **A data é o prazo de entrega do card**, lido
+do `duedate` em 2026-08-26 — quem pegar o card encontra a lacuna antes disso. O dossiê com as saídas e o
+custo de cada uma está em `docs/produto/backlog-lacunas-g01-g09.md`; **responder é aqui**, e o dossiê não
+se atualiza sozinho (ver §5).
+
+| # | Pergunta, em uma linha | Morde | Cards | Se ninguém responder |
+|---|---|---|---|---|
+| 1 | **`G-09` arredondamento** — para onde vai o centavo sobrante, e em que ordem precisão e arredondamento se aplicam na composição do valor | **09-02** | `SPR-40`, `SPR-28`, `SPR-29` | quem preencher "Resultados Esperados" de `SPR-40` resolve o caso à mão, e a política nasce dentro de um card de modelo, sem contador |
+| 2 | **`LACUNA-GLO-001` fuso** — estabelecimento ou cliente decide vigência, "hoje", turno e fechamento | **09-08** | `SPR-36`, `SPR-46`, `SPR-37`, `SPR-34` | fuso do **cliente**, decidido pelo corpo de `SPR-36`; depois de escrita, a coluna só sai por expand/contract em N schemas |
+| 3 | **`G-03` agrupamento de catálogo** — existe no núcleo, ou agrupar é capacidade de `PUB` | 09-16 | `SPR-31`, `SPR-16` | `SPR-31` modela a hierarquia como entidade de núcleo; hoje o que segura é o rótulo, e rótulo sai |
+| 4 | **`G-05` adicional** — de quem é (núcleo, módulo novo, módulo existente), e é conjunto ou multiconjunto | 09-22 | `SPR-32`, `SPR-33`, `SPR-18`, `SPR-20`, `SPR-22`, `SPR-29` | adicional entra como coisa do núcleo que compõe valor, contra a lista fechada de `RN-NUC-013`; e conjunto torna "bacon duplo" impossível |
+| 5 | **`G-04` variação** — eixo único com preço próprio (300 ml / 500 ml) é núcleo ou degrau de baixo de `GRD` | 09-22 | `SPR-32`, `SPR-33`, `SPR-18`, `SPR-19`, `SPR-22` | cada combinação vira item de catálogo próprio, por omissão — o cadastro multiplica à mão |
+| 6 | **`G-01` as três reservas da Opção B** — a Fase 1 modela numeração por estabelecimento e série, congelamento e o grão dele, âncora da obrigação documental | 10-07 | `SPR-37`, `SPR-34` | não são modeladas, sem ninguém ter dito "não" — e ligar `EMI` depois vira migração de dado fiscal em N clientes, que é a condição sob a qual a Opção B foi escolhida |
+| 7 | **`G-02` turno** — quem abre, o que o fechamento encerra, o que acontece com turno aberto na virada do dia | 10-07 | `SPR-37` | turno é modelado como está, e abrir/fechar turno segue recusado pelo default |
+| 8 | **`G-06` contador de comanda por mesa** — "comanda 2 da mesa 10" é referência legítima, com que escopo e quem aloca | 11-13 | `SPR-6`, `SPR-8`, `SPR-9` | os três chegam com o contador no critério de aceite e sem regra atrás, e o número vira coluna |
+| 9 | **`G-07` disponibilidade** — marca no caminho de venda do núcleo, ou ausência do artefato publicado com disponibilidade real em `EST` | 11-27 | `SPR-26`, `SPR-27` | **mudou em 2026-08-26:** a afirmação "é do núcleo" foi retratada, então nenhum lado está afirmado; os dois cards chegam sem fronteira e quem implementar cria a marca no núcleo, que é o caminho mais curto |
+| 10 | **`G-08` busca de catálogo** — é operação classificada do núcleo, e com o link caído ela lê o quê | 11-27 | `SPR-17` | quem pegar escolhe a fonte, e a mais fácil de escrever é o servidor — a busca some quando o link cai |
+
+**Visibilidade no board:** oito cards receberam rótulo `bloqueada` e comentário nomeando a pergunta e o
+default ([[convention-bloqueio-nomeia-o-default-silencioso]]). **`G-06` e `G-08` não têm card rotulado** —
+a lacuna deles está só em comentário, e quem olhar o board pelo rótulo não a vê.
+
+**Empate desempatado por quantos cards a resposta solta.** Os itens 4 e 5, e os 6 e 7, vencem no mesmo dia.
+
+### 0.1 Quatro perguntas do mesmo board que não são lacuna de regra — são recorte e ordem, e são suas
+
+- **`SPR-14` antes de `SPR-41`, ou um segundo gate depois dele?** `SPR-14` (limite **10-23**) cria tabelas
+  em schema de cliente e está agendado **depois** de `SPR-41` (10-20), o único gate de segurança do board.
+  Do jeito que está, o gate 2 do `CLAUDE.md` §4 fica descoberto **pelo calendário**, sem ninguém ter
+  decidido isso. É o resíduo mais sério que a revisão do backlog encontrou.
+- **`SPR-46` aplica o aceite neutro ou espera o fuso?** O aceite neutro — "o formatador recebe o fuso
+  declarado, ausência é erro, nenhum caminho escolhe fuso" — fecha o card **sem** decidir §0 item 2. O
+  card hoje fixa "o fuso é do cliente" no escopo e no aceite.
+- **`SPR-8` e `SPR-9` entram como `bloqueada` por `G-06`, ou ficam declarados só em comentário**, como
+  `SPR-6`? Os três vencem em 11-13 com o contador no critério de aceite.
+- **`SPR-25` e `SPR-30` são dois cards ou um?** Descrevem o mesmo mecanismo — retirada autorizada mais
+  lançamento novo. A fronteira está declarada nos dois; o recorte é seu.
 
 ---
 
@@ -95,14 +143,16 @@ branco é linha inexistente. Somar a folha àquela contagem produz número falso
   no cliente errado, é **escrever** no cliente errado — irreversível pelas regras append-only e alterando
   a fatura. E o terceiro eixo já perdeu uma opção: para papel nosso, o cliente-alvo **não vem do pedido**
   (`PRV-15`, já registrado em [[decision-d-03-sao-tres-eixos-nao-uma-decisao]]).
-- **3.7 O fuso — mudou de urgência, não de dono.** Fuso do **estabelecimento** ou do **cliente**? Resolver
+- **3.7 O fuso — agora tem data: 2026-09-08 (§0, item 2), e quatro cards do board o assumem resolvido pelo cliente.** Fuso do **estabelecimento** ou do **cliente**? Resolver
   mexe em `.claude/rules/dados.md`, território seu. **O que mudou:** a família de fatos sobrevive fechando
   para **qualquer** lado, porque nenhum fato carrega campo de calendário
   ([[convention-fato-nao-carrega-campo-de-calendario]]). Deixou de ser irrecuperável e passou a ser caro:
   **nenhuma leitura por hora, dia, mês ou turno é publicável** enquanto o dono da hora não existir.
-- **3.8 `D-01`/`D-02`** — arranjo **B** (código-base único, cascas por alvo) ou **D** (web única +
-  acompanhante nativo no Windows)? Servidor em Go, com o risco nomeado? **Nenhum código de produto** sai
-  antes. Pergunta acrescentada por T-0004: **o console do provedor é o mesmo produto ou outra aplicação?**
+- **3.8 `D-02`** — arranjo **B** (código-base único, cascas por alvo) ou **D** (web única + acompanhante
+  nativo no Windows)? **Nenhum código de produto de cliente** sai antes ([[state-d-02-arranjo-b-ou-d]]).
+  `D-01` fechou na linguagem em 2026-08-26 — **Node + TypeScript estrito**
+  ([[decision-stack-node-typescript-estrito]]) — e segue aberta em ORM/query builder e framework HTTP.
+  Pergunta acrescentada por T-0004: **o console do provedor é o mesmo produto ou outra aplicação?**
 - **3.9 `D-05`** — onde mora o catálogo de regra fiscal, e **ela ainda não está na tabela do `CLAUDE.md`
   §8**. `FIS` não é modelável ([[decision-d-05-catalogo-de-regra-fiscal-sem-casa]]).
 - **3.10 Orçamento do console.** Ele cede ao caminho crítico do caixa como a drenagem cede (`RN-OFF-030`)?
@@ -131,9 +181,15 @@ branco é linha inexistente. Somar a folha àquela contagem produz número falso
     longo demais deixa o terminal furtado vendendo.
   - **unidade de uma leitura corrente** (`LACUNA-PRV-011`) — não é número, é definição, e sem ela o painel
     ao vivo não é especificável ([[gotcha-artefato-corrente-colide-com-trilha-por-ocorrencia]]).
-- **3.12 Herdado, sem mudança:** **MVP** — confirmar ou alterar o corte de `docs/produto/roadmap-de-modulos.md`,
-  com o custo da emissão própria à vista; e **turno** — respondido "não sei ainda / depende do cliente",
-  e é por isso que metade de `LACUNA-NUC-007` segue aberta.
+- **3.12 MVP — parcialmente resolvido (T-0005, 2026-08-24).** A fatia "emissão própria" fechou: Opção B,
+  `EMI` desligado por padrão para o perfil-alvo inicial (interior), config por cliente/tenant, condicionada
+  às três reservas de modelo (`docs/produto/roadmap-de-modulos.md` §5.3) estarem na Fase 1
+  ([[decision-emi-desligado-por-padrao-mvp1]] em `modulos/emi/`). **Isto não fecha `D-05`** — `D-05` segue
+  aberta e continua sendo o bloqueio real de modelagem de `FIS`, independentemente do estado de `EMI`. As
+  outras cinco perguntas do roadmap (`PERGUNTAS` itens 1, 3–6) seguem abertas, sem mudança. **Turno** segue
+  "não sei ainda / depende do cliente", e é por isso que metade de `LACUNA-NUC-007` segue aberta —
+  **com data desde 2026-08-26: `SPR-37` vence em 10-07 (§0, item 7), e as três reservas da Opção B estão
+  no item 6 do mesmo bloco.**
 
 ## 4. Comerciais e legais
 
@@ -173,8 +229,28 @@ branco é linha inexistente. Somar a folha àquela contagem produz número falso
   `RN-PRV-021` está longe da casa natural dela: quem for atrás não as encontra por vizinhança. Resíduo de
   prosa: `RN-EMI-040` e `LACUNA-NUC-011` ainda dizem "operação da plataforma". `RN-ATI-015` e `RN-ATI-017`
   seguem sem lista enumerada. Arquivos no teto: `catalogo-de-capacidades.md` (390),
-  `verticais/restaurante.md` (400), `fiscal-custodia-e-trilha.md` (400), `glossario.md` (396),
-  `roadmap-de-modulos.md` (398) — o próximo acréscimo em qualquer deles exige partir por eixo.
+  `verticais/restaurante.md` (400), `fiscal-custodia-e-trilha.md` (400), `glossario.md` (396) — o
+  próximo acréscimo em qualquer deles exige partir por eixo. **`roadmap-de-modulos.md` já passou do
+  teto** (424 linhas, após T-0005) **sem justificativa declarada no relatório** de quem editou —
+  `.claude/rules/00-nucleo.md` §8 exige justificativa explícita para arquivo acima de 400 linhas.
+  Partir por eixo (ex.: extrair §7 "o que a Fase 1 não pode modelar" para arquivo próprio) é trabalho
+  de `produto`, pendente.
+  **Acrescentado em 2026-08-26 (T-0006):** (a) `revisao-backlog-spr-2026-08-26.md:119` e `:133` citam
+  `fronteira-do-nucleo.md:72` para "item composto por eixos" — a linha certa é **`:71`**; `:72` é
+  composição por insumo (conferido na fonte em 2026-08-26). (b) `roadmap-de-modulos.md:155` e `:171`
+  dizem "`service_mode` sem `RN`" e o fato morreu: `RN-NUC-048` existe e fechou `LACUNA-GLO-002` em
+  2026-08-23 — o endereço está certo, a substância não, e ela chegou a ser **publicada como afirmação
+  falsa** num comentário de issue, já retratado em `SPR-1`
+  ([[gotcha-endereco-de-relatorio-envelhece-na-propria-sessao]]). (c) o dossiê
+  `backlog-lacunas-g01-g09.md` §9 ficou defasado no mesmo dia em que nasceu — ele diz que "é do núcleo"
+  está afirmado dentro de `SPR-27`, e a afirmação foi retratada horas depois; **a pauta viva é a §0
+  daqui**, o dossiê é o material de custo. (d) nove cards (`SPR-35`, `SPR-42`–`SPR-44`,
+  `SPR-47`–`SPR-50`, `SPR-52`) seguem lidos só pelo título, e um deles já mostrou o que isso custa
+  ([[gotcha-o-titulo-nao-e-o-card]]). (e) `SPR-53` continua com a descrição afirmando que `produto` não
+  tem acesso ao Jira; corrigido por comentário, por decisão registrada, e a descrição fica.
+- **`produto` / humano — três das cinco Epics planejadas nunca foram criadas**, e `SPR-25` e `SPR-27`
+  declaram dependência para "Epic 3" e "Epic 5". Dependência para issue inexistente não acusa no board:
+  ninguém vai descobrir isso por sintoma.
 - **`ui`** — `docs/design/vocabulario-e-eixos.md:377` aponta para `state-sessao-2026-08-22-...`, que foi
   **removido** em 2026-08-23; a referência ficou pendurada. E falta **papel de bloco para entrada de
   comando por teclado** — id novo, nunca variante, slot da zona crítica com ordinal fixo.

@@ -5,8 +5,9 @@ type: convention
 escopo: plataforma
 camada: produto
 data: 2026-08-22
+atualizado: 2026-08-26
 relaciona: [[decision-forja-e-pdv-modular]]
-tarefa: T-0001
+tarefa: T-0001, T-0006
 ---
 
 O que existe no PDV arcaico normalmente existe porque **atende necessidade real, já validada por
@@ -39,3 +40,14 @@ defensivo, e a metade ofensiva — que virou `docs/produto/catalogo-de-capacidad
 **Os `PN-nn` são critério citável por número, não postura genérica.** Recusa de spec cita o `PN` que a
 fundamenta, e mudar um `PN` exige decisão registrada — não interpretação de quem está escrevendo a
 spec naquele dia. É o que faz a §12 do núcleo ser auditável linha por linha em vez de retórica.
+
+**A terceira parte tem que atender a necessidade nomeada na primeira — e é ela que se perde**
+(2026-08-26, `SPR-23`). A recusa estava certa: fundir itens por texto livre como chave é mecanismo
+ruim. O texto substituto trocou fusão de fato por agregação, e a linha agregada passou a **esconder**
+"sem cebola" e "com bacon" — que é exatamente a dor nomeada na primeira parte. Recusa com quatro partes
+onde a terceira não repõe a necessidade é recusa de capacidade escrita no formato de recusa de
+mecanismo, e passa na revisão porque as quatro partes estão lá.
+
+**Como conferir:** leia a primeira e a terceira parte juntas, ignorando a segunda. A necessidade da
+primeira continua atendida pelo mecanismo da terceira, com caso concreto? Não continua — é `BLOQUEIO`
+ou é reescrita, nunca "melhor que estava".

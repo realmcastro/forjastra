@@ -28,7 +28,7 @@
 
 ## Armadilhas
 
-- [Regra nova que não corrige a célula nasce inerte](gotcha-regra-nova-que-nao-corrige-a-celula-nasce-inerte.md) — duas correções corretas da mesma rodada se anularam (`AUT-14`); quem muda desfecho de célula entrega a célula no mesmo despacho, e reauditar o conserto é obrigatório · camada:produto
+- [Regra nova que não corrige a célula nasce inerte](gotcha-regra-nova-que-nao-corrige-a-celula-nasce-inerte.md) — duas correções corretas da mesma rodada se anularam (`AUT-14`); quem muda desfecho de célula entrega a célula no mesmo despacho — e a regra e a célula moram em **arquivos diferentes**, então prova de autorização cita os dois endereços · camada:produto
 - [Fuso do estabelecimento × fuso do cliente](gotcha-fuso-do-estabelecimento-versus-fuso-do-cliente.md) — regra aprovada contra regra aprovada; some com um estabelecimento só e reaparece com dois, decidindo a que dia o fato pertence · camada:dados
 - [Revogação de terminal não alcança o offline](gotcha-revogacao-de-terminal-nao-alcanca-offline.md) — "terminal furtado não vende mais" é falso: revogar é ato do servidor, a janela é o prazo de habilitação, e a notificação carrega as duas validades · camada:produto
 - [O caso de falha do mecanismo novo é o primeiro lugar a olhar](gotcha-o-caso-de-falha-do-mecanismo-novo-e-o-primeiro-lugar-a-olhar.md) — três vezes em duas fichas um campo obrigatório nasceu sem valor possível, e a terceira nasceu do **conserto** da segunda; quem cria sujeito novo entrega o campo dele na mesma passada · camada:produto
@@ -41,7 +41,7 @@
 
 ## Convenções
 
-- [Necessidade antes de mecanismo](convention-necessidade-antes-de-mecanismo.md) — recusar mecanismo é evolução; recusar capacidade validada é defeito de produto disfarçado de postura; toda recusa tem quatro partes, e os `PN-nn` são critério citável por número · camada:produto
+- [Necessidade antes de mecanismo](convention-necessidade-antes-de-mecanismo.md) — recusar mecanismo é evolução; recusar capacidade validada é defeito de produto disfarçado de postura; toda recusa tem quatro partes, e **a terceira tem que repor a necessidade da primeira** — é essa que se perde e passa na revisão · camada:produto
 - [Operação sensível é o irreversível ou não conferível depois](convention-criterio-de-operacao-sensivel.md) — não é "move dinheiro"; por isso reimpressão de via entra, e por isso o registro é precondição do ato · camada:seguranca
 - [Campo de texto livre não é campo enumerável](convention-campo-de-texto-livre-nao-e-campo-enumeravel.md) — estreitar leitura por enumeração só funciona onde a `RN` dona foi enumerada na mesma passada; sobre texto de terceiro, mostre presença, não conteúdo · camada:produto
 - [Piso antes de diferencial no corte de MVP](convention-piso-antes-de-diferencial-no-corte-de-mvp.md) — capacidade obrigatória por dependência é piso; MVP não recebe diferencial enquanto houver piso descoberto · camada:produto
@@ -54,9 +54,17 @@
 ## Estado
 
 - [Fase 0 — arquitetura de trabalho com IA](state-fase-0-arquitetura-ia.md) — o que já existe, o que vem na Fase 1, o que está deliberadamente ausente · camada:processo
-- [Pendências abertas em 2026-08-23](state-pendencias-abertas-2026-08-23.md) — as cinco decisões do humano, as lacunas que travam trabalho (`LACUNA-NUC-037` é a de maior alavanca) e os resíduos com dono · camada:processo
+- [D-01: Node + TypeScript estrito](decision-stack-node-typescript-estrito.md) — linguagem fechada em 2026-08-26; exaustividade do compilador cobre R-10/R-11 e o núcleo do cliente para de existir em duas linguagens; **ORM e framework HTTP seguem abertos** · camada:backend
+- [D-02: arranjo B ou D](state-d-02-arranjo-b-ou-d.md) — pergunta única: a interface do terminal roda dentro do processo nativo (B) ou num navegador falando com um nativo (D)? Expo não cobre Windows desktop, e é o Windows offline que decide · camada:backend
+
+- [Pendências abertas em 2026-08-23](state-pendencias-abertas-2026-08-23.md) — **a pauta única do humano**: §0 traz as dez lacunas do board **com data** (a primeira morde em 2026-09-02) e as quatro perguntas de recorte; depois os quatro blocos sem data e os resíduos com dono · camada:processo
 
 ## Referências
 
+- [Modelo agendado antes da regra que o define](gotcha-modelo-agendado-antes-da-regra-que-o-define.md) — o sintoma é um calendário saudável: encadear prazo por pessoa respeita disponibilidade, não a existência da regra · camada:produto
+- [Capacidade sem dono entra pelo título do card](gotcha-capacidade-sem-dono-entra-pelo-titulo-do-card.md) — termo que não está no glossário não existe na spec, mas o board o aceita e por omissão ele é lido como núcleo · camada:produto
+- [Board SPR em 2026-08-26](state-board-spr-2026-08-26.md) — mapa das duas Epics novas e das 17 filhas, quem é dono de quê, e o estado do backlog anterior depois de T-0006: Bloco A aplicado, 11 cards `bloqueada`, e três coisas que ninguém está olhando (o gate 2 descoberto por calendário é a primeira) · camada:processo
+- [Jira: o projeto é o SPR](reference-jira-projeto-spr.md) — site, `cloudId`, três status e nenhum status de bloqueio; 33 issues de backlog anterior ao processo · camada:processo
+- [O board SPR é nomeado pela vertical](gotcha-board-spr-e-nomeado-pela-vertical.md) — "Sistema de Pedido de Restaurantes" e um backlog em mesa/comanda/garçom: o erro de framing do §7.3 entra pelo título da issue · camada:processo
 - [Dossiês de decisão de arquitetura](reference-dossies-de-decisao-de-arquitetura.md) — `docs/arquitetura/`: D-01/D-02 (um binário para os três alvos **não** sobrevive), D-03, e a pesquisa fiscal com URL por afirmação · camada:backend
 - [Projeto de referência: belasvue](reference-projeto-belasvue.md) — de onde vieram o esquema de memória e o SDUI; o que copiar e o que não copiar · camada:processo

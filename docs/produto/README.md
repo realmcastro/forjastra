@@ -54,6 +54,10 @@ rota, componente ou stack — e nada aqui decide prioridade, prazo ou escopo com
   que o produto faz **em consequência**. É a metade que veta.
 - [postura-auditoria-pn.md](postura-auditoria-pn.md) — tabela derivada: confere de relance que nenhum
   `PN` recusa **capacidade** sem uma saída declarada. Divergiu? vale o `PN`, não a tabela.
+- [revisao-backlog-spr-2026-08-26.md](revisao-backlog-spr-2026-08-26.md) — revalidação das 52 issues do
+  board `SPR` contra esta spec: veredito por card, as **9 regras que o backlog pressupõe e não existem**
+  (`G-01` a `G-09`, duas travando a Fase 1), os 8 cards que contradizem regra aprovada com `path:linha`, e
+  as 6 lacunas de fronteira abertas. **Recomendação, nada aprovado**; não cria `RN` nem reserva código.
 
 ### Operação do provedor — três arquivos, um conjunto (`RN-PRV-001` a `010`, `015` a `017`)
 O **quinto escopo**: o nosso negócio, que não é núcleo, módulo, vertical nem cliente. Nada **neste
