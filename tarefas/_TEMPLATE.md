@@ -1,5 +1,6 @@
 ---
 id: T-0000
+jira:
 titulo:
 status: aberta
 escopo: cliente=- vertical=- modulo=- camada=-

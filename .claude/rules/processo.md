@@ -2,21 +2,23 @@
 
 `handoff.md` define os **artefatos** (plano, ficha, relatório, consulta). Este arquivo define o
 **ciclo**: como uma tarefa nasce, avança, é validada e fecha — e quando o ciclo pode ser encurtado.
+`jira.md` define o **registro público** desse ciclo: toda tarefa tem issue, e a issue espelha a ficha.
 
 ## 1. Ciclo de vida de uma tarefa
 
 | Etapa | Quem | Saída |
 |---|---|---|
 | 1. Triagem | thread principal | é conversa ou é trabalho? conversa termina aqui |
-| 2. Plano | agent `orquestrador` | Plano de Despacho |
-| 3. Ficha | thread principal | `tarefas/T-<id>-<slug>.md` a partir de `tarefas/_TEMPLATE.md` |
-| 4. Execução | agents especialistas | seção na ficha + Relatório de Handoff |
-| 5. Validação | thread principal | relatório confere com o brief? gate cumprido? |
-| 6. Roteamento | `orquestrador` | `PERGUNTAS` viram consulta; `BLOQUEIO` resolve ou escala |
-| 7. Gates | auditores | `seguranca` / `performance` conforme `CLAUDE.md` §4 |
-| 8. Fechamento | `orquestrador` | memória escrita, ficha fechada, `tarefas/INDEX.md` atualizado |
+| 2. Issue | thread principal | issue no Jira com o pedido — **antes** do plano (`jira.md` §1) |
+| 3. Plano | agent `orquestrador` | Plano de Despacho |
+| 4. Ficha | thread principal | `tarefas/T-<id>-<slug>.md` a partir de `tarefas/_TEMPLATE.md`, com o campo `jira:` |
+| 5. Execução | agents especialistas | seção na ficha + Relatório de Handoff |
+| 6. Validação | thread principal | relatório confere com o brief? gate cumprido? → espelha na issue |
+| 7. Roteamento | `orquestrador` | `PERGUNTAS` viram consulta; `BLOQUEIO` resolve, escala e **muda o status da issue** |
+| 8. Gates | auditores | `seguranca` / `performance` conforme `CLAUDE.md` §4 |
+| 9. Fechamento | `orquestrador` | memória escrita, ficha fechada, issue concluída, `tarefas/INDEX.md` atualizado |
 
-Nunca pule a etapa 5. Relatório aceito sem leitura é como defeito entra: o agent diz "OK", o
+Nunca pule a etapa 6. Relatório aceito sem leitura é como defeito entra: o agent diz "OK", o
 orquestrador propaga o "OK", e ninguém olhou o arquivo.
 
 Defeito encontrado na validação → **novo despacho ao dono do território**, nunca correção inline
@@ -38,6 +40,8 @@ Nenhuma tarefa fecha sem, no que se aplicar à camada tocada:
   de índice na mesma passada.
 - **Nada de segredo** entrou no repo, em nenhum arquivo, nem em exemplo.
 - Toda `MEMÓRIA SUGERIDA` foi escrita, fundida ou recusada **com motivo**.
+- **Issue do Jira** tem plano, todos os relatórios e o fechamento espelhados, e está no status
+  concluída (`jira.md` §4 e §5). Não deu para espelhar? `PENDENTE NO JIRA:` declarado, nunca omitido.
 
 Item que não se aplica é declarado como "não se aplica: <por quê>" no fechamento. Silêncio não conta
 como cumprido.
@@ -78,6 +82,10 @@ migrada da tabela de abertas para registro `decision`.
 O processo serve o trabalho, não o contrário. Pode ir direto ao agent dono, sem plano nem ficha,
 quando **tudo** isto vale: uma camada só, um agent só, nenhum gate aplicável, nenhuma decisão em
 aberto envolvida, e o resultado é verificável em um olhar.
+
+**A issue nunca é encurtada.** O atalho dispensa plano e ficha; não dispensa registro público
+(`jira.md` §1). O custo é uma chamada; o custo de não ter é trabalho invisível para quem não está
+nesta sessão.
 
 Não pode encurtar, nunca: DDL, autorização, dinheiro, fronteira de módulo, ou qualquer coisa que
 toque mais de um território. Aí a ficha existe justamente porque o custo de errar é maior que o custo

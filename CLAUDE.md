@@ -47,12 +47,16 @@ Então a divisão é:
 | Papel | Quem | Faz |
 |---|---|---|
 | **Cérebro** | agent `orquestrador` | lê o pedido, resolve o escopo, devolve **Plano de Despacho** |
-| **Mãos** | este thread | cria a ficha, dispara os agents na ordem, valida, escreve memória |
+| **Mãos** | este thread | abre a issue, cria a ficha, dispara os agents, valida, espelha no Jira, escreve memória |
 | **Trabalho** | agents especialistas | executam o brief dentro do território deles |
 
+**Toda tarefa tem issue no Jira, criada antes do plano** (`.claude/rules/jira.md`). Agent nenhum
+fala com o Jira, **exceto o `produto`**: ele é o dono do backlog lá, e escreve conteúdo de issue
+com justificativa e prova. Espelhamento de processo e transição de status continuam sendo deste thread.
+
 O que este thread **pode** fazer direto, sem agent: responder pergunta conceitual; ler 1–2
-arquivos; `grep` pontual; `git status/log`; escrever em `memory/` e `tarefas/`; editar `CLAUDE.md`
-e `.claude/**` quando o humano pede mudança de regra. Fora disso, **delega**.
+arquivos; `grep` pontual; `git status/log`; escrever em `memory/` e `tarefas/`; ler e escrever no
+Jira; editar `CLAUDE.md` e `.claude/**` quando o humano pede mudança de regra. Fora disso, **delega**.
 
 ## 4. Os agents
 
@@ -62,13 +66,14 @@ permite paralelismo sem colisão.
 | Agent | Papel | Território de escrita |
 |---|---|---|
 | `orquestrador` | planeja o despacho, roteia perguntas entre agents, fecha a tarefa | `tarefas/**`, `memory/**` |
-| `produto` | dono da regra de negócio: define módulo, entidade, invariante, critério de aceite | `docs/produto/**` |
+| `produto` | dono da regra de negócio: define módulo, entidade, invariante, critério de aceite. **Dono do backlog no Jira** | `docs/produto/**`, conteúdo de issue no Jira |
 | `arquiteto-dados` | modelo Postgres, schema-por-cliente, migrations, índices | `db/**` |
 | `backend` | API, fronteira de módulo, contratos, geração do manifesto SDUI | `apps/api/**`, `packages/contracts/**` |
 | `ui` | catálogo de componentes, contrato de bloco SDUI, slots/variantes, **sistema de design** | `apps/web/**`, `packages/sdui/**`, `docs/design/**` |
 | `coder` | implementa spec já aprovada, cross-cutting, refactor mecânico | qualquer, **só sob spec** |
 | `seguranca` | auditoria: isolamento de tenant, autorização, dado sensível. **Read-only** | `docs/auditorias/**` |
 | `performance` | orçamentos, plano de consulta, custo de render. **Read-only** | `docs/auditorias/**` |
+| `commiter` | branch, commit e PR no padrão de `git.md`. **Só a pedido do humano** — nunca em plano, nunca no fechamento | nenhum arquivo: escreve **história**, não conteúdo |
 
 Para exploração ampla e read-only do repo, use o agent nativo **`Explore`** — não crie agent novo
 para isso.
@@ -89,10 +94,13 @@ para isso.
 - `processo.md` — o ciclo: etapas de uma tarefa, **definição de pronto**, cadência de validação,
   ciclo de fases, quando encurtar. Orquestrador sempre; agent que entrega lê a §2.
 - `handoff.md` — formato da ficha de tarefa e do relatório. Orquestrador + todo agent que entrega.
+- `jira.md` — issue antes do plano, espelhamento e status. Leem: `orquestrador`, este thread e
+  `produto` — os três que escrevem no Jira. Os outros sete não leem, porque não tocam nele.
 - `memoria.md` — como ler e escrever o grafo de memória.
 - `migrations.md` — ciclo de vida do banco: forward-only, expand/contract, N schemas. Leitura
   obrigatória de quem toca DDL (`arquiteto-dados`, `coder`).
-- `git.md` — branch, commit, entrega.
+- `git.md` — quem mexe no git, e o padrão de branch, commit e PR. Leem: `commiter` (inteira) e
+  todo agent que precise saber que **não** comita (§1).
 - `produto.md`, `dados.md`, `backend.md`, `ui.md`, `coder.md`, `seguranca.md`, `performance.md` —
   um por agent. Ninguém lê a regra de outro sem motivo declarado.
 
@@ -165,11 +173,11 @@ Ao fechar uma decisão: registro `decision` em `memory/plataforma/` **e** linha 
 
 ```
 CLAUDE.md              este arquivo
-.claude/agents/        os 8 agents
-.claude/rules/         regra por agent + núcleo, processo, handoff, memória, migrations, git
+.claude/agents/        os 9 agents
+.claude/rules/         regra por agent + núcleo, processo, handoff, jira, memória, migrations, git
 .claude/commands/      /tarefa — o ciclo inteiro em um comando
 memory/                grafo de conhecimento (§6)
-tarefas/               fichas de tarefa — o bastão que passa entre agents
+tarefas/               fichas de tarefa — o bastão que passa entre agents (cada uma com sua issue)
 docs/produto/          spec de módulo e regra de negócio (dono: produto)
 docs/auditorias/       relatório de segurança e performance
 docs/arquitetura/      exemplo longo, diagrama, racional extenso

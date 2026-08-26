@@ -2,19 +2,25 @@
 
 Agents não conversam entre si em tempo real. Eles se comunicam por **dois artefatos**: a **ficha de
 tarefa** (memória compartilhada da tarefa, em disco) e o **relatório** (o que volta ao orquestrador).
-O orquestrador é o único roteador.
+O orquestrador é o único roteador. O terceiro artefato, a **issue no Jira**, não é canal entre agents:
+é o registro público do que os dois primeiros produzem (`jira.md`).
 
 ```
-humano → thread principal → [orquestrador: PLANO] → thread principal cria a FICHA
+humano → thread principal → cria a ISSUE no Jira → [orquestrador: PLANO] → cria a FICHA
        → agent A (lê ficha, escreve sua seção, devolve RELATÓRIO)
+       → thread principal valida e ESPELHA o relatório na issue
        → orquestrador lê relatório: rota PERGUNTAS, dispara próximo, ou fecha
-       → ... → orquestrador: FECHAMENTO (escreve memória, encerra a ficha)
+       → ... → orquestrador: FECHAMENTO (escreve memória, encerra a ficha e a issue)
 ```
+
+Quem espelha artefato de processo é o thread principal. `produto` é o único agent que escreve no
+Jira, e só conteúdo de backlog — a fronteira está em `jira.md` §2.
 
 ## 1. Plano de Despacho (só o `orquestrador` produz)
 
 ```
 ## PLANO — T-<id> <título>
+JIRA: <chave da issue>
 ESCOPO: <o que entra>
 FORA DE ESCOPO: <o que explicitamente não entra>
 ESCOPO DE MEMÓRIA: cliente=<id|-> vertical=<ramo|-> modulo=<nome|-> camada=<dados|backend|ui|...>
@@ -37,6 +43,7 @@ nunca toca na de outro.
 ```markdown
 ---
 id: T-0001
+jira: <chave da issue — obrigatório, `jira.md` §1>
 titulo: <curto>
 status: aberta | bloqueada | fechada
 escopo: cliente=<id|-> vertical=<ramo|-> modulo=<nome|-> camada=<...>
@@ -56,7 +63,7 @@ aberta_em: AAAA-MM-DD
 <orquestrador: o que ficou, memórias escritas, o que sobrou para depois>
 ```
 
-Índice em `tarefas/INDEX.md`: uma linha por ficha (`T-0001 — título — status`). Ficha fechada
+Índice em `tarefas/INDEX.md`: uma linha por ficha (`T-0001 — <chave> — título — status`). Ficha fechada
 permanece — é o histórico de por quê as coisas são como são.
 
 ## 3. Relatório de Handoff (todo agent, sempre)
@@ -110,4 +117,5 @@ ficha se importar. Consulta que virou tarefa foi mal roteada.
 
 Antes de fechar: todo `BLOQUEIO` resolvido ou escalado; todo gate aplicável cumprido; toda
 `MEMÓRIA SUGERIDA` avaliada — escrita como registro, recusada com motivo, ou fundida a um registro
-existente. Aí sim `status: fechada` e a linha do `INDEX.md` atualizada.
+existente; e todo artefato espelhado na issue (`jira.md` §4). Aí sim `status: fechada`, a issue em
+concluída e a linha do `INDEX.md` atualizada — os três no mesmo passo.

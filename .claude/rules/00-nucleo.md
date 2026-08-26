@@ -72,6 +72,9 @@ fora do escopo? `RISCOS` no relatório. Uma linha, e segue.
   em memória. Use placeholder e `.env.example`.
 - **Git que muda estado** — `checkout -b`, `commit`, `push`, `merge`, `reset`, `clean`, `stash drop`.
   Branch e commit são decisão do humano (`git.md`). Entregar = deixar na working tree e reportar.
+  **Exceção nominal, uma só: o agent `commiter`** — e mesmo ele age apenas quando o humano pede
+  commit, branch ou PR com essas palavras, nunca por dentro de um plano ou de um fechamento
+  (`git.md` §2).
 - **Referência a IA** em mensagem de commit, código ou doc de produto.
 - **Assumir a vertical** — nada no núcleo pode conter "restaurante", "posto", "mesa" ou "bomba"
   como condição. Vertical é dado, configuração ou módulo (`CLAUDE.md` §7.3).
