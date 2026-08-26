@@ -27,3 +27,9 @@ obrigação nossa, para sempre, inclusive a transição IBS/CBS.
 **Como aplicar:** toda spec, contrato e modelo de `FIS`/`EMI` assume estas quatro obrigações como
 dadas. Voltar atrás não é troca de biblioteca: é troca de produto. Pesquisa fiscal, com URL oficial
 por afirmação, em `docs/arquitetura/fiscal/`.
+
+**Nota (2026-08-24, T-0005):** esta decisão fixa o **mecanismo** de emissão quando `EMI` está ligado
+(própria, não PAA) — ela não fixa que `EMI` esteja ligado por padrão. O MVP 1 liga `FIS` e deixa
+`EMI` desligado por padrão para o perfil-alvo inicial (interior), config por cliente/tenant; ver
+[[decision-emi-desligado-por-padrao-mvp1]] em `modulos/emi/`. As duas decisões não se contradizem:
+uma é o *como* emitir quando ligado, a outra é o *quando/para quem* liga.

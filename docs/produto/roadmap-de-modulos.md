@@ -145,7 +145,9 @@ minimizadas:** é prosa normativa, não código; nada disso executa.
 ## 4. MVP 1 — o que entra, e por que cada item é piso
 
 Proposta. Ordenada por **dependência**, de baixo para cima; nada aqui é "primeiro" no sentido de
-importância comercial.
+importância comercial. **Exceção declarada:** o item 6 (`EMI`) não é piso do perfil-alvo inicial —
+desde 2026-08-24 (T-0005, decisão do humano) ele é módulo plugável, desligado por padrão para esse
+perfil; ver a linha e §5.3/5.4.
 
 | # | Bloco | Por que é piso | Estado da spec | Dependência que o trava |
 |---|---|---|---|---|
@@ -153,8 +155,8 @@ importância comercial.
 | 2 | **`NUC`** — pedido, venda imutável, pagamento, correção por fato novo, caixa, papéis | é o conjunto que os três negócios quebram sem | 25 `RN` | `service_mode` sem `RN`; `LACUNA-NUC-001` (fuso), `004` (arredondamento), `006` (meios de pagamento), `007` (turno) |
 | 3 | **`OFF`** — contrato transversal de continuidade offline | o caixa não pode parar; é `PN-01` | **33 `RN`** (`001`–`033`) em quatro arquivos; grandezas sem valor não recontadas em 2026-08-23 | `LACUNA-OFF-002`/`003` (numeração), `011` (papel retido), `012` (repouso), `017` (habilitação a vender) |
 | 4 | **Autorização** — papéis, atribuição, delegação, autoridade retida | operação sensível sem papel e sem trilha é fraude barata | 9 `RN` (`RN-NUC-017`–`025`) + a matriz operação × papel, **em disco desde 2026-08-23, em três arquivos** (`026`–`033`, `039`, `040`) | `D-03` |
-| 5 | **`FIS`** — tributação, vigência, congelamento | sem tributo composto não há venda documentável em nenhum ramo | 20 `RN` (1 provisória) | **`D-05`** e o **grão do congelado** (§7) — hoje **não modelável** |
-| 6 | **`EMI`** — bloco mínimo indivisível (§5) | a obrigação documental é o que faz a venda existir para fora | 41 `RN` | `LACUNA-EMI-001`, `005`, `011`, `014`; numeração |
+| 5 | **`FIS`** — tributação, vigência, congelamento | sem tributo composto não há venda documentável em nenhum ramo; **entra ativo** no MVP 1 independentemente do estado de `EMI` (Opção B, §5.3, separa as duas decisões) | 20 `RN` (1 provisória) | **`D-05`** e o **grão do congelado** (§7) — hoje **não modelável**, e isso **não muda** com a decisão de `EMI` (§5.3/5.4) |
+| 6 | **`EMI`** — bloco mínimo indivisível (§5) | **não é piso do MVP 1**: desde 2026-08-24 (T-0005) é módulo plugável, **desligado por padrão** para o perfil-alvo inicial (interior) — decisão do humano, Opção B (§5.3/5.4). É config por cliente/tenant, não característica do MVP inteiro: outro cliente com outro perfil pode ativá-lo depois, sem migração destrutiva, desde que as três reservas de modelo da §5.3 estejam na Fase 1 | 41 `RN` | `LACUNA-EMI-001`, `005`, `011`, `014`; numeração — relevantes para quando algum cliente ativar `EMI`; as três reservas de modelo (§5.3) são pré-requisito da Fase 1 mesmo com `EMI` desligado |
 | 7 | **`PER`** — periféricos: comprovante impresso, gaveta | dependência dura de `EMI` (contingência **imprime**, e imprime mais) e base da receita `RES` | **19 `RN`** (`RN-PER-001`–`019`), em dois arquivos, escritos em 2026-08-22 | `LACUNA-PER-3` (imprimir depois), `PER-2`/`PER-4` (norma não confirmada) |
 | 8 | **`MSA`** + **`COZ`** — consumo em aberto e ponto de produção | base da receita `RES`: sem eles a vertical de construção não opera | 14 + 12 `RN` | — |
 | 9 | **`RES`** — a receita e as regras do ramo | é o corpo de prova de tudo acima | 11 `RN` (1 provisória) | `LACUNA-RES-002`/`003` |
@@ -222,9 +224,18 @@ trabalho de construção: é trabalho contínuo, e hoje **não está atribuído 
 | **Segunda UF** | metade da regra de emissão é decisão de UF (credenciamento, código de responsável técnico, parâmetro estadual). Habilitar a segunda UF é **projeto**, não cliente novo |
 | **Automação de rotação de credencial** | o **aviso** de vencimento fica (é continuidade); rotacionar sozinho não |
 
-### 5.3 As duas opções, custeadas — proposta, não decisão
+### 5.3 As duas opções, custeadas — decidido: Opção B (2026-08-24, T-0005)
 
-**Opção A — emissão própria no MVP 1.**
+**Decisão do humano.** Opção B. O MVP 1 não constrói emissão própria: o cliente liga só `FIS` e
+compõe o tributo certo por item/venda; a obrigação documental fica fora da Forja. A decisão é
+**config por perfil de cliente/tenant, não característica do MVP inteiro** — o perfil-alvo inicial
+(interior) é quem fica sem `EMI` por padrão; outro cliente, com outro perfil, liga `EMI` depois sem
+migração destrutiva, contanto que as três reservas abaixo tenham entrado no modelo da Fase 1. Esta
+decisão resolve **A-vs-B de emissão**, e só isso: ela **não substitui** a resolução de `D-05` (§7.1).
+`D-05` segue **aberta**, e é ela quem de fato trava a modelagem de `FIS` na Fase 1 — independentemente
+de `EMI` estar ligado ou desligado para qualquer cliente.
+
+**Opção A — emissão própria no MVP 1. Recusada nesta decisão.**
 Entrega: o cliente vende e cumpre a obrigação documental dentro da Forja, inclusive com o autorizador
 fora do ar. Custo, todo declarado: o bloco de 41 `RN`; `PER` especificado antes (a contingência
 imprime); a fila de pendências com **superfície de retaguarda** e um **papel** que a opere — hoje
@@ -235,7 +246,7 @@ bloqueio: `LACUNA-EMI-011` (se a UF do caso base não admitir contingência off-
 escala de degradação cai) e `LACUNA-EMI-005` (se o código de responsável técnico for por emitente, há
 teto comercial por UF).
 
-**Opção B — MVP 1 sem emissão própria, com caminho de transição declarado.**
+**Opção B — MVP 1 sem emissão própria, com caminho de transição declarado. Decidida.**
 O cliente liga só `FIS`: compõe o tributo, e a obrigação documental fica com o contador ou o provedor
 dele. Isso **já é configuração suportada** e tem comportamento desligado escrito
 (`modulos/fiscal.md` §3.1), então não é gambiarra. Custo: o cliente-final recebe comprovante **não
@@ -250,13 +261,23 @@ se reescreve:
 3. **Âncora da obrigação documental** no fato, para que a venda antiga saiba a que documento ela
    corresponderia.
 
-Sem essas três, a Opção B não é "depois a gente liga": é migração de dado fiscal em N clientes.
+Sem essas três, a Opção B não é "depois a gente liga": é migração de dado fiscal em N clientes. **As
+três são pré-requisito da Fase 1 mesmo com `EMI` desligado** para todo cliente — é a condição de
+"todos os dados para a futura implementação existirem" que o humano pediu ao confirmar a Opção B. Elas
+não substituem `D-05` (§7.1): `D-05` trava a **casa** do catálogo de regra fiscal que `FIS` usa para
+compor o tributo; as três reservas tratam da **numeração**, do **congelamento/grão** e da **âncora
+documental** — condições diferentes, e as duas seguem abertas em paralelo.
 
-### 5.4 O que decide entre A e B
+### 5.4 O que decidiu entre A e B
 
-Não é preferência técnica: é (a) se existe cliente-alvo que precisa emitir dentro do PDV desde o
+Não era preferência técnica: era (a) se existe cliente-alvo que precisa emitir dentro do PDV desde o
 primeiro dia; (b) se o instrumento de custódia pode existir antes do primeiro cliente; (c) se a UF do
-caso base admite contingência off-line. As três são do humano, e estão nas `PERGUNTAS`.
+caso base admite contingência off-line. Resolvido em 2026-08-24 (T-0005): para o perfil-alvo inicial
+(interior), a resposta a (a) é **não** — é um perfil que não liga muito para nota fiscal, e o
+documento fica com o contador dele. (b) e (c) ficam sem resposta necessária **enquanto esse for o
+perfil-alvo**: como a decisão é por cliente/tenant (não característica do MVP inteiro), um cliente
+futuro que responda diferente a (a) reabre (b) e (c) só para ele, no momento de ativar `EMI` — sem
+mudar o MVP 1 nem exigir migração, desde que as três reservas da §5.3 já estejam no modelo.
 
 ---
 
@@ -377,15 +398,20 @@ resposta **antes** de modelar qualquer coisa datada.
 
 ## PERGUNTAS: para humano
 
-O corte acima é **proposta**. Nada dele está aprovado, e seis respostas mudam o desenho:
+O corte acima é **proposta**. Nada dele está aprovado. Das seis perguntas que mudam o desenho, a
+segunda foi **resolvida em 2026-08-24 (T-0005)**; as outras cinco seguem abertas — a numeração não
+muda, para manter a referência estável:
 
 1. **Confirma o MVP 1 da §4** — plataforma, `NUC`, `OFF`, autorização, `FIS`, `EMI` (bloco mínimo),
    `PER`, `MSA`, `COZ`, `RES` — e **confirma que `PCF` e `ATI` ficam para o subsequente**, apesar de
    terem sido nomeados no pedido?
-2. **Opção A ou Opção B** da §5.3 — emissão própria no MVP 1, ou MVP 1 sem ela com as três reservas de
-   modelo? Decide (a) existe cliente-alvo que precisa emitir dentro do PDV desde o primeiro dia; (b) o
-   instrumento de custódia pode existir antes do primeiro cliente; (c) a UF do caso base admite
-   contingência off-line (`LACUNA-EMI-011`).
+2. **RESOLVIDA (2026-08-24, T-0005): Opção B.** O MVP 1 não constrói emissão própria; `FIS` entra
+   ativo (compõe o tributo certo por item/venda) e `EMI` fica módulo plugável, desligado por padrão
+   para o perfil-alvo inicial (interior), ativável por outro cliente depois — é config por
+   cliente/tenant, não característica do MVP inteiro. Condição: as três reservas de modelo da §5.3
+   (numeração, congelamento/grão, âncora documental) entram na Fase 1 mesmo com `EMI` desligado. **Esta
+   resposta não substitui a pergunta 3** (`D-05`): `D-05` segue aberta e trava a modelagem de `FIS`
+   independentemente desta decisão de escopo de emissão.
 3. **`D-05`** — onde mora o catálogo de regra fiscal: `platform`, replicado por schema, ou artefato
    versionado que acompanha o release? Sem isso `FIS` não entra na Fase 1.
 4. **Confirma a reclassificação de piso** da §2.3, item por item — principalmente `CAP-PER-001` e

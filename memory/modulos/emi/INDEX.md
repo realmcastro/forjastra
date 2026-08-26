@@ -15,3 +15,4 @@ _(vazio — as `RN-EMI` vivem na spec)_
 ## Decisões
 
 - **Emissão é própria** (montamos, assinamos, transmitimos) → [[decision-emissao-fiscal-propria]] em `plataforma/`.
+- [EMI desligado por padrão no MVP 1](decision-emi-desligado-por-padrao-mvp1.md) — perfil-alvo inicial (interior) não liga `EMI`; ativação é config por cliente/tenant, condicionada às três reservas de modelo do roadmap §5.3 estarem na Fase 1 · camada:produto

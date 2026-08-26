@@ -28,3 +28,9 @@ que é território dele. Até fechar: quem modelar tempo declara explicitamente 
 assumindo, e não escolhe "para destravar". Corolário operacional já observado: **não existe "fora do
 horário" global** em multi-tenant multi-fuso — o horário morto de um cliente é o pico de outro, e
 qualquer escalonamento de job em N schemas é palpite enquanto isto estiver aberto.
+
+**Urgência reforçada (2026-08-24, T-0005):** consulta a `arquiteto-dados` sobre as três reservas de
+modelo de `FIS`/`EMI` (numeração, congelamento/grão, âncora documental — roadmap §5.3) apontou este
+conflito (`LACUNA-GLO-001`) como o **mais urgente dos três**, porque data/hora do congelamento e da
+numeração dependem dele antes de qualquer DDL datada — mais urgente que `D-05` e `D-04` para destravar
+a *primeira* migration de `FIS`, ainda que as três precisem fechar antes da Fase 1 completa.
