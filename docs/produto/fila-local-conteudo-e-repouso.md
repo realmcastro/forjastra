@@ -16,10 +16,11 @@
 > **Piso, não teto**, como o irmão: módulo pode ser mais restritivo, nunca mais permissivo.
 > **`OFF` não é módulo ativável** — é contrato transversal, e vale para o núcleo e para todo módulo.
 >
-> **Nenhum número.** Toda duração, tamanho e margem é `LACUNA-OFF-nnn` com dono nomeado: aqui ficaram
-> `012` e `014`.
+> **Nenhum número aqui.** Toda duração, tamanho e margem é `LACUNA-OFF-nnn` com dono nomeado: aqui
+> ficaram `012` e `014`. Desde 2026-09-23 o valor de partida de `014` mora em
+> `fila-local-valores-de-partida.md` (`RN-OFF-038`), com os outros valores decididos na mesma data.
 >
-> `RN-OFF-021` a `RN-OFF-023` e `RN-OFF-027` — `028` a `031` já estavam em
+> `RN-OFF-021` a `RN-OFF-023`, `RN-OFF-027` e, desde 2026-09-23, `RN-OFF-039` — `028` a `031` já estavam em
 > `offline-grandezas-e-orcamento.md`, e numeração **não se renumera**. Numeração continua a sequência do
 > irmão e é imutável (`glossario.md` §4.2). Cenários continuam de `C-08`: aqui está `C-09`; `C-10` mudou
 > para o novo irmão.
@@ -54,8 +55,8 @@ retenção atende não se recusa (`.claude/rules/00-nucleo.md` §12): o que se r
 alterável; alteração é **detectável** — item que chega ao servidor divergente do que o terminal cunhou
 (`RN-OFF-013`) é recusado e escalado, nunca aceito; e registro de erro, cópia de apoio e exportação de
 diagnóstico do terminal não contêm conteúdo de fila (`RN-OFF-023`).
-**Infeliz** o mecanismo de confidencialidade ainda não existe (é mecanismo: `LACUNA-OFF-012`, e **D-01**
-e **D-02** estão ABERTAS) → então **nenhum caminho** faz a fila conter dado de pessoa antes de
+**Infeliz** o mecanismo de confidencialidade ainda não existe (é mecanismo: `LACUNA-OFF-012`; **D-01**
+e **D-02** fecharam em 2026-09-11, e o mecanismo continua por escolher) → então **nenhum caminho** faz a fila conter dado de pessoa antes de
 `LACUNA-OFF-008` (onde a fila reside) e `LACUNA-OFF-012` fecharem: até lá a coleta segue o mínimo de
 `RN-EMI-017` (só o que a entrega escolhida exige) e o gate de `seguranca` precede qualquer construção.
 Esta é a ordem, e ela é requisito de produto: **onde a fila reside fecha antes de a fila poder conter
@@ -81,7 +82,8 @@ limite; e a saída do item é consequência de confirmação, nunca de tempo, de
 (`RN-OFF-016`).
 **Infeliz** a confirmação é ambígua (resposta perdida depois do commit, `C-03`) → o item **não sai**:
 permanece e é reenviado pela mesma identidade, porque a dúvida se resolve a favor de retenção. Quanto
-tempo o registro operacional fica e o que ele contém: `LACUNA-OFF-014`.
+tempo o registro operacional fica e o que ele contém: `LACUNA-OFF-014`, decidida em 2026-09-23 por
+`RN-OFF-038` (até o fechamento do dia da venda, nunca mais de 48 h, sem identificação do comprador).
 
 ### RN-OFF-023 — A fila local nunca contém: lista fechada de sete itens
 
@@ -138,6 +140,33 @@ relatório nem exportação ampla.
 apagado, porque é prova (`PN-08`): fica no item, com acesso restrito ao dono da fila (`RN-OFF-011`), e a
 ocorrência é declarada. Nunca copiado para superfície mais ampla "para facilitar a busca".
 
+### RN-OFF-039 — Operação recusada não entra na fila e ninguém a retenta além de quem opera; tentativa de contato de fundo não é operação
+
+**Enunciado** operação recusada (classe 2 ou 4, default de `RN-OFF-008`, ou qualquer motivo de
+`RN-NUC-043`) **não** entra na fila e **não** é retentada pelo terminal nem pelo servidor. Tentar de novo é
+**ato novo de quem opera**, e cada tentativa é o seu próprio fato de recusa (`RN-NUC-043`, infeliz).
+Nenhuma superfície oferece retentativa automática de operação recusada. As tentativas de contato que o
+terminal faz sozinho (reconectar, receber publicação, reconciliar o conjunto de identificação) **não** são
+operação recusada e não produzem `operation_refused`: o rastro delas é a transição de conectividade e os
+marcos de estado do terminal (`fatos-de-operacao.md` §3). A retentativa da **drenagem** (`RN-OFF-012`,
+`LACUNA-OFF-005`) e a transmissão de `EMI` (`RN-OFF-017`) são outra coisa, e não mudam.
+**Motivo** responde ao achado `CST-07` (`docs/auditorias/2026-08-23-custo-de-agregacao-do-provedor-caminho-critico.md:140`)
+e declara o dono do "espaçamento de retentativa de operação recusada": `produto`, que decide que ele não
+existe. A cardinalidade de `operation_refused` era a duração da falha dividida pelo espaçamento, e o
+espaçamento não tinha dono; sem retentativa automática, ela passa a ser a dos atos de quem opera, que o
+negócio limita como limita as vendas. O eixo deixa de ser terminais × duração da queda. Recusados:
+comprimir a rajada num fato com contagem, que reduz o grão sem custo medido (`RN-NUC-041`, freio a) e apaga
+onde mora o sintoma "o caixa 3 não consegue"; e publicar o espaçamento como configuração, que deixa um
+número que ninguém mede decidindo o tamanho da tabela mais volumosa da fase.
+**Aceite** terminal em `D2` por 8 h e operador tentando sangria três vezes → exatamente três fatos de
+recusa `no_contact`, nenhum sem ato de pessoa. O mesmo terminal, 8 h sem ninguém operar → zero recusas, e
+só as transições de conectividade. Buscar retentativa automática de operação recusada em qualquer spec →
+zero.
+**Infeliz** a rajada é física (tecla presa, leitor repetindo o mesmo código) → cada leitura é tentativa e é
+registrada; o recurso local é defendido pelo teto de `RN-NUC-083` e pela ordem de `RN-NUC-046`, nunca por
+suprimir a segunda tentativa.
+**Offline** vale igual em D1, D2 e D3.
+
 ## 3. Movida para `fila-local-autoridade-e-identidade.md` em 2026-08-23
 
 A autoridade retida (`RN-OFF-024`), a exceção de teto (`RN-OFF-025`), a transferência de fila
@@ -169,8 +198,10 @@ trata o **conjunto de meios de identificação retido** como **comprometido** (`
 **revoga** a habilitação do terminal a vender por aquele estabelecimento (`RN-OFF-032`i) e reconcilia o
 conjunto nos terminais que continuam. **A revogação tem janela, e ela é declarada** (corrigido em
 2026-08-23, `AUT-16`): terminal offline **não recebe** revogação, então quem o tiver em mãos continua
-praticando ato ordinário nele **até a habilitação vencer por tempo sem contato** — grandeza
-`LACUNA-OFF-017`, valor em aberto. A exposição é **inerente ao offline e limitada pelo prazo**, nunca
+praticando ato ordinário nele **até a habilitação vencer por tempo de funcionamento sem contato**: 72 h
+no padrão, nunca mais de 168 h ligado, e sem limite de calendário contra quem o mantém offline e o liga
+pouco (`RN-OFF-035`, que fechou `LACUNA-OFF-017` em 2026-09-23; corrigido em 2026-09-23, `SEG-T14-01`:
+dizia "nunca mais de 7 dias"). A exposição é **inerente ao offline e limitada pelo prazo**, nunca
 zero: afirmá-la como zero é exatamente a promessa que `RN-EMI-037`, motivo, proíbe escrever. É essa
 janela que a notificação de `RN-EMI-038` (c) carrega ao cliente, ao lado da janela da capacidade de
 assinar — são duas, e é a segunda que diz até quando há via saindo em nome dele.
@@ -194,12 +225,14 @@ terminal volta como novo, e o que ele assinou no intervalo é fato a apurar (`RN
 `fila-local-autoridade-e-identidade.md` §5; `LACUNA-OFF-013` em `offline-grandezas-e-orcamento.md`.
 
 - **`LACUNA-OFF-012`** — **mecanismo** de confidencialidade em repouso (`RN-OFF-021`). Requisito é de
-  produto; mecanismo depende de **D-01** e **D-02**, ABERTAS. **Dono:** `arquiteto-dados` e `backend`,
+  produto; mecanismo dependia de **D-01** e **D-02**, que fecharam em 2026-09-11 (corrigido em 2026-09-23;
+  dizia "ABERTAS"), então a lacuna está desbloqueada e segue aberta. **Dono:** `arquiteto-dados` e `backend`,
   Fase 2, com gate de `seguranca` antes de qualquer construção que retenha dado de pessoa.
-- **`LACUNA-OFF-014`** — **por quanto tempo** o terminal retém o registro operacional de venda já
-  confirmada, e **o que** esse registro contém (`RN-OFF-022`). A necessidade é consultar e reimprimir a
-  venda recente sem rede; o valor decide o tamanho do alvo em repouso. **Dono:** humano, com `seguranca`
-  (exposição) e `performance` (custo local). Unidade declarada; valor não.
+- **`LACUNA-OFF-014` — FECHADA em 2026-09-23** → `RN-OFF-038`
+  ([[decision-valores-de-partida-da-continuidade-offline]]). Perguntava **por quanto tempo** o terminal
+  retém o registro operacional de venda já confirmada, e **o que** ele contém (`RN-OFF-022`). Até o
+  fechamento do dia da venda, nunca mais de 48 h, com o que a via não fiscal mostra e sem identificação
+  do comprador. A consulta a `seguranca` sobre a exposição continua pendente.
 
-**Pergunta para o humano:** por quanto tempo o terminal precisa poder reimprimir a venda recente sem rede
-(`LACUNA-OFF-014`)? As outras três deste conjunto mudaram para o irmão de autoridade e identidade, §5.
+**Pergunta para o humano:** respondida em 2026-09-23 por decisão delegada (`RN-OFF-038`). As outras três
+deste conjunto mudaram para o irmão de autoridade e identidade, §5.

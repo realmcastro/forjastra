@@ -58,7 +58,8 @@ fechado por default e não por vigilância.
 **Infeliz** a matriz nasce no passo 7 e alguém precisa operar antes dela. Então **não opera**. Custo
 declarado, e é caro de propósito: o console do passo 7 nasce **vazio** até a matriz ser valorada. Somado
 à cláusula (b) de `RN-PRV-006` (papel não atribuível sem leitor de trilha) e à (d) de `RN-PRV-004`
-(`D-03` aberta), o escopo `provedor` hoje **não opera nada** — três travas independentes, todas falhando
+(`D-03` aberta até 2026-09-23; desde então, a entrada do ato de resolução tem regra e ainda não tem
+implementação), o escopo `provedor` hoje **não opera nada** — três travas independentes, todas falhando
 fechado, todas com dono nomeado. É o desfecho, não a pendência.
 
 ---
@@ -121,9 +122,17 @@ registra "sem autor".
   default do escopo vale por si, e a proibição do valor errado no registro vale por si. O que depende
   delas é os papéis nossos **operarem** — e é por isso que hoje eles não operam.
 - **A matriz do escopo `provedor`** foi entregue em 2026-08-23 como **folha de valoração**, em
-  `matriz-celulas-a-valorar.md` §1: 14 linhas candidatas (8 de leitura, 6 de ato), por **espécie de
-  objeto**, com **valor de célula em branco**. Valor de célula é do humano, e enquanto ele não existir o
+  `matriz-celulas-a-valorar.md` §1: 15 linhas candidatas (8 de leitura, 7 de ato; a `A7`, primeiro
+  `owner`, entrou em 2026-09-23 com `RN-NUC-090`), por **espécie de objeto**, com **valor de célula em
+  branco**. Valor de célula é do humano, e enquanto ele não existir o
   desfecho é o que `RN-PRV-015` diz — negado aos três. Valorada, ela **passa a ser** a matriz que esta
   regra cita.
-- **`D-03`, terceiro eixo** (como o cliente-alvo é resolvido fora do pedido) decide o tamanho do dano de
-  `PRV-01` e destrava a cláusula (d) de `RN-PRV-004`. Do humano.
+- **`D-03`, terceiro eixo** (como o cliente-alvo é resolvido fora do pedido), fechada em 2026-09-23 pela
+  opção C; a entrada do ato de resolução passou a ser a cláusula (d) de `RN-PRV-004`, com três origens.
+  Ficam abertos, para `seguranca` (consulta pedida em `T-0015`) e para o humano:
+  - **a fila é enumeração parcial da carteira.** Ela mostra à pessoa nossa os clientes com objeto aberto
+    atribuído a ela, e o tamanho dela depende de quem atribui. Quem atribui objeto à fila não está
+    decidido; sem atribuição, a fila é vazia e nada resolve, o que falha fechado;
+  - **o limite de escopo de `IDN-05`** (um vigente por pessoa, conferido contra a pessoa autenticada) é
+    desfecho que a regra fixa e requisito da implementação da Fase 2 (`backend`); hoje não há o que
+    conferir, porque nenhum ato nosso acontece.

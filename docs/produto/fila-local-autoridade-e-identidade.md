@@ -5,7 +5,9 @@
 > qual os dois lados são lidos: lá, **o conteúdo** da fila — confidencialidade em repouso, o que sai
 > depois de confirmado, o que nunca entra, texto de terceiro (`RN-OFF-021` a `RN-OFF-023`, `RN-OFF-027`);
 > aqui, **o que o terminal retém para poder operar** — autoridade retida, transferência, identidade e a
-> habilitação a vender (`RN-OFF-024` a `RN-OFF-026`, `RN-OFF-032`, `RN-OFF-033`).
+> habilitação a vender (`RN-OFF-024` a `RN-OFF-026`, `RN-OFF-032`, `RN-OFF-033`). Desde 2026-09-23, também
+> o **artefato publicado retido**, no único uso dele que não tinha regra: buscar item para lançar
+> (`RN-NUC-081`, §6), e o fato da busca que não acha nada (`RN-NUC-100`).
 >
 > **Nada foi alterado de conteúdo pela mudança de arquivo**, e a §3 do arquivo original ficou **vaga de
 > propósito** — o número não foi reaproveitado lá, para não invalidar citação já feita (o mesmo
@@ -15,8 +17,9 @@
 > **Piso, não teto**, como os irmãos: módulo pode ser mais restritivo, nunca mais permissivo.
 > **`OFF` não é módulo ativável** — é contrato transversal, e vale para o núcleo e para todo módulo.
 >
-> **Nenhum número.** Toda duração, tamanho e margem é `LACUNA-OFF-nnn` com dono nomeado: aqui nascem
-> `011`, `015`, `016` e `017`. Numeração de regra é contínua e imutável entre os irmãos
+> **Nenhum número aqui.** Toda duração, tamanho e margem é `LACUNA-OFF-nnn` com dono nomeado: aqui nascem
+> `011`, `015`, `016` e `017`. Os valores de partida de `011`, `016` e `017`, decididos em 2026-09-23,
+> moram em `fila-local-valores-de-partida.md`. Numeração de regra é contínua e imutável entre os irmãos
 > (`glossario.md` §4.2); `C-10` mora aqui, `C-09` continua no irmão.
 >
 > **Fronteira de D-03, ABERTA.** Declarar *o que o terminal retém* e *o que cada coisa retida sustenta* é
@@ -36,7 +39,8 @@ coisas de naturezas distintas para operar sem contato, e a única forma de errar
 | **meio de identificação** — quem é o operador que está na frente dele | **reconciliação** | `RN-OFF-033` |
 
 Mais um fato, que não é nenhuma das três e sem o qual nada acima serve: o terminal estar **habilitado a
-vender** por aquele estabelecimento (`RN-OFF-032`i), com **prazo próprio** (`LACUNA-OFF-017`).
+vender** por aquele estabelecimento (`RN-OFF-032`i), com **prazo próprio** (`RN-OFF-035`, que fechou
+`LACUNA-OFF-017`).
 
 ## 2. Autoridade retida
 
@@ -69,7 +73,8 @@ produto diz **qual** autoridade falta, oferecendo o caminho que não a exige (`R
 exige o papel não acontece. A **duração** é configuração do cliente (`RN-OFF-028`) e **não escrevo o
 número**: `LACUNA-OFF-011`. Enquanto ela não tiver valor medido, a validade **não** pode ser tratada como
 longa por conveniência — o padrão declarado é o mais curto que a operação suporta, e com `RN-OFF-032` no
-lugar o custo de encurtá-la deixou de ser o balcão: é só o alcance sensível.
+lugar o custo de encurtá-la deixou de ser o balcão: é só o alcance sensível. **Decidido em 2026-09-23:**
+8 h sem contato no padrão, teto de 12 h, aviso quando resta um quarto (`RN-OFF-034`).
 
 ### RN-OFF-025 — Destravar o teto de operação offline é decisão online; a exceção offline, se existir, é pré-autorizada, finita, contada e com trilha própria
 
@@ -90,7 +95,8 @@ recusada (`RN-OFF-014`) e nada da fila é descartado (`RN-OFF-015`); nenhuma aut
 exceção nova.
 **Infeliz** o humano decide que **não** existe exceção offline → `RN-OFF-014` vale seco: atingido o teto,
 venda nova é recusada até reconectar, e isso é declarado ao cliente na habilitação, nunca descoberto no
-pico. Se existe, o tamanho dela e quem a publica saem com o teto: `LACUNA-OFF-004`.
+pico. Se existe, o tamanho dela e quem a publica saem com o teto: `LACUNA-OFF-004`. **Decidido em
+2026-09-23** (`RN-OFF-037`): existe, nasce vazia, e o `owner` a publica com até metade do teto.
 
 ### RN-OFF-026 — Transferência de fila é escopada ao mesmo cliente e ao mesmo estabelecimento, e nunca por identificador que o pedido informa
 
@@ -152,14 +158,15 @@ célula da linha 6 é inimplementável, porque identificar quem está na frente 
 papel a pessoa porta.
 
 **(i) tem prazo declarado, e ele não é opcional** (acrescentado em 2026-08-23, junto de `AUT-14`). A
-habilitação a vender é estabelecida **com contato**, **vence** por tempo sem contato e é renovada por
-contato, com **aviso antecipado** ao operador antes de vencer. O motivo é o mesmo, palavra por palavra,
-que deu prazo à capacidade de assinar (`RN-EMI-033`, `RN-EMI-037`): terminal sem rede **não recebe
-revogação**, então sem prazo a revogação é promessa que a física do offline não cumpre. Sem esta
+habilitação a vender é estabelecida **com contato**, **vence** por tempo de funcionamento sem contato e
+é renovada por contato, com **aviso antecipado** ao operador antes de vencer. O motivo é o mesmo, palavra
+por palavra, que deu prazo à capacidade de assinar (`RN-EMI-033`, `RN-EMI-037`): terminal sem rede **não
+recebe revogação**, então sem prazo a revogação é promessa que a física do offline não cumpre. Sem esta
 cláusula, um terminal furtado e mantido offline seguiria abrindo sessão, concluindo venda em espécie e
 entregando via em nome do emitente **indefinidamente** — o oposto de `C-09`, que trata o terminal furtado
-como **comprometido** e faz o terminal perder a habilitação. A grandeza é **tempo sem contato**, mais a
-**antecedência do aviso**; o valor é `LACUNA-OFF-017` e **não o escrevo**.
+como **comprometido** e faz o terminal perder a habilitação. Decidido em 2026-09-23 (`RN-OFF-035`): 72 h
+de **funcionamento** sem contato no padrão, entre 24 h e 168 h, aviso com um terço de antecedência, sem
+limite de calendário (corrigido em 2026-09-23, `SEG-T14-01`: o texto contava calendário, até 7 dias).
 
 **Motivo** a necessidade preservada é a da revogação rápida: é por ela que a autoridade retida tem
 validade curta, e é o gerente demitido às 19h que a justifica. O mecanismo recusado é fazer o **ato
@@ -194,8 +201,8 @@ continua vendendo; vencida, ele **para** de praticar as nove, dizendo que o que 
 (`PN-17`). Terminal registrado como furto tem a habilitação **revogada na hora** no servidor, sem esperar prazo
 (`C-09`) — e, se ele estiver **offline**, para de praticar as nove quando o prazo vencer, porque revogação
 não alcança dispositivo sem contato. A janela entre o furto e o vencimento é **inerente e limitada pelo
-prazo**, é declarada ao cliente com as duas datas (`RN-EMI-038`c) e **nunca** apresentada como zero
-(corrigido em 2026-08-23, `AUT-16`).
+prazo de funcionamento**, sem limite de calendário, é declarada ao cliente em horas ligadas e nunca como
+data (`RN-EMI-038`c), e **nunca** apresentada como zero (corrigido em 2026-08-23, `AUT-16`, e em 2026-09-23).
 
 **Infeliz** (a) o terminal **não** está habilitado a vender por aquele estabelecimento (nunca cadastrado,
 ou descadastrado) → não há ato ordinário ali: o terminal não vende, e isso é estado **declarado na
@@ -261,9 +268,14 @@ ABERTA, e este requisito não o escolhe: `LACUNA-OFF-015`. Até fechar, nenhum c
 retido, e o gate de `seguranca` precede a construção, na mesma ordem de `RN-OFF-021`, infeliz. (b) o
 conjunto está **defasado** e um operador legítimo não é reconhecido → ele não opera naquele terminal, e
 isso é declarado; nunca contornado por identificação genérica, por "operador padrão" ou por identificar
-pelo terminal. (c) **com que frequência** o terminal reconcilia o conjunto, e **qual o tamanho máximo**
+pelo terminal. **Acrescentado em 2026-09-11:** "declarado" não é só a mensagem na tela — a tentativa
+recusada **produz fato**, com motivo `identity_unrecognized` e sem carregar a identificação apresentada
+(`RN-NUC-056`), e a **reconciliação** da cláusula (d) é marco registrado, porque é dela que sai a idade
+do conjunto. Sem os dois, este desfecho é invisível no servidor e a lacuna (c) abaixo fecha por palpite.
+(c) **com que frequência** o terminal reconcilia o conjunto, e **qual o tamanho máximo**
 dele: `LACUNA-OFF-016` — grandeza declarada, valor em aberto. É ela que define a janela do infeliz (c) de
-`RN-OFF-032`, e é por isso que ela é o número a apertar.
+`RN-OFF-032`, e é por isso que ela é o número a apertar. Decidida em 2026-09-23, sem medida: a cada
+contato e em até 5 min depois de mudar, sem teto de quantidade (`RN-OFF-036`).
 
 ## 4. Cenário
 
@@ -299,7 +311,12 @@ exceção pré-autorizada e contada (`RN-OFF-025`); nunca senha de gerente no te
 `LACUNA-OFF-001` a `010` estão em `operacao-offline-e-sincronizacao.md` §8; `012` e `014` no irmão;
 `013` em `offline-grandezas-e-orcamento.md`.
 
-- **`LACUNA-OFF-011`** — a **duração** da validade do papel retido no terminal (`RN-OFF-024`), em
+**Fechadas em 2026-09-23** (`T-0014`, decisão delegada,
+[[decision-valores-de-partida-da-continuidade-offline]]): `011` → `RN-OFF-034`, `016` → `RN-OFF-036` (sem
+medida, declarado) e `017` → `RN-OFF-035`, todas em `fila-local-valores-de-partida.md`. O texto abaixo é
+o que cada uma perguntava, preservado.
+
+- **`LACUNA-OFF-011` — FECHADA em 2026-09-23** → `RN-OFF-034`. A **duração** da validade do papel retido no terminal (`RN-OFF-024`), em
   unidade de tempo de operação (minutos de operação sem contato? um turno?). **O compromisso mudou em
   2026-08-23:** com `RN-OFF-032`, encurtá-la **não** para mais o balcão — o que ela custa é só o alcance
   **sensível** (sangria, gaveta fora de venda, desconto acima do limite, assinatura fora do fluxo). As
@@ -310,12 +327,15 @@ exceção pré-autorizada e contada (`RN-OFF-025`); nunca senha de gerente no te
   identificação retido contém (`RN-OFF-033`). O requisito é de produto e está escrito; o mecanismo é o
   eixo E2 de **D-03**, ABERTA, e não o presumo. **Dono:** humano para o mecanismo (D-03), com gate de
   `seguranca` antes de qualquer construção que retenha o conjunto — mesma ordem de `LACUNA-OFF-012`.
-- **`LACUNA-OFF-016`** — com que **frequência** o terminal reconcilia o conjunto de meios de identificação
+- **`LACUNA-OFF-016` — FECHADA em 2026-09-23, sem medida** → `RN-OFF-036`. Com que **frequência** o terminal reconcilia o conjunto de meios de identificação
   do estabelecimento, e qual o **tamanho máximo** dele (`RN-OFF-033`c/d). É a janela em que um operador
   desligado continua identificável naquele terminal — o número que substitui a validade da autoridade
   como coisa a apertar. **Dono:** humano para a janela, `performance` para o custo, com medida.
-  Unidade declarada; valor não.
-- **`LACUNA-OFF-017`** — **por quanto tempo sem contato a habilitação a vender do terminal continua
+  Unidade declarada; valor não. **Desde 2026-09-11 ela tem de onde sair medida:** `RN-NUC-056` faz a
+  recusa por identidade virar fato e a reconciliação virar marco, e o par *recusa × idade do conjunto*
+  é a série que separa defasagem de qualquer outra causa. A série começa no dia em que o fato existir,
+  então fechar a lacuna antes disso continua sendo escolha sem medida — e declarada como tal.
+- **`LACUNA-OFF-017` — FECHADA em 2026-09-23** → `RN-OFF-035`, com o valor conferido por `seguranca` em 2026-09-23. **Por quanto tempo sem contato a habilitação a vender do terminal continua
   valendo**, e **com quanta antecedência** o operador é avisado de que ela vai vencer (`RN-OFF-032`i). A
   grandeza é **tempo sem contato** (dias de operação? um ciclo de fechamento?) mais **tempo de
   antecedência**; valor em aberto. **A tensão, que é o que o humano decide:** curto demais para de vender
@@ -327,9 +347,54 @@ exceção pré-autorizada e contada (`RN-OFF-025`); nunca senha de gerente no te
   **dispositivo**, rara e notada. **Dono:** humano, com `seguranca` (o alvo é o dispositivo em mãos
   erradas) e `performance` só para o custo do aviso. Unidade declarada; valor não.
 
-**Perguntas para o humano, uma linha cada:** (1) quanto tempo vale o papel retido no terminal, sabendo que
-agora isso custa só o alcance sensível e não o balcão (`RN-OFF-032`)? (2) existe exceção offline para
-passar do teto — e, se existe, de que tamanho e publicada por quem? (3) qual a janela de reconciliação do
-conjunto de meios de identificação (`LACUNA-OFF-016`), que é o prazo real de "o desligado para de
-operar"? (4) por quanto tempo sem contato o terminal continua habilitado a vender, e com quanta
-antecedência ele avisa (`LACUNA-OFF-017`)?
+**Perguntas para o humano:** as quatro daqui (validade do papel retido, exceção de teto, janela de
+reconciliação, prazo da habilitação) têm resposta de 2026-09-23 em `RN-OFF-034` a `037`. Fica `LACUNA-OFF-015`.
+
+## 6. O artefato publicado retido: buscar item sem contato
+
+Aberta em 2026-09-23 (`T-0014`, `G-08`). Sem esta regra, buscar item por texto não tinha classificação,
+e o default de `RN-OFF-008` a recusava nos três domínios (`backlog-lacunas-g01-g09.md` §10).
+
+### RN-NUC-081 — Buscar item por texto para lançar é leitura local do catálogo que o terminal aplica; sem contato ela é integral, e só acha o que o catálogo publica
+
+**Enunciado** buscar item de catálogo por texto, ou por parte do código, para lançá-lo é **leitura sobre a
+versão de catálogo que o terminal retém e aplica** (`RN-OFF-020`, `RN-NUC-013`), e nunca depende de
+consulta ao servidor. É buscável o que o catálogo publica para identificar o item (o nome com que ele é
+publicado e os códigos dele) e nada além: nem sinônimo mantido no terminal, nem índice de fora do
+artefato. Buscar **não** é operação nova da matriz: é atributo de lançar item (`matriz-operacao-papel.md`,
+linha 2, `terminal+ident`), como `RN-NUC-038` é atributo das operações que localizam.
+**Motivo** fecha `G-08`. A necessidade é achar o item quando não há código para ler (etiqueta perdida,
+granel, peça sem etiqueta), e posto, padaria e loja de roupa a têm. Recusados: busca no servidor, que some
+quando o link cai no único caminho que não aceita regressão; e deixar sem classificar, que entrega uma
+busca que a própria regra recusa. A leitura local é integral nos três domínios e não cria segunda fonte de
+verdade sobre o catálogo: o que a busca acha é exatamente o que o lançamento aceita. O eixo é itens por
+catálogo de estabelecimento; ele não cresce com clientes nem com terminais, e o custo é local.
+**Aceite** em `D2`, código ilegível: o operador digita "pão fran" e recebe os itens da versão aplicada cujo
+nome publicado contém o texto; escolher um lança pela linha 2, com o preço da mesma versão. Item publicado
+depois da última versão recebida: a busca não o acha e diz que procura no catálogo **que este terminal
+tem**, com a data da versão, nunca que o item não existe (a forma de `RN-NUC-063`). Nenhuma busca espera
+resposta do servidor, com ou sem contato.
+**Infeliz** o terminal nunca recebeu versão de catálogo → não há o que buscar nem o que lançar, e a mensagem
+diz isso (`published_artifact_missing`). Busca sem resultado não é recusa e não produz `operation_refused`.
+**Offline** integral em D1, D2 e D3; classe 1 (aplica). **Gate:** `performance` antes do aceite, porque a
+busca está dentro do caminho de lançar item (`.claude/rules/performance.md` §3).
+**Registra** o lançamento (`RN-NUC-053`). **Não registra** o texto buscado: é digitação livre, que pode
+carregar nome de pessoa. **Alterado em 2026-09-23** (`T-0014`, A.2c, decisão delegada): a busca sem
+resultado saiu desta lista e é fato por `RN-NUC-100`; o motivo que a mantinha aqui, não haver decisão
+nomeada que a consumisse (`RN-NUC-044`), caiu quando a decisão foi nomeada lá.
+
+### RN-NUC-100 — Busca por texto que não encontra nada vira fato, sem o texto buscado
+
+**Enunciado** a busca de `RN-NUC-081` que chega a texto sem resultado produz **um** fato ao terminar (lançou,
+foi limpa ou o operador saiu dela), nunca um por tecla: estabelecimento, instante, origem (terminal e
+operação de onde se buscou), versão de catálogo aplicada, contagem de textos sem resultado e se lançou item.
+**Motivo** informa o `owner` a publicar o item que falta ou a corrigir o nome publicado (`RN-NUC-044`); a
+versão separa "o catálogo não tem" de "este terminal não recebeu". Sem o fato, isso some: não vira venda nem recusa.
+**Aceite** em `D2`: "baguete" não acha nada, o operador limpa, digita "pão" e lança "Pão francês" → um fato,
+contagem 1, lançou; "baguete" não está no fato, em registro de erro nem em diagnóstico. Achou de primeira: nenhum fato.
+**Infeliz** falha ao registrar não atrasa nem impede o lançamento, e vira fato próprio (`CLAUDE.md` §7.10).
+**Offline** integral em D1, D2 e D3, como a busca. **Gate:** `performance`, com o de `RN-NUC-081`.
+**Registra** o fato do enunciado (separar um texto do seguinte é de `ui`). **Não registra** o texto buscado,
+pelo motivo de `RN-NUC-081` e porque, em módulo que reuse a busca, quem digita é o cliente-final
+(`seguranca.md` §3): a entrada dele, mesmo truncado, espera `seguranca`. Nem quem buscou: a decisão é de
+catálogo, e recorte por pessoa é `LACUNA-REL-002`.

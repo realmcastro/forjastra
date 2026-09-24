@@ -209,11 +209,24 @@ depois (é `RN-NUC-038` aplicada ao sujeito nosso). Identificador que o pedido c
 correção silenciosa. E nenhuma superfície nossa tem cliente-alvo **implícito**: o alvo é visível a quem
 opera e nomeado no registro do ato (`RN-PRV-016`). (c) Um ato — e um escopo de trabalho — de papel nosso
 nomeia **exatamente um** cliente, espelho de "nunca mais de um cliente" de `RN-NUC-024`; alcançar o
-segundo exige ato novo de resolução, registrado. (d) Enquanto não existir o mecanismo que resolve o
-cliente-alvo fora do pedido — `D-03`, terceiro eixo, **aberta** —, o ato nosso que nomeia cliente **não
-acontece**: falha fechado, e a inoperância é o desfecho, não a pendência. (e) O eixo de **mutação** mede
-alcance sobre o **dado do negócio do cliente**; gravar a trilha do próprio ato ou da própria leitura
-(`RN-PRV-011`) **não** é mutação, e não conta para "quem lê amplamente não muta".
+segundo exige ato novo de resolução, registrado. (d) A **entrada do ato de resolução** é um objeto já
+vinculado a um cliente por autoridade que não é a nossa, nunca o cliente em si, e a lista é fechada:
+(d1) pedido aberto no ambiente do cliente por sujeito dele autenticado (chamado, pedido de mudança, e a
+concessão de `RN-NUC-024` quando `LACUNA-NUC-009` lhe der célula); (d2) fato nosso que nomeia o cliente
+pelo registro do `platform` (`RN-PRV-013`: migration que falhou no schema X, provisionamento incompleto);
+(d3) o ato que cria o cliente (`RN-NUC-090`), cujo alvo é o cliente criado. A pessoa entrega a referência
+opaca do objeto, que só resolve com o objeto aberto e na fila **atribuída a ela**; ela vê a fila, nunca a
+carteira. Lista ou busca de clientes, identificador digitado e "último cliente" implícito são recusados,
+porque nos três o erro de mão cai num cliente que existe. Um escopo vigente por pessoa nossa, em qualquer
+número de sessões: resolver o segundo encerra o primeiro, e o escopo só vale junto da pessoa autenticada
+que o resolveu (`IDN-05`). Fora disso, o ato nosso que nomeia cliente **não acontece**: falha fechado.
+(e) O eixo de **mutação** mede alcance sobre o **dado do negócio do cliente**; gravar a trilha do próprio
+ato ou da própria leitura (`RN-PRV-011`) **não** é mutação, e não conta para "quem lê amplamente não muta".
+
+**Correção datada — 2026-09-23, (d).** Dizia: enquanto `D-03` aberta, o ato nosso que nomeia cliente não
+acontece. `D-03` fechou pela opção C, que dá o portador e deixa a entrada para cá (`docs/arquitetura/`,
+`d-03-identidade-decisao-2026-09-23.md` §7; proposta em `T-0014`, aceita em `T-0015`). **Risco, em
+consulta de `seguranca`:** a fila é enumeração parcial da carteira (`operacao-do-provedor-autorizacao.md` §3).
 
 **Motivo** é a segregação de função, e é o desenho do próprio humano: o suporte conserta e **não vê
 faturamento**; o administrador geral vê e **não conserta**. Sem a regra, a combinação "vê tudo e muda
@@ -236,9 +249,11 @@ requisição alterada → **negado**; nada é gravado em A nem em B; existe fato
 (`RN-PRV-011`); e a recusa não revela que B existe (`RN-NUC-036`). O mesmo na leitura: a tela rotulada A
 nunca devolve valor de B, e nenhum artefato entregue a A carrega número, ordenação ou comparação
 derivada de B (`RN-PRV-017`). Terceiro caso, o que prova (c): um escopo de trabalho aberto em A não
-alcança B sem um ato novo de resolução, e esse ato aparece no registro. Quarto, o que prova (d): hoje,
-com `D-03` aberta, **todos** os quatro terminam em recusa — e é isso que a regra diz, não um defeito de
-leitura dela.
+alcança B sem um ato novo de resolução, e esse ato aparece no registro. Quarto, o que prova (d): a
+referência do pedido aberto de A, na fila da pessoa, resolve A; referência de objeto encerrado, fora da
+fila dela, inventada ou de objeto de B → recusa, nada resolvido, sem revelar se o objeto existe. Com A
+aberto, resolver B encerra A, e a aba de A que submete depois é recusada. Hoje, sem célula valorada
+(`RN-PRV-015`) e sem a implementação da Fase 2, **todos** terminam em recusa, e é o que a regra diz.
 
 **Infeliz** o suporte precisa do número para consertar — "o cliente diz que o total está errado". Então
 o veículo é a **concessão** (`RN-NUC-024`), com motivo e prazo, não a ampliação do papel; e o que ele vê
@@ -254,8 +269,9 @@ errado, e a escrita é irreversível pelas regras deste desenho (fato append-onl
 novo). **Mecanismo nosso:** o alvo é resolvido fora do pedido e o identificador do pedido não decide
 nada — só confirma, e divergência recusa. **Por que é melhor, e como se prova:** o erro de digitação
 perde efeito por construção, não por cuidado do operador; prova-se praticando o ato com o identificador
-do cliente vizinho e obtendo recusa, com nada gravado nos dois. **Qual é o mecanismo exato de resolução
-é `D-03`, do humano — e não o presumo aqui.**
+do cliente vizinho e obtendo recusa, com nada gravado nos dois. **Infeliz de (d):** o cliente só
+telefona. Ele abre o pedido na própria superfície e lê a referência; sem pedido dele, fato nosso ou ato
+de criação não há alvo, e o suporte não age, inclusive para o cliente sem acesso algum (`RN-NUC-090`).
 
 ### RN-PRV-005 — Quem opera não concede, e ninguém audita o próprio alcance
 

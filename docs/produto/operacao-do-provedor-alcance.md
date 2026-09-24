@@ -308,6 +308,11 @@ não impede a leitura, e é a leitura que é o vazamento.
 
 ### 2.3 `D-03`, agravada — e é a pergunta que continua sendo do humano
 
+> **Respondida em 2026-09-23.** `D-03` fechou pela opção C
+> (`memory/plataforma/decision-d-03-opcao-c-sujeito-local-ao-cliente.md`): a pessoa nossa mora numa
+> população própria, fora dos clientes, e alcança cada um só pelo escopo que o ato de resolução cria, cuja
+> entrada é `RN-PRV-004` (d). O texto abaixo fica como o raciocínio que levou à pergunta.
+
 Nosso humano operando em N clientes é caso de **borda** ou caso de **venda**? A decisão de §2 empurra
 para **caso de venda**: com leitura ampla **e** mutação ampla (em papéis diferentes, mas nas mesmas
 pessoas, hoje), existir dentro do ambiente de N clientes é **rotina**, não exceção — e `provider_support`
