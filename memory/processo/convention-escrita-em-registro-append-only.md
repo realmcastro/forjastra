@@ -1,30 +1,35 @@
 ---
 name: convention-escrita-em-registro-append-only
-description: em registro append-only (comentário de issue) a ordem de publicação é conteúdo — não cite fato que ainda não existe — e toda substituição de texto destrutivo é precedida do comentário de preservação com quatro partes, a quarta sendo o destino de cada critério que sai
+description: o git preserva o texto anterior sozinho, mas não preserva o destino de cada critério que sai numa substituição — essa quarta parte continua sendo trabalho de quem edita, e sem ela a preservação vira arquivo morto
 type: convention
 escopo: processo
 camada: processo
 data: 2026-08-26
-relaciona: [[decision-jira-e-o-registro-publico-da-tarefa]], [[gotcha-o-titulo-nao-e-o-card]]
+atualizado: 2026-09-11 (o registro saiu do board externo para `docs/backlog/`; metade da convenção passou a ser feita pelo git)
+relaciona: [[decision-backlog-e-o-registro-publico-da-tarefa]], [[gotcha-o-titulo-nao-e-o-card]]
 tarefa: T-0006
 ---
 
-Duas cláusulas, as duas aprendidas aplicando o Bloco A em 2026-08-26.
+Nasceu em 2026-08-26 sobre comentário de issue, que não se edita. Desde 2026-09-11 o backlog é
+arquivo versionado, e **o git assumiu metade dela**. A metade que ele não assume é a que sempre
+importou.
 
-**1. A ordem de publicação é parte do conteúdo.** O comentário de `SPR-26` afirmava que a retratação de
-`SPR-27` existia; postar na ordem inversa publicaria referência a algo inexistente — e comentário não se
-edita. Antes de postar, verifique se cada fato que o texto **afirma como existente** já existe. Onde a
-ordem importa, ela é o passo, não a preferência.
+**O que o git faz sozinho:** guardar o texto anterior verbatim, com data e autor. A antiga obrigação
+de colar o texto antigo antes de substituir morreu, desde que a mudança entre em **commit próprio** e
+o assunto diga o que mudou. Substituição de item enterrada num commit de vinte arquivos perde isso, e
+aí a convenção volta a valer por inteiro.
 
-**2. Substituição destrutiva é precedida do comentário de preservação, e ele tem quatro partes**, nesta
-ordem: o texto anterior verbatim (o que mudou), **por quê**, **contra o quê** (`path:linha` da regra ou
-da spec), e o **destino de cada critério que sai** — para que card, ou por que morre. Sem a quarta, a
-preservação vira arquivo morto: o critério fica registrado e ninguém sabe onde ele foi parar.
+**O que o git não faz, e continua sendo seu:** dizer **para onde foi cada critério que saiu**.
+Substituição destrutiva declara, no próprio item: **por quê**, **contra o quê** (`path:linha` da
+regra ou da spec), e o **destino de cada critério que sai** — para que item, ou por que morre. O
+`git log` mostra que o critério existia e sumiu; ele não mostra que foi parar em outro item, nem que
+foi descartado de propósito. Sem essa parte, a preservação vira arquivo morto: o critério fica
+registrado e ninguém sabe onde ele foi parar.
 
-**Por quê:** título e descrição de card **não** são append-only — sobrescrever apaga critério de aceite
-válido sem deixar rastro, e a edição sai com o nome do humano. O comentário é o único lugar onde o
-estado anterior sobrevive, e ele só serve se disser para onde cada coisa foi.
+**Por quê:** apagar texto de um item é mais fácil que apagar comentário de board, e não deixa rastro
+nenhum fora do git — que ninguém lê procurando por isso. A trava passou a depender inteiramente da
+disciplina, que é o preço geral de ter saído da ferramenta ([[decision-backlog-e-o-registro-publico-da-tarefa]]).
 
-**Como aplicar:** vale para issue, e vale para qualquer registro público que não se edita. Corrigiu
-depois de publicar? Novo comentário com a data, nunca edição do antigo — a cópia corrigida em silêncio
-produz duas versões da mesma verdade (`.claude/rules/jira.md` §4, mesma razão de `migrations.md` §1).
+**Como aplicar:** mudou escopo de um item? Commit próprio, assunto que nomeia a mudança, e as três
+partes acima no corpo do item. Corrigiu depois de publicar? Novo commit, nunca amend em história já
+empurrada, pela mesma razão de `migrations.md` §1.

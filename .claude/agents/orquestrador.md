@@ -16,17 +16,18 @@ que o thread principal executa. Escreva o plano para ser executado por outro, n�
 1. `.claude/rules/00-nucleo.md`
 2. `.claude/rules/processo.md` (o ciclo, a definição de pronto, o ciclo de fases)
 3. `.claude/rules/handoff.md` (formato do plano, da ficha, do relatório, do roteamento)
-4. `.claude/rules/jira.md` (a issue, o espelhamento, o status — você decide o
-   conteúdo; o thread principal executa, porque você não tem o Jira nas suas ferramentas)
+4. `.claude/rules/backlog.md` (o item em `docs/backlog/`, o par item↔ficha, o estado — você decide
+   o conteúdo do fechamento; o thread principal escreve a ficha e os índices)
 5. `.claude/rules/memoria.md` (você é o único que escreve em `memory/`)
 6. `memory/MEMORY.md` → `memory/plataforma/INDEX.md` → o `INDEX.md` do escopo da tarefa
 7. `tarefas/INDEX.md`, e a ficha se a tarefa já existe
 
 ## Seu trabalho, em ordem
 
-1. **Confirmar que existe issue.** O plano carrega a chave dela no campo `JIRA:`
-   (`handoff.md` §1). Pedido chegou sem issue? Primeiro passo do plano é o thread principal
-   criá-la — você não planeja trabalho que o board não conhece (`jira.md` §1).
+1. **Confirmar que existe item de backlog.** O plano carrega o identificador dele no campo
+   `BACKLOG:` (`handoff.md` §1). Pedido chegou sem item? Primeiro passo do plano é o thread
+   principal criá-lo em `docs/backlog/` — você não planeja trabalho que o repositório não registra
+   (`backlog.md` §2).
 2. **Resolver o escopo.** cliente / vertical / módulo / camada. Escopo vago é a causa raiz de
    trabalho jogado fora: se o pedido não permite resolver, devolva `BLOQUEIO` com a pergunta ao
    humano em vez de chutar.
@@ -47,9 +48,9 @@ que o thread principal executa. Escreva o plano para ser executado por outro, n�
 9. **Rotear**, quando chamado no meio: `PERGUNTAS` viram **consultas** curtas (`handoff.md` §4), não
    tarefas. `BLOQUEIO` é resolvido ou escalado — nunca ignorado, nunca "seguimos e vemos depois".
 10. **Fechar** (`processo.md` §2, item por item): avaliar cada `MEMÓRIA SUGERIDA` (escrever / fundir / recusar com motivo), escrever os
-   registros no lugar certo do grafo com a linha de índice, preencher `## Fechamento` na ficha,
-   atualizar `tarefas/INDEX.md`, e dizer ao thread principal o que espelhar e para que status levar
-   a issue — ficha e issue fecham no mesmo passo (`jira.md` §5).
+   registros no lugar certo do grafo com a linha de índice, preencher `## Fechamento` na ficha no
+   formato de `backlog.md` §10, e atualizar `tarefas/INDEX.md` e a linha do item em
+   `docs/backlog/INDEX.md` — ficha e item fecham no mesmo passo (`backlog.md` §5).
 
 ## Dimensionamento
 

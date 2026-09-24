@@ -2,25 +2,25 @@
 
 Agents não conversam entre si em tempo real. Eles se comunicam por **dois artefatos**: a **ficha de
 tarefa** (memória compartilhada da tarefa, em disco) e o **relatório** (o que volta ao orquestrador).
-O orquestrador é o único roteador. O terceiro artefato, a **issue no Jira**, não é canal entre agents:
-é o registro público do que os dois primeiros produzem (`jira.md`).
+O orquestrador é o único roteador. O terceiro artefato, o **item em `docs/backlog/`**, não é canal
+entre agents: é o pedido que precede a ficha (`backlog.md`).
 
 ```
-humano → thread principal → cria a ISSUE no Jira → [orquestrador: PLANO] → cria a FICHA
+humano → thread principal → cria o ITEM em docs/backlog/ → [orquestrador: PLANO] → cria a FICHA
        → agent A (lê ficha, escreve sua seção, devolve RELATÓRIO)
-       → thread principal valida e ESPELHA o relatório na issue
+       → thread principal valida e cola o relatório na FICHA, verbatim
        → orquestrador lê relatório: rota PERGUNTAS, dispara próximo, ou fecha
-       → ... → orquestrador: FECHAMENTO (escreve memória, encerra a ficha e a issue)
+       → ... → orquestrador: FECHAMENTO (escreve memória, encerra a ficha, atualiza os índices)
 ```
 
-Quem espelha artefato de processo é o thread principal. `produto` é o único agent que escreve no
-Jira, e só conteúdo de backlog — a fronteira está em `jira.md` §2.
+O relatório mora na ficha, **uma vez** — não existe cópia dele em outro lugar (`backlog.md` §6).
+`produto` é o único agent que escreve o item de backlog; a fronteira está em `backlog.md` §7.
 
 ## 1. Plano de Despacho (só o `orquestrador` produz)
 
 ```
 ## PLANO — T-<id> <título>
-JIRA: <chave da issue>
+BACKLOG: <identificador do item — F-<nnn> ou SPR-<n>>
 ESCOPO: <o que entra>
 FORA DE ESCOPO: <o que explicitamente não entra>
 ESCOPO DE MEMÓRIA: cliente=<id|-> vertical=<ramo|-> modulo=<nome|-> camada=<dados|backend|ui|...>
@@ -43,7 +43,7 @@ nunca toca na de outro.
 ```markdown
 ---
 id: T-0001
-jira: <chave da issue — obrigatório, `jira.md` §1>
+backlog: <identificador do item — obrigatório, `backlog.md` §4>
 titulo: <curto>
 status: aberta | bloqueada | fechada
 escopo: cliente=<id|-> vertical=<ramo|-> modulo=<nome|-> camada=<...>
@@ -63,7 +63,7 @@ aberta_em: AAAA-MM-DD
 <orquestrador: o que ficou, memórias escritas, o que sobrou para depois>
 ```
 
-Índice em `tarefas/INDEX.md`: uma linha por ficha (`T-0001 — <chave> — título — status`). Ficha fechada
+Índice em `tarefas/INDEX.md`: uma linha por ficha (`T-0001 — <identificador> — título — status`). Ficha fechada
 permanece — é o histórico de por quê as coisas são como são.
 
 ## 3. Relatório de Handoff (todo agent, sempre)
@@ -117,5 +117,6 @@ ficha se importar. Consulta que virou tarefa foi mal roteada.
 
 Antes de fechar: todo `BLOQUEIO` resolvido ou escalado; todo gate aplicável cumprido; toda
 `MEMÓRIA SUGERIDA` avaliada — escrita como registro, recusada com motivo, ou fundida a um registro
-existente; e todo artefato espelhado na issue (`jira.md` §4). Aí sim `status: fechada`, a issue em
-concluída e a linha do `INDEX.md` atualizada — os três no mesmo passo.
+existente; e todo relatório na ficha, verbatim. Aí sim `status: fechada`, a seção `## Fechamento`
+escrita no formato de `backlog.md` §10, e as linhas de `tarefas/INDEX.md` e de
+`docs/backlog/INDEX.md` atualizadas — tudo no mesmo passo.

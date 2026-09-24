@@ -5,7 +5,7 @@ type: convention
 escopo: processo
 camada: processo
 data: 2026-08-26
-relaciona: [[reference-jira-projeto-spr]], [[decision-jira-e-o-registro-publico-da-tarefa]]
+relaciona: [[reference-jira-projeto-spr]], [[decision-backlog-e-o-registro-publico-da-tarefa]]
 ---
 
 Toda `duedate` no Jira é calculada como **`ceil(ideal × 1,3)` em dias úteis**, encadeada dentro da

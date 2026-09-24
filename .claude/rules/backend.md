@@ -3,8 +3,18 @@
 Território: `apps/api/**`, `packages/contracts/**`. A regra de negócio **executa aqui** — não no
 template, não no manifesto, não só no banco.
 
-**D-01 (stack/ORM) está ABERTA.** Enquanto estiver: você projeta **contrato e fluxo**, não escreve
-implementação acoplada a framework. Brief que exige código de framework → `BLOQUEIO`.
+**D-01 FECHOU em 2026-09-11: Fastify e Kysely** ([[decision-d-01-fastify-e-kysely]]). Você escreve
+implementação. Duas consequências que não são detalhe de ferramenta, e sim como as §1 e §3 desta regra
+passam a ser cumpridas: o tenant é resolvido em **hook de requisição**, uma vez, nunca em cada rota; e
+a validação de entrada é **schema na borda**, não checagem manual espalhada.
+
+Kysely **não tem motor de migration** e não passa a ter: quem aplica DDL é o executor de
+`db/migrator/**` (R-14). Tipo gerado a partir do schema tem dono declarado — tipo velho faz o
+compilador garantir uma forma que o banco não tem mais, que é pior que não ter tipo.
+
+**`D-03` (identidade e auth) continua ABERTA.** Ela decide de onde vem o sujeito autenticado, então
+todo ponto em que a identidade é **provada** é `BLOQUEIO`. O que a §1 exige — o tenant vir da
+identidade e nunca do chamador — é projetável sem ela, desde que a fronteira fique declarada.
 
 ## 1. Tenant é contexto, não parâmetro
 
@@ -54,5 +64,14 @@ de venda ou pagamento, declare no relatório: o que acontece **offline**, o que 
 
 - Regra de negócio em trigger/procedure sem `decision` registrada aprovando.
 - SQL por concatenação de string. Parâmetro, sempre.
+- **Fragmento SQL cru no caminho de requisição.** O qualificador de schema do query builder alcança o
+  que o construtor monta e **não** alcança texto cru, que cai no `search_path` da conexão — e no pool
+  esse `search_path` é o do cliente anterior ([[gotcha-withschema-nao-alcanca-sql-cru]],
+  [[gotcha-search-path-serve-o-executor-e-vaza-no-pool]]). Onde o cru for inevitável, o schema entra
+  qualificado dentro do próprio fragmento, e o trecho carrega teste com **dois** clientes.
+- **Deixar violação de unicidade subir sem ler de volta o desfecho gravado**, em rota que move
+  dinheiro ou estoque. Sendo a chave primária a identidade de idempotência (`D-04`), essa violação é
+  o **reenvio legítimo** na maioria das vezes, e tratá-la como conflito escala como defeito crítico
+  uma venda que deu certo ([[gotcha-23505-sem-read-back-acusa-reenvio-legitimo]]).
 - `if (cliente === 'x')` ou ramificação por vertical. Diferença vira capacidade/configuração.
 - Log com dado sensível (cartão, documento, credencial) ou com payload inteiro por preguiça.

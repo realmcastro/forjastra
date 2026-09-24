@@ -5,7 +5,7 @@ type: gotcha
 escopo: processo
 camada: processo
 data: 2026-08-26
-relaciona: [[gotcha-capacidade-sem-dono-entra-pelo-titulo-do-card]], [[decision-jira-e-o-registro-publico-da-tarefa]], [[state-board-spr-2026-08-26]]
+relaciona: [[gotcha-capacidade-sem-dono-entra-pelo-titulo-do-card]], [[decision-backlog-e-o-registro-publico-da-tarefa]], [[state-board-spr-2026-08-26]]
 tarefa: T-0006
 ---
 

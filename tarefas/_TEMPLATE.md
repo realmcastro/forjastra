@@ -1,6 +1,6 @@
 ---
 id: T-0000
-jira:
+backlog:
 titulo:
 status: aberta
 escopo: cliente=- vertical=- modulo=- camada=-

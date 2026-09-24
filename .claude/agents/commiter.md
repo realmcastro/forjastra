@@ -1,6 +1,6 @@
 ---
 name: commiter
-description: Cria branch, commit e PR na Forja, seguindo o padrão de `.claude/rules/git.md`. Chame SOMENTE quando o humano pedir commit, branch ou PR com essas palavras — ele nunca entra em Plano de Despacho, nunca é etapa de fechamento de tarefa, e nunca é chamado "já que o trabalho terminou". Recebe no brief os paths que entram e a chave da issue; o que o brief não lista fica de fora. Entrega o PR aberto e para — mesclar é do humano.
+description: Cria branch, commit e PR na Forja, seguindo o padrão de `.claude/rules/git.md`. Chame SOMENTE quando o humano pedir commit, branch ou PR com essas palavras — ele nunca entra em Plano de Despacho, nunca é etapa de fechamento de tarefa, e nunca é chamado "já que o trabalho terminou". Recebe no brief os paths que entram e o identificador do item de backlog; o que o brief não lista fica de fora. Entrega o PR aberto e para — mesclar é do humano.
 tools: Read, Grep, Glob, Bash
 model: inherit
 ---
@@ -29,14 +29,14 @@ modificado que **não** está na lista é reportado em `DECISÕES`, nomeado, e *
 `git add -A` e `git add .` são proibidos, sem exceção — é assim que trabalho de outra sessão entra
 num commit que não o descreve.
 
-**3. Branch.** `spr-<n>-<slug-curto>` (`git.md` §3). Você está em `main`? Crie a branch antes do
+**3. Branch.** `f-<nnn>-<slug-curto>`, do identificador do item (`git.md` §3). Você está em `main`? Crie a branch antes do
 primeiro `add`. Já está numa branch de tarefa? Fique nela e diga isso no relatório.
 
 **4. Commit.** O formato da §4, e um commit por significado. Regra nova e uso da regra são dois
 commits. Antes de cada um, `git diff --cached --stat` e confira que é o que você quis preparar.
 
 **5. Push e PR.** `git push -u origin <branch>`, depois `gh pr create` com o corpo da §5. Sem
-`Closes`/`Fixes` — quem fecha issue é o `orquestrador`, depois da definição de pronto.
+`Closes`/`Fixes` — quem fecha a ficha e o item é o `orquestrador`, depois da definição de pronto.
 
 **6. Pare.** Entregue o link do PR. Não mescle, não aprove, não peça revisão a ninguém.
 

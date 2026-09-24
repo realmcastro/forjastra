@@ -29,12 +29,28 @@ N schemas; e nenhuma migration é condicional a cliente.
 ## 3. Convenções (as que não dá para mudar depois)
 
 - Nomes em **inglês**, `snake_case`, tabela no **plural** (`orders`, `order_items`).
-- Toda tabela: chave primária, `created_at timestamptz`, `updated_at timestamptz`.
+- **Chave primária: `uuid`, geração ordenada por tempo**, em toda tabela (`D-04`, fechada em
+  2026-09-11 → [[decision-d-04-chave-timestamps-exclusao]]). Onde a linha nasce no terminal, essa
+  chave **é** a identidade de idempotência de `RN-OFF-013`, não uma coluna ao lado.
+- **Timestamps variam por família, e a exceção é declarada:**
+  - **fato** (venda, pagamento, movimento de caixa, documento fiscal, trilha): `occurred_at` e
+    `received_at`, os dois `timestamptz NOT NULL`, e **nenhum `updated_at`** — a linha nunca é
+    atualizada, e a coluna existiria só para convidar código a atualizá-la;
+  - **cadastro e configuração**: `created_at` e `updated_at`, mantidos por gatilho genérico;
+  - **ledger e registro de processo**: os instantes próprios (`applied_at`, `started_at`), sem
+    `created_at` redundante ao lado.
+- **Nenhuma coluna de exclusão lógica no núcleo.** Nem `deleted_at`, nem `is_active`. Tirar de
+  circulação é vigência declarada mais fato de mudança de estado — a recusa, com as quatro partes,
+  está em `db/convencoes.md` §4.
 - **Tempo:** `timestamptz` sempre, armazenado em **UTC**. Nunca `timestamp` sem fuso, nunca `date`
-  para algo que tem hora. O fuso do cliente é dado do cliente (`platform`), aplicado na borda —
+  para algo que tem hora. O fuso é do **estabelecimento** (`RN-NUC-057`, desde 2026-09-23), parte da
+  configuração publicada dele, aplicado na borda —
   turno, fechamento de caixa e "vendas de hoje" dependem disso e são caríssimos de corrigir depois.
-- **Dinheiro:** inteiro em menor unidade (centavos) **ou** `numeric(14,2)` — uma escolha, para todo
-  o sistema, registrada como `decision`. **Nunca** `float`/`real`/`double`.
+- **Dinheiro (decidido em 2026-09-23, [[decision-dinheiro-e-quantidade]]):** `numeric` sem modificador sob
+  domínio de envelope (`money_amount` ≤ 2 casas, `unit_price` ≤ 3, `quantity_value` ≤ 3), com `CHECK` por
+  `min_scale()`; nunca `numeric(p,s)`, que arredonda em silêncio. O texto anterior dizia: inteiro em
+  menor unidade (centavos) **ou** `numeric(14,2)`, uma escolha para todo o sistema.
+  **Nunca** `float`/`real`/`double`.
 - **Quantidade:** `numeric` com escala declarada (combustível e granel usam 3 casas; unidade usa 0).
   Escolher `integer` aqui bloqueia verticais inteiras.
 - Domínio fechado: tabela de lookup com código estável, **não** `enum` do Postgres — adicionar valor
@@ -42,6 +58,20 @@ N schemas; e nenhuma migration é condicional a cliente.
 - Booleano nasce `NOT NULL DEFAULT`. Nulo tem que significar algo; se não significa, é defeito.
 - Toda FK tem índice. Toda regra de unicidade do negócio é `UNIQUE` no banco, não só no código.
 - `CHECK` para invariante que o banco pode garantir (total ≥ 0, quantidade > 0, status em lista).
+
+## 3.1 Fato que a spec manda registrar tem coluna, e a ausência é declarada
+
+Invariante 10 do `CLAUDE.md` §7. A sua parte dele é estrutural, não editorial:
+
+- **Fato nasce com os dois instantes** (`occurred_at`, `received_at`) e sem `updated_at` (`D-04`).
+  Registro que chega depois não reescreve o instante em que a coisa aconteceu.
+- **Ausência é declarada no topo do arquivo de migration**, numerada, com o nome da lacuna ou da
+  decisão aberta que a sustenta. Coluna que não nasce por recorte é diferente de coluna que ninguém
+  pensou, e só o texto distingue as duas.
+- **Não invente o fato que a spec não pediu**, e não o suprima porque "dá para derivar". Derivação de
+  fato ausente é suposição com cara de consulta.
+- **Captura não pode custar lock no caminho do caixa.** Se registrar um fato exige travar a tabela
+  que a venda escreve, o desenho está errado, não a captura.
 
 ## 4. O que é fiscal/financeiro é append-only
 
@@ -69,8 +99,9 @@ Sem essas cinco respostas, o modelo não está pronto para o gate de `seguranca`
 
 ## Nunca
 
-- Presumir ORM, query builder ou framework — **D-01 está ABERTA** (`CLAUDE.md` §8). Entregue SQL/DDL
-  puro e versionado; se o brief exige código de ORM, emita `BLOQUEIO`.
+- Escrever DDL em linguagem de ferramenta. **D-01 fechou** (Fastify e Kysely), e isso **não** muda o
+  seu entregável: DDL é SQL puro e versionado, aplicado pelo executor de `db/migrator/**` (R-14).
+  Kysely consulta; ele não cria estrutura. Migration em código de biblioteca é `BLOQUEIO`.
 - Coluna de vertical no núcleo (`table_number`, `pump_id`) — vai para tabela do módulo.
 - `SELECT *` em migration, view ou exemplo.
 - Nome abreviado (`qtd`, `vlr`, `dt`). O glossário de `produto` manda no vocabulário.

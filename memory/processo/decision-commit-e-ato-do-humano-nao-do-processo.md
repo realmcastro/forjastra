@@ -5,7 +5,7 @@ type: decision
 escopo: processo
 camada: processo
 data: 2026-08-26
-relaciona: [[decision-jira-e-o-registro-publico-da-tarefa]], [[convention-escrita-em-registro-append-only]]
+relaciona: [[decision-backlog-e-o-registro-publico-da-tarefa]], [[convention-escrita-em-registro-append-only]]
 tarefa: T-0006
 ---
 
@@ -30,3 +30,12 @@ que entram** — `git add -A` é proibido, e arquivo fora da lista fica de fora 
 entrega o PR aberto e para: mesclar é do humano, e o PR não carrega `Closes`/`Fixes`, porque quem
 fecha issue é o `orquestrador` depois da definição de pronto. Plano que traga um passo de `commiter`
 está errado — recuse o passo, não o execute.
+
+## Revisão — 2026-09-23
+
+O humano autorizou de forma permanente: "não precisa de PR, você pode subir diretamente no
+repositório". A partir daí o thread principal despacha o `commiter` quando um bloco coeso está na
+árvore, e ele comita e dá push **direto em `main`**, sem branch de item e sem PR. Continuam valendo:
+fora de plano de despacho, paths nomeados no brief, nada de `git add -A`, nada de `--force`. A
+fricção que esta decisão defendia foi trocada, por quem tinha autoridade para isso, pela velocidade de
+um executor só ([[state-execucao-solo-2026-09-11]]).

@@ -23,8 +23,16 @@ Duas coisas diferentes moram aqui: **quem pode mexer no git** (§1) e **como o h
 
 ## 2. O `commiter` — só a pedido do humano, nunca por dentro do processo
 
-**O `commiter` é despachado exclusivamente quando o humano pede commit, branch ou PR, com essas
-palavras.** Ele não é passo de tarefa, não é etapa de fechamento, não é consequência de nada.
+**Autorização permanente do humano, 2026-09-23:** "não precisa de PR, você pode subir diretamente no
+repositório". Desde então o thread principal despacha o `commiter` quando um bloco coeso está na
+árvore, e ele comita **direto em `main`** e dá `push`, sem branch de item e sem PR. Continua valendo o
+resto desta seção: o `orquestrador` não põe o `commiter` em plano, os paths são nomeados no brief,
+`git add -A` segue proibido, e nada de `--force`. Na tabela abaixo, commitar em `main` passou a ser
+permitido e abrir PR deixou de ser o caminho.
+
+**Antes dessa autorização,** o `commiter` era despachado exclusivamente quando o humano pedia commit,
+branch ou PR, com essas palavras. Ele não é passo de tarefa, não é etapa de fechamento, não é
+consequência de nada.
 
 - **O `orquestrador` não o inclui em Plano de Despacho.** Nenhum. Plano que traz um passo de
   `commiter` está errado e o thread principal recusa o passo, não o executa.
@@ -56,16 +64,17 @@ sessão para dentro de um commit que não o descreve.
 ## 3. Branch
 
 ```
-spr-<n>-<slug-curto>
+f-<nnn>-<slug-curto>
 ```
 
-`spr-54-aplicar-revisao-do-backlog` · `spr-40-tipo-do-dinheiro`
+`f-001-fundacao-do-banco` · `spr-40-tipo-do-dinheiro` (item migrado mantém o prefixo `spr-`;
+`spr-54-aplicar-revisao-do-backlog` é do mesmo tempo e continua válido no histórico)
 
-- **A chave da issue é a âncora**, não o id da ficha: toda tarefa tem issue (`jira.md` §1), e nem
-  toda tem ficha (`processo.md` §5). Branch ancorada no que às vezes não existe nomeia mal metade
-  das vezes.
-- Minúsculo, hífen, sem acento. Slug curto: o nome completo já está na issue.
-- Uma branch por issue. Duas issues na mesma branch é sinal de recorte errado — quebre a branch.
+- **O identificador do item é a âncora**, não o id da ficha: toda tarefa tem item (`backlog.md` §2),
+  e nem toda tem ficha (`processo.md` §5). Branch ancorada no que às vezes não existe nomeia mal
+  metade das vezes.
+- Minúsculo, hífen, sem acento. Slug curto: o nome completo já está no item.
+- Uma branch por item. Dois itens na mesma branch é sinal de recorte errado — quebre a branch.
 - Nasce da `main` atualizada, salvo instrução contrária no brief.
 
 ## 4. Commit
@@ -76,15 +85,15 @@ spr-<n>-<slug-curto>
 <por que a mudança existe, não o que ela faz — o diff já diz o quê.
 Quebre em ~72 colunas. Bullets quando forem mais de três pontos.>
 
-Ref: SPR-<n> · tarefas/T-<id>-<slug>.md
+Ref: F-<nnn> · tarefas/T-<id>-<slug>.md
 ```
 
 - **Assunto no imperativo:** "Aplicar", "Corrigir", "Estabelecer" — nunca "Aplicado", "Aplicando",
   `feat:`, `chore:`. O repo não usa Conventional Commits e não passa a usar sem decisão registrada.
 - **O corpo responde "por quê", não "o quê".** Quem lê um commit em seis meses tem o diff à mão e
   não tem o motivo.
-- **Rodapé `Ref:`** com a chave da issue e o path da ficha, quando existirem. É ele que liga o
-  histórico ao registro público e ao raciocínio. Sem ficha, só a chave.
+- **Rodapé `Ref:`** com o identificador do item (`docs/backlog/`) e o path da ficha, quando
+  existirem. É ele que liga o histórico ao pedido e ao raciocínio. Sem ficha, só o identificador.
 - **Nenhuma referência a IA**, em nenhum campo — `00-nucleo.md` §8. Inclui rodapé de co-autoria e
   menção a ferramenta. Vale mesmo quando o padrão da ferramenta pede o contrário.
 - **Um commit, um significado.** Regra nova e aplicação da regra são dois commits, mesmo na mesma
@@ -95,7 +104,7 @@ Ref: SPR-<n> · tarefas/T-<id>-<slug>.md
 
 O remote é GitHub (`realmcastro/forjastra`) — o artefato chama **PR**. Abra com `gh pr create`.
 
-**Título:** o mesmo do assunto do commit, ou o título da issue quando a branch tem vários commits.
+**Título:** o mesmo do assunto do commit, ou o título do item quando a branch tem vários commits.
 
 **Corpo**, nesta ordem; seção que não se aplica é omitida:
 
@@ -113,14 +122,15 @@ O remote é GitHub (`realmcastro/forjastra`) — o artefato chama **PR**. Abra c
 <o que este PR deliberadamente não resolve, e de quem é>
 
 ## Ref
-SPR-<n> · tarefas/T-<id>-<slug>.md
+F-<nnn> · tarefas/T-<id>-<slug>.md
 ```
 
 - **Sem captura de tela, sem checklist decorativo, sem template preenchido pela metade.**
-- **`Fica de fora` é obrigatória** em PR não trivial, pela mesma razão da issue (`jira.md` §9): é a
-  seção que impede o PR de crescer durante a revisão.
-- **Nada de segredo e nada de dado real de cliente.** O PR é tão exposto quanto o Jira (`jira.md`
-  §6): conteúdo de `memory/**` e de `docs/auditorias/**` vai por `path:linha`, nunca colado.
-- **Não vincule o PR à issue por palavra-chave de fechamento** (`Closes`, `Fixes`). Quem fecha issue
-  é o `orquestrador`, depois da definição de pronto (`processo.md` §2) — mesclar PR não prova que a
-  tarefa está pronta.
+- **`Fica de fora` é obrigatória** em PR não trivial, pela mesma razão do item (`backlog.md` §8): é
+  a seção que impede o PR de crescer durante a revisão.
+- **Nada de segredo e nada de dado real de cliente.** O PR sai do repositório e é lido por quem não
+  clonou (`backlog.md` §9): conteúdo de `memory/**` e de `docs/auditorias/**` vai por `path:linha`,
+  nunca colado.
+- **Mesclar PR não fecha item.** Quem fecha a ficha e o item é o `orquestrador`, depois da definição
+  de pronto (`processo.md` §2), e nenhuma palavra-chave de fechamento (`Closes`, `Fixes`) faz isso
+  por ele — não use.

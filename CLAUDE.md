@@ -26,13 +26,34 @@ embarcado** no cliente. É assim que o mesmo binário serve operações de negó
 **Idioma:** conversa, docs, memória, fichas de tarefa e commits em **pt-BR**. Identificadores de
 código (tabelas, colunas, tipos, funções, rotas) em **inglês**.
 
-## 2. Estado atual — Fase 0
+## 2. Estado atual — Fase 1, aberta em 2026-09-11
 
-Não existe código de produto ainda. **De propósito.** A Fase 0 entrega só a arquitetura de
-trabalho com IA (este arquivo, `.claude/agents/`, `.claude/rules/`, `memory/`, `tarefas/`).
-Fase 1 é o **modelo de dados** — feito para não migrar depois. Só então backend, e só então UI.
+A **Fase 0 fechou**: a arquitetura de trabalho com IA está em pé (este arquivo, `.claude/agents/`,
+`.claude/rules/`, `memory/`, `tarefas/`). A **Fase 1 é o modelo de dados**, feito para não migrar
+depois, e ela **cria `db/`**: `db/migrations/**` para o SQL versionado e `db/migrator/**` para o
+executor. Território de `arquiteto-dados` (executor implementado por `coder`, sob spec).
 
-Não invente estrutura de código (`apps/`, `packages/`, `src/`) antes da fase que a cria.
+A **fundação da Fase 2 abriu junto**, em 2026-09-11, quando `D-01` fechou: `apps/api/**` nasce para
+o que **não depende do modelo de venda** — resolução de tenant na borda, forma única de erro,
+validação de entrada, contexto injetado. **Rota de negócio não**: ela espera o modelo, que espera
+lacunas do humano. A ordem de `processo.md` §4 não foi furada, e sim lida pelo que ela protege: a
+fundação não precisa ser refeita pelo modelo.
+
+**`packages/sdui/**` abriu em 2026-09-12**, pela mesma leitura: o analisador do manifesto e o registro
+do vocabulário de blocos não dependem do modelo de venda nem do contrato de rota — nenhum import
+atravessa a fronteira do pacote e a fonte de dado do nó é string opaca, conferido no fechamento de
+`T-0012`. A Fase 3 não os refaz.
+
+**`packages/contracts/**` abriu em 2026-09-23**, só para o módulo de ponto fixo de dinheiro e
+quantidade: servidor e terminal precisam do mesmo código, e cópia dá centavo diferente
+([[decision-dinheiro-e-quantidade]], `T-0018`). O contrato de rota continua esperando o modelo.
+
+`apps/web/**` e o resto de `packages/**` continuam **proibidos** até a fase que os cria. Estrutura
+criada cedo é palpite que depois ninguém tem coragem de mexer.
+
+**A execução é de uma pessoa só desde 2026-09-11** ([[state-execucao-solo-2026-09-11]]). Isso encerra
+a pergunta sobre a Epic `SPR-35` correr em paralelo à Fase 1: ela corria porque tinha dono próprio, e
+não tem mais. A ordem é a de `processo.md` §4, por dependência.
 
 ## 3. Regra fundamental — este thread não implementa
 
@@ -47,16 +68,16 @@ Então a divisão é:
 | Papel | Quem | Faz |
 |---|---|---|
 | **Cérebro** | agent `orquestrador` | lê o pedido, resolve o escopo, devolve **Plano de Despacho** |
-| **Mãos** | este thread | abre a issue, cria a ficha, dispara os agents, valida, espelha no Jira, escreve memória |
+| **Mãos** | este thread | abre o item de backlog, cria a ficha, dispara os agents, valida, escreve memória |
 | **Trabalho** | agents especialistas | executam o brief dentro do território deles |
 
-**Toda tarefa tem issue no Jira, criada antes do plano** (`.claude/rules/jira.md`). Agent nenhum
-fala com o Jira, **exceto o `produto`**: ele é o dono do backlog lá, e escreve conteúdo de issue
-com justificativa e prova. Espelhamento de processo e transição de status continuam sendo deste thread.
+**Toda tarefa tem item em `docs/backlog/`, criado antes do plano** (`.claude/rules/backlog.md`).
+Agent nenhum escreve lá, **exceto o `produto`**: ele é o dono do backlog, e escreve o item com
+justificativa e prova. A ficha, o estado e os índices continuam sendo deste thread.
 
 O que este thread **pode** fazer direto, sem agent: responder pergunta conceitual; ler 1–2
-arquivos; `grep` pontual; `git status/log`; escrever em `memory/` e `tarefas/`; ler e escrever no
-Jira; editar `CLAUDE.md` e `.claude/**` quando o humano pede mudança de regra. Fora disso, **delega**.
+arquivos; `grep` pontual; `git status/log`; escrever em `memory/` e `tarefas/`; editar `CLAUDE.md` e
+`.claude/**` quando o humano pede mudança de regra. Fora disso, **delega**.
 
 ## 4. Os agents
 
@@ -66,14 +87,14 @@ permite paralelismo sem colisão.
 | Agent | Papel | Território de escrita |
 |---|---|---|
 | `orquestrador` | planeja o despacho, roteia perguntas entre agents, fecha a tarefa | `tarefas/**`, `memory/**` |
-| `produto` | dono da regra de negócio: define módulo, entidade, invariante, critério de aceite. **Dono do backlog no Jira** | `docs/produto/**`, conteúdo de issue no Jira |
+| `produto` | dono da regra de negócio: define módulo, entidade, invariante, critério de aceite. **Dono do backlog** | `docs/produto/**`, `docs/backlog/**` |
 | `arquiteto-dados` | modelo Postgres, schema-por-cliente, migrations, índices | `db/**` |
-| `backend` | API, fronteira de módulo, contratos, geração do manifesto SDUI | `apps/api/**`, `packages/contracts/**` |
+| `backend` | API, fronteira de módulo, contratos, geração do manifesto SDUI; e, desde 2026-09-23, o acompanhante nativo (`D-02`) e o contrato do canal local, com território a nascer na fase que os cria | `apps/api/**`, `packages/contracts/**` |
 | `ui` | catálogo de componentes, contrato de bloco SDUI, slots/variantes, **sistema de design** | `apps/web/**`, `packages/sdui/**`, `docs/design/**` |
 | `coder` | implementa spec já aprovada, cross-cutting, refactor mecânico | qualquer, **só sob spec** |
 | `seguranca` | auditoria: isolamento de tenant, autorização, dado sensível. **Read-only** | `docs/auditorias/**` |
 | `performance` | orçamentos, plano de consulta, custo de render. **Read-only** | `docs/auditorias/**` |
-| `commiter` | branch, commit e PR no padrão de `git.md`. **Só a pedido do humano** — nunca em plano, nunca no fechamento | nenhum arquivo: escreve **história**, não conteúdo |
+| `commiter` | commit e push **direto em `main`**, sem PR, no padrão de `git.md` (autorizado pelo humano em 2026-09-23). Despachado pelo thread principal quando um bloco coeso está na árvore; nunca em plano | nenhum arquivo: escreve **história**, não conteúdo |
 
 Para exploração ampla e read-only do repo, use o agent nativo **`Explore`** — não crie agent novo
 para isso.
@@ -94,8 +115,8 @@ para isso.
 - `processo.md` — o ciclo: etapas de uma tarefa, **definição de pronto**, cadência de validação,
   ciclo de fases, quando encurtar. Orquestrador sempre; agent que entrega lê a §2.
 - `handoff.md` — formato da ficha de tarefa e do relatório. Orquestrador + todo agent que entrega.
-- `jira.md` — issue antes do plano, espelhamento e status. Leem: `orquestrador`, este thread e
-  `produto` — os três que escrevem no Jira. Os outros sete não leem, porque não tocam nele.
+- `backlog.md` — item antes do plano, identificador, par item↔ficha e estado. Leem: `orquestrador`,
+  este thread e `produto` — os três que escrevem em `docs/backlog/`. Os outros sete não leem.
 - `memoria.md` — como ler e escrever o grafo de memória.
 - `migrations.md` — ciclo de vida do banco: forward-only, expand/contract, N schemas. Leitura
   obrigatória de quem toca DDL (`arquiteto-dados`, `coder`).
@@ -155,15 +176,27 @@ pelo gancho. **Nunca varra `memory/` inteiro.**
    dono do território.
 8. **Segredo nunca no repo.** Nem em exemplo, nem em teste, nem em memória.
 9. **Decisão em aberto (§8) não se presume.** Precisa dela e ela não existe? Emite `BLOQUEIO`.
+10. **O que acontece na operação vira fato, no instante em que acontece.** Capturar é o padrão; **não
+    capturar é a exceção e exige justificativa registrada**. A razão é a assimetria: guardar e nunca
+    usar custa armazenamento; não guardar e precisar depois é **irrecuperável**, porque fato não tem
+    backfill. Ao desenhar qualquer fluxo, a pergunta não é "precisamos disso?" e sim **"o que se
+    perde para sempre se isto não for registrado?"**. Toda spec declara o que registra **e o que
+    deliberadamente não registra**. Três limites, e eles não afrouxam: dado pessoal segue minimizado
+    e justificado (`seguranca.md` §3) — e o valor que queremos (conversão, desistência, onde o fluxo
+    trava) não precisa de identificação de pessoa; cartão, credencial e segredo **nunca**; e o
+    registro **jamais bloqueia a venda** — falha ao registrar não derruba a operação, vira fato
+    próprio.
 
 ## 8. Decisões em aberto — proibido presumir
 
 | # | Decisão | Estado |
 |---|---|---|
-| D-01 | Stack de backend e ORM/query builder | **PARCIAL** — linguagem **FECHADA**: Node + TypeScript estrito nos dois lados → [[decision-stack-node-typescript-estrito]]. **ABERTOS:** ORM/query builder e framework HTTP |
-| D-02 | Framework de frontend do cliente SDUI | **ABERTA** — regra de UI nasce agnóstica. A pergunta é arranjo **B** ou **D** → [[state-d-02-arranjo-b-ou-d]] |
-| D-03 | Estratégia de auth e identidade (por cliente vs global) | **ABERTA** |
-| D-04 | Convenção de PK, timestamps e soft delete | **ABERTA** — proposta do `arquiteto-dados`, Fase 1 |
+| D-01 | Stack de backend e ORM/query builder | **FECHADA** — Node + TypeScript estrito → [[decision-stack-node-typescript-estrito]]; **Fastify** e **Kysely** desde 2026-09-11 → [[decision-d-01-fastify-e-kysely]] |
+| D-02 | Framework de frontend do cliente SDUI | **FECHADA** 2026-09-11 — arranjo **D**: interface em navegador, custódia num acompanhante nativo em Node → [[decision-d-02-arranjo-d]] |
+| D-03 | Estratégia de auth e identidade (por cliente vs global) | **FECHADA** 2026-09-23 — opção C: sujeito local ao cliente, índice de encaminhamento opaco no `platform`, portador de terminal nunca revinculado → [[decision-d-03-opcao-c-sujeito-local-ao-cliente]] |
+| D-04 | Convenção de PK, timestamps e soft delete | **FECHADA** 2026-09-11 — `uuid` ordenado no tempo e **é** a identidade de idempotência; timestamps por família; nenhuma exclusão lógica no núcleo → [[decision-d-04-chave-timestamps-exclusao]] |
+| D-05 | Onde mora o catálogo de regra fiscal de abrangência maior que o cliente | **FECHADA** 2026-09-23 — autoridade no `platform`, projeção com mesmo id e digest no cliente → [[decision-d-05-autoridade-no-platform-projecao-no-cliente]] |
+| D-06 | Residência de três coisas: agregado que soma clientes (i), trilha dos nossos atos (ii), observação de operação por cliente (iii) | **(ii) FECHADA** 2026-09-23 → [[decision-d-06-ii-trilha-no-platform-com-projecao-no-cliente]]; (i) e (iii) **ABERTAS** |
 
 Fechada: **Postgres**, com **um schema por cliente** (ver `memory/plataforma/`).
 Ao fechar uma decisão: registro `decision` em `memory/plataforma/` **e** linha desta tabela virando
@@ -174,10 +207,11 @@ Ao fechar uma decisão: registro `decision` em `memory/plataforma/` **e** linha 
 ```
 CLAUDE.md              este arquivo
 .claude/agents/        os 9 agents
-.claude/rules/         regra por agent + núcleo, processo, handoff, jira, memória, migrations, git
+.claude/rules/         regra por agent + núcleo, processo, handoff, backlog, memória, migrations, git
 .claude/commands/      /tarefa — o ciclo inteiro em um comando
 memory/                grafo de conhecimento (§6)
-tarefas/               fichas de tarefa — o bastão que passa entre agents (cada uma com sua issue)
+tarefas/               fichas de tarefa — o bastão que passa entre agents (cada uma com seu item)
+docs/backlog/          um arquivo por item ainda não iniciado (dono: produto)
 docs/produto/          spec de módulo e regra de negócio (dono: produto)
 docs/auditorias/       relatório de segurança e performance
 docs/arquitetura/      exemplo longo, diagrama, racional extenso

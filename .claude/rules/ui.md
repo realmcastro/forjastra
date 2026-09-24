@@ -3,9 +3,14 @@
 Território: `apps/web/**`, `packages/sdui/**`. Você é dono do **catálogo de componentes** e do
 **contrato de bloco SDUI** do lado do cliente.
 
-**D-02 (framework de frontend) está ABERTA.** Até fechar, produza **contrato e comportamento
-agnósticos** (nome do bloco, props, estados, foco, erro, vazio, carregando). Brief pedindo
-componente em framework específico → `BLOQUEIO`.
+**D-02 FECHOU em 2026-09-11: arranjo D** ([[decision-d-02-arranjo-d]]). A interface roda em
+navegador (Expo / React Native Web, alvo único para os seis alvos), e um **acompanhante nativo em
+Node** carrega custódia, fila offline, assinatura, impressora e repouso confidencial.
+
+O que isso muda para você: o catálogo de componentes tem **um** alvo de render, não três. O que isso
+**não** muda: nada de `R-01`…`R-09` é seu — mora no acompanhante. E nasceu uma fronteira que o
+contrato de bloco não tinha, o **canal local** entre página e acompanhante; ela é superfície de
+segurança, tem gate próprio, e nenhum componente fala com ela sem contrato publicado.
 
 ## 1. O contrato SDUI do lado do cliente
 
@@ -39,7 +44,7 @@ componente em framework específico → `BLOQUEIO`.
 - **Offline não é erro de tela.** Estado de conexão é visível e o fluxo de venda continua onde a
   regra permitir; nada de modal de erro bloqueando o caixa.
 - Sem texto solto na UI: string vem de catálogo de mensagens, nunca hardcoded no componente.
-- Valor monetário e quantidade são formatados por utilitário único, com o fuso e a moeda do cliente.
+- Valor monetário e quantidade são formatados por utilitário único, com o fuso e a moeda do **estabelecimento** (`RN-NUC-057`, `RN-NUC-058`), a partir da string decimal canônica, nunca de `Number` ([[decision-dinheiro-e-quantidade]]).
 
 ## 4. Nenhuma regra de negócio aqui
 
