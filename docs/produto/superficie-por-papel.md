@@ -222,7 +222,8 @@ mesma sangria → *negado ao meu papel*, com o caminho. As duas respostas são *
 terminal, sem nenhuma chamada — e é isso que prova que as duas coisas retidas de (c) estão lá.
 **Infeliz** (a) com quanta **antecedência** o portador é avisado de que a validade vai vencer é
 `LACUNA-NUC-033`, do humano — é número, e não o escrevo. Até fechar, a superfície declara o **estado**
-(cobre / não cobre), nunca um prazo que ninguém fixou. (b) o caminho de pedido nomeado vira **lista**, por
+(cobre / não cobre), nunca um prazo que ninguém fixou. **FECHADA em 2026-09-23** → `RN-OFF-034`
+(`fila-local-valores-de-partida.md`): o aviso vem quando resta um quarto da validade configurada. (b) o caminho de pedido nomeado vira **lista**, por
 conveniência de construção → é defeito, e é exatamente o defeito que reconstrói o catálogo do que o papel
 não alcança (`RN-NUC-034`, infeliz). **Como** o operador nomeia (digitação, leitura de código, atalho de
 teclado) é de `ui`; **como** a negação é composta e transportada é de `backend` — nenhuma das duas é
@@ -328,7 +329,7 @@ Inventário fechado. Nenhuma destas linhas foi resolvida exibindo o dado.
 | conferir o que o provedor fez no meu ambiente | `owner` | trilha dos atos sob concessão, que `RN-NUC-024` (d) **promete** | **ausente** — `LACUNA-NUC-031` |
 | resolver item da lista, ou transferir fila, quando o item carrega texto de terceiro, identificação de comprador ou o que comprova pagamento | `manager` | o próprio **conteúdo** do item — o inventário dele é (i.b) e existe | `?` — `LACUNA-NUC-018` |
 | o que entrego ao cliente-final quando não há documento | `cashier` | o desfecho declarado | `LACUNA-OFF-009` (humano + contador) |
-| agir antes de a autoridade retida vencer | `manager`, `fiscal_officer` | antecedência do aviso | `LACUNA-NUC-033` |
+| agir antes de a autoridade retida vencer | `manager`, `fiscal_officer` | antecedência do aviso | `LACUNA-NUC-033`, FECHADA em 2026-09-23 → `RN-OFF-034` |
 
 **Contagem de leitura, medida nas duas matrizes** (atualizada em 2026-08-23, quando a partição da linha 18
 levou o núcleo de 35 para 39 linhas): de **76** operações, **7** são leitura (núcleo 17, 27 e 28, mais as 4
@@ -361,5 +362,5 @@ Abertas em 2026-08-22. Nenhuma bloqueia regra: todas negam por default (`RN-NUC-
   (linha 35) e não tem abrir. Se existir, entra na matriz com o papel que a autoriza; se não existir, o
   fechamento é o único marco de dia, e isso precisa ser dito em vez de subentendido. Vai junto de
   `LACUNA-NUC-007` (turno). **Dono:** humano.
-- **`LACUNA-NUC-033`** — **com quanta antecedência o portador de autoridade retida é avisado de que ela
+- **`LACUNA-NUC-033` — FECHADA em 2026-09-23** → `RN-OFF-034`. **Com quanta antecedência o portador de autoridade retida é avisado de que ela
   vai vencer** (`RN-NUC-036`, infeliz). É número. **Dono:** humano; irmã de `LACUNA-NUC-014`.

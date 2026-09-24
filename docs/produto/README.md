@@ -13,11 +13,12 @@ rota, componente ou stack — e nada aqui decide prioridade, prazo ou escopo com
 | saber se uma ideia é recusada, e por quê | [postura-nova-geracao.md](postura-nova-geracao.md) |
 | achar o módulo dono de um assunto | [catalogo-de-modulos.md](catalogo-de-modulos.md) |
 | saber como o sistema opera sem rede | [operacao-offline-e-sincronizacao.md](operacao-offline-e-sincronizacao.md) |
-| saber **que fato** se registra no instante em que acontece | [fatos-de-operacao.md](fatos-de-operacao.md) e os três irmãos |
+| saber **que fato** se registra no instante em que acontece | [fatos-de-operacao.md](fatos-de-operacao.md) e os quatro irmãos |
 | saber **quem pode** praticar uma operação | [matriz-operacao-papel.md](matriz-operacao-papel.md) e os dois irmãos |
 | saber **o que um papel vê** na tela | [superficie-por-papel.md](superficie-por-papel.md) |
 | saber o que **nós** vemos do cliente, e o que libera cada parte | [superficie-do-provedor.md](superficie-do-provedor.md) |
 | **valorar célula** — o que está esperando decisão do humano | [matriz-celulas-a-valorar.md](matriz-celulas-a-valorar.md) |
+| saber **o que ainda não se registra**, e o que se perde com isso | [captura-varredura-invariante-10-2026-09-11.md](captura-varredura-invariante-10-2026-09-11.md) |
 
 ## Convenções que valem para todo arquivo daqui
 
@@ -80,13 +81,13 @@ cliente (`provider_support` é, e permanece).
   cada trava libera** — que é a resposta a "quais telas vão existir" na forma que sobrevive a `D-01`/`D-02`.
   Nada aqui é tela, bloco ou gráfico.
 
-### Fatos de operação — quatro arquivos, um conjunto (`RN-NUC-041` a `049`, `RN-PRV-011` a `014` e `021`)
+### Fatos de operação — cinco arquivos, um conjunto (`RN-NUC-041` a `049`, `052` a `056` e `063`, `RN-PRV-011` a `014` e `021`)
 O que se registra **no instante em que acontece**, porque fato não capturado no instante é
 **irrecuperável** — a única parte que migration não conserta depois. Grão aqui é **candidato**: o
 veredito é do `arquiteto-dados`.
 - [fatos-de-operacao.md](fatos-de-operacao.md) — o que a operação do **cliente** produz: caminho de
   venda no grão do item, a disciplina do grão, conectividade e os marcos que dão tempo. **As lacunas e as
-  perguntas dos quatro moram aqui** (§7).
+  perguntas dos cinco moram aqui** (§7).
 - [fatos-de-operacao-provedor.md](fatos-de-operacao-provedor.md) — irmão com o mesmo peso: o que os
   **papéis nossos** praticam (a leitura é fato de igual peso ao ato), o ciclo de vida do cliente, do
   módulo, do schema e do terminal, e a **sugestão** nossa ao cliente — sustentação enumerável do mesmo
@@ -94,11 +95,32 @@ veredito é do `arquiteto-dados`.
 - [fatos-de-operacao-dominios-fechados.md](fatos-de-operacao-dominios-fechados.md) — irmão com o mesmo
   peso: o **fato de recusa** e as três listas fechadas de valor — motivo de recusa (sem ele, "módulo não
   usado" é invisível), motivo de **cancelamento** e **modo de atendimento**. Enumeração só estreita algo
-  se nascer com o campo.
+  se nascer com o campo. Desde 2026-09-11 tem também a recusa por **identidade não reconhecida**
+  (`RN-NUC-056`), que é de onde sai a medida de `LACUNA-OFF-016`, e desde 2026-09-23 a de
+  **identificador de item que não resolve** no catálogo aplicado (`RN-NUC-063`, que fechou
+  `LACUNA-PER-6`), com a classe estrutural do código lido.
 - [fatos-de-operacao-retencao-e-descarte.md](fatos-de-operacao-retencao-e-descarte.md) — irmão com o
   mesmo peso: **o fato depois do instante**. A ordem de sacrifício do recurso local do terminal
   (`RN-NUC-046`) e a relação entre retenção e janela de leitura (`RN-NUC-049`) — o mesmo defeito em duas
   escalas de tempo, a perda chegando ao leitor com a cara de ausência.
+- [fatos-de-operacao-ciclo-de-vida-do-pedido.md](fatos-de-operacao-ciclo-de-vida-do-pedido.md) — irmão
+  com o mesmo peso, de 2026-09-11: **o pedido × o fato sobre o pedido**. O pedido continua local e fora
+  da fila; o que sobe é fato aditivo próprio — aberto, lançado, retirado, abandonado (`RN-NUC-052` a
+  `055`), com as duas listas `Registra / Não registra` do fluxo.
+
+**Material de decisão do invariante 10, sem peso normativo** (nasceram em 2026-09-11, quando capturar
+virou o padrão — `CLAUDE.md` §7.10). Nenhum dos dois cria `RN`, reserva código ou revoga cláusula:
+- [captura-ciclo-de-vida-do-pedido-proposta.md](captura-ciclo-de-vida-do-pedido-proposta.md) — a
+  decisão do humano sobre `LACUNA-NUC-038`, com as duas saídas (o piso × o fato aditivo), o que cada
+  uma entrega e não entrega, o custo de adiar em duas fases, e a **forma exata** da revogação de
+  `RN-NUC-003` infeliz (c). **Decidida em 2026-09-11, saída `B`**; a revogação é ato dele e está no
+  arquivo dono.
+- [captura-varredura-invariante-10-2026-09-11.md](captura-varredura-invariante-10-2026-09-11.md) —
+  onde a captura falta hoje, ordenado por **o que se perde**: a distinção entre ausência decidida e
+  acidental, as ausências que já estão decididas e certas, e a **cobertura declarada** — o que foi
+  lido, como, e o que não foi. Duas passadas: sete achados em 2026-09-11 e mais quatro em
+  2026-09-12, quando a varredura fechou sobre os 39 arquivos que carregam `RN` e as duas listas
+  `Registra / Não registra` entraram nos sete contratos de módulo.
 
 ### Catálogos
 - [catalogo-de-modulos.md](catalogo-de-modulos.md) — todos os módulos previstos, inclusive de verticais
@@ -110,18 +132,32 @@ veredito é do `arquiteto-dados`.
 - [receitas-por-vertical.md](receitas-por-vertical.md) — que módulos cada ramo liga (`RES`, `PST`,
   `VAR`), com o que é do ramo e o que só parecia ser. Vertical não tem código e não é ativável.
 
-### Núcleo de venda — três arquivos, um conjunto normativo (`RN-NUC-001` a `016`, mais `037` e `038`)
+### Escopo e identidade (`RN-NUC-050`, `051` e `057` a `061`)
+- [nucleo-estabelecimento.md](nucleo-estabelecimento.md) — o que é o **estabelecimento**, a que cliente
+  (tenant) pertence, o que o distingue de cliente e de terminal, e por que o ciclo de vida dele é **fato
+  datado** e não campo de estado. Desde 2026-09-23, também: o dia é o do **fuso do estabelecimento**
+  (`057`), a **moeda** é dele (`058`), encerrar e reabrir (`059`), a unidade que **nunca muda de
+  cliente** (`060`) e **habilitar terminal a vender** (`061`). Só a identidade fiscal fica declaradamente
+  de fora (§3).
+
+### Núcleo de venda — quatro arquivos, um conjunto normativo (`RN-NUC-001` a `016`, `037`, `038` e `062` a `065`)
 - [nucleo-venda.md](nucleo-venda.md) — a tabela das operações do núcleo e as regras de pedido, venda
   imutável, pagamento e correção por fato novo (`001`–`008`), mais a **resolução escopada** de venda por
-  referência humana (`038`). **As lacunas dos três moram aqui** (§6).
+  referência humana (`038`). **As lacunas dos quatro moram aqui** (§6).
+- [nucleo-venda-congelamento.md](nucleo-venda-congelamento.md) — irmão de 2026-09-23: o que a venda
+  **congela ao concluir**, o **rateio** pelo maior resto (`064`) e as reservas da obrigação documental
+  (`065`).
 - [nucleo-caixa-e-turno.md](nucleo-caixa-e-turno.md) — sessão de caixa e dinheiro na gaveta
-  (`009`–`012`), mais **abrir sessão em nome de outro** (`037`).
+  (`009`–`012`), mais **abrir sessão em nome de outro** (`037`) e o **turno** como agrupamento opcional
+  de sessões (`062`).
 - [nucleo-publicacao-e-texto.md](nucleo-publicacao-e-texto.md) — que artefato o núcleo **publica** para
   o terminal aplicar offline, e por que texto do sistema nunca é instrução (`013`–`016`).
 
-### Autorização — dois arquivos, um conjunto (`RN-NUC-017` a `025`)
+### Autorização — dois arquivos, um conjunto (`RN-NUC-017` a `025`, `066`, `090` e `091`)
 - [papeis-e-permissoes.md](papeis-e-permissoes.md) — quais papéis existem, por que cada um existe, em
-  que escopo vale, e o que **não** sobreviveu à reconciliação de sete artefatos.
+  que escopo vale, e o que **não** sobreviveu à reconciliação de sete artefatos. Desde 2026-09-23:
+  **ninguém autoriza a si mesmo** (`066`), quem atribui o **primeiro `owner`** (`090`) e o **segundo
+  fator** por classe de ato (`091`).
 - [papeis-atribuicao-e-delegacao.md](papeis-atribuicao-e-delegacao.md) — como a autoridade chega a uma
   pessoa, se limita e **expira**: atribuição, delegação, escalonamento, autoridade retida offline.
 
@@ -131,15 +167,15 @@ decisão **nega** — não é comportamento aprovado.
 - [matriz-operacao-papel-contrato.md](matriz-operacao-papel-contrato.md) — o **vocabulário da célula**
   (`026`), a coluna de offline (`027`), a contenção (`028`), o registro (`029`), a **precedência da
   célula sobre a prosa** (`039`) e **o que se delega** (`040`).
-- [matriz-operacao-papel.md](matriz-operacao-papel.md) — a matriz do **núcleo** (39 linhas), o
+- [matriz-operacao-papel.md](matriz-operacao-papel.md) — a matriz do **núcleo** (42 linhas), o
   fechamento de sessão alheia (`030`), o fechamento do dia (`031`), a reapresentação de via (`032`), as
   divergências reconciliadas (§7) e a contagem (§8).
 - [matriz-operacao-papel-modulos.md](matriz-operacao-papel-modulos.md) — papel de núcleo em operação de
   **módulo** (`033`), as operações de `MSA`, `COZ`, `PCF`, `ATI`, `FIS`, `EMI` e da vertical, o **eixo de
   leitura** (§7) e a contagem consolidada (§8). **As lacunas de célula moram aqui** (§9).
 - [matriz-celulas-a-valorar.md](matriz-celulas-a-valorar.md) — **não é uma quarta matriz**: é a folha de
-  valoração, com linha **candidata** e valor de célula em **branco** — a matriz do escopo `provedor` (14
-  linhas) e as duas linhas de `REL` que `LACUNA-NUC-037` esperava. Célula em branco **não** é `?`, e nada
+  valoração, com linha **candidata** e valor de célula em **branco** — a matriz do escopo `provedor` (15
+  linhas desde 2026-09-23) e as duas linhas de `REL` que `LACUNA-NUC-037` esperava. Célula em branco **não** é `?`, e nada
   dela entra na contagem da §8 acima.
 
 ### Superfície por papel — dois arquivos, um conjunto (`RN-NUC-034` a `036`)

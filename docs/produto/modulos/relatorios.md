@@ -259,3 +259,28 @@ núcleo (`PN-10`) — nenhuma fila, nenhuma pendência e nenhuma operação depe
 elaborada é composta, e isso é ausência de análise, não erro de tela.
 **Sensível** agregado que se aproxima de pessoa (cliente-final quando `CLF` está ligado; operador, que
 `RN-REL-008` mantém fora do grão).
+
+**Registra** (acrescentado em 2026-09-12, `CLAUDE.md` §7.10) **nada, e é o único módulo do produto
+nessa condição** — `REL` lê fato e não produz nenhum. A única coisa que ele poderia registrar é a
+**própria leitura**, e ela não está decidida: ler relatório não tem linha em matriz nenhuma
+(`LACUNA-NUC-037`), e o valor da célula decide **duas** coisas ao mesmo tempo, quem lê e se a leitura
+deixa rastro (`R` × `P`, `RN-NUC-029`). A cláusula que obriga quem valorar a decidir as duas está em
+`matriz-operacao-papel-modulos.md` §9 e em `matriz-celulas-a-valorar.md` §2, item (f).
+
+**Não registra**, e cada um com o motivo:
+
+- **A própria leitura, hoje.** Ausência **acidental**, pendurada na célula acima — achado 2.9 de
+  `captura-varredura-invariante-10-2026-09-11.md`. Sem ela, "este relatório é usado, por quem e com
+  que frequência" não é respondível, e é essa a única conferência possível da promessa de
+  `RN-REL-001`: relatório existe pela decisão que informa. A assimetria que torna o buraco visível:
+  **exportar** documento fiscal registra quem pediu, o escopo e o volume (`RN-EMI-039`), e ler o
+  agregado do mesmo período não registra nada.
+- **Pessoa, em grão, coluna, ordenação ou filtro** (`RN-REL-008`). É decisão sobre vigilância de
+  trabalhador, do humano, em `LACUNA-REL-002` — a trilha continua íntegra e consultável caso a caso.
+- **Qualquer valor que dependa de outro cliente**, inclusive anonimizado ou em faixa (`RN-REL-006`):
+  é vazamento por agregado, que sobrevive a schema correto.
+- **Projeção.** Fora da fronteira do módulo hoje (§1), e o que existe é `CAP-REL-001`, candidata e
+  não agendada.
+- E a trava que é de captura, não de leitura: **ausência de módulo nunca vira zero**, nem gravado nem
+  apresentado (`RN-REL-005`). Zero é fato; ausência não é, e confundir os dois faz alguém decidir
+  sobre dado que não existe.

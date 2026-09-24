@@ -214,6 +214,10 @@ respostas.
   semente. Sem número, o grão de `RN-REL-009` a `014` não é operável, e limite ausente é limite
   infinito. **Dono:** `performance` (passo 7 da T-0003), com o humano para a parte de expectativa de
   uso. Não escrevo número.
+  **Parte de janela FECHADA em 2026-09-23 para classe discricionária** → `RN-NUC-084` (c)
+  (`fatos-de-operacao-retencao-e-descarte.md`): 12 meses fechados no grão fino. Os seis relatórios desta
+  semente leem fato de **obrigação** ou de **prova** (venda, desconto e autorização dele, sessão de caixa,
+  desfecho fiscal), que (c) não alcança, então para eles a janela continua aberta. O recorte por página continua com `performance`.
 - **`LACUNA-REL-002`** — recorte **por pessoa** (operador, autorizador, quem fechou a sessão) entra
   em algum relatório? É a mesma pergunta de vigilância de `catalogo-de-capacidades.md`. **Dono:**
   humano.

@@ -14,8 +14,9 @@
 > **Célula em branco não é `?`.** `?` é um **valor**, com significado próprio ("ninguém decidiu", nega por
 > default) e conta na contagem consolidada de `matriz-operacao-papel-modulos.md` §8. Branco é a ausência
 > da própria linha: a linha ainda não foi admitida em matriz nenhuma. Consequência prática, e é o motivo
-> de a distinção estar escrita: **as 43 células `?` e o total de 380 continuam exatos** — nada desta
-> folha entra naquela contagem, e quem a somar produzirá um número falso.
+> de a distinção estar escrita: **as 43 células `?` e o total de 395 continuam exatos** (380 até
+> 2026-09-23, quando o núcleo ganhou as linhas 40 a 42) — nada desta folha entra naquela contagem, e quem
+> a somar produzirá um número falso.
 >
 > **Contrato de célula, herdado sem reescrita.** Valem os valores e sinais de `RN-NUC-026`
 > (`P`, `N`, `N·cfg`, `A:<papel>`, `R`, `?`), a precedência da célula sobre a prosa (`RN-NUC-039`), o
@@ -30,7 +31,7 @@
 
 ---
 
-## 1. Escopo `provedor` — 14 linhas candidatas, 3 papéis
+## 1. Escopo `provedor` — 15 linhas candidatas, 3 papéis
 
 **As colunas são os três papéis de `RN-PRV-003`**, e só eles: os cinco papéis das matrizes de cliente
 **não** são coluna aqui, e `provider_operator`/`provider_administrator` **não** são coluna lá — é o mesmo
@@ -87,6 +88,14 @@ negativa seja **decidida**, e não apenas herdada da omissão.
 | A4 | **Conceder e revogar** concessão de `provider_support` | `RN-NUC-024`, `RN-PRV-005` | | | | |
 | A5 | **Interagir com o cliente-final** de um cliente | `RN-PRV-008` — **inerte** até a resposta do advogado | | | | |
 | A6 | **Emitir sugestão** ao cliente | `RN-PRV-021` — **provisória** (`LACUNA-PRV-004`, `LACUNA-PRV-007`) | | | | |
+| A7 | **Atribuir o primeiro `owner`**, dentro do ato que provisiona o cliente (A1) | `RN-NUC-090`, `RN-PRV-013` | | | | |
+
+**A7 entrou em 2026-09-23** (`T-0015`, B.1 §2, `docs/produto/identidade-necessidade-e-fronteira-2026-09-23.md:134-188`),
+e é linha própria porque o objeto é outro: A1 cria o cliente, A7 cria a primeira **atribuição** nele. As
+duas não se separam no tempo, porque `RN-NUC-090` põe a atribuição no mesmo ato do provisionamento, e é
+isso que dispensa resolver o alvo fora do pedido. Para a valoração: A7 valorada `P` num papel em que A1
+não é `P` é linha que não se consuma; e depois do primeiro `owner`, atribuir papel no cliente é só dele
+(linha 20 do núcleo), então A7 não é "editar atribuição" e não se confunde com A3.
 
 **Três observações que a valoração precisa ter à vista, e nenhuma é valor.** (1) **A2 não se consuma sem
 a regra de confirmação** (`LACUNA-PRV-003`): mesmo valorada `P`, a operação continua negada até alguém
@@ -97,7 +106,7 @@ declaradas inerte e provisória**: valorá-las não as ativa, porque o que as tr
 
 ### 1.3 Duas travas que a valoração não remove
 
-Valorar as 14 linhas **não** faz o escopo operar. Continuam de pé, e é o desfecho correto:
+Valorar as 15 linhas **não** faz o escopo operar. Continuam de pé, e é o desfecho correto:
 `RN-PRV-004` (d) — com `D-03` ABERTA, o ato nosso que nomeia cliente **não acontece**; e `RN-PRV-016` —
 enquanto `RN-NUC-029` não admitir a **quarta fonte** (papel de escopo `provedor`, com o cliente-alvo
 resolvido no próprio registro), o registro é impossível e **registro impossível impede o ato**. As duas
@@ -138,6 +147,14 @@ schema, então nenhuma defesa de isolamento por cliente o pega, e são pessoas j
 (e) A coluna `Offline`: relatório tem frescura de **dias** (`RN-REL-002`) e não é fila (`RN-REL-003`) —
 nenhuma decisão de `REL` é do caminho crítico, e desligar `REL` não atrasa fila nenhuma.
 
+(f) **A célula decide também se a leitura produz registro**, e não só quem lê — `R` × `P`
+(`RN-NUC-026`, `RN-NUC-029`). Isso importa mais aqui do que em qualquer outra linha destas folhas
+porque `REL` **não produz fato nenhum** por contrato (`modulos/relatorios.md` §3, "Nenhum evento"):
+valorada `P`, a leitura de relatório não deixa rastro em lugar nenhum, e nenhuma leitura posterior
+responde "este relatório é usado, por quem e com que frequência" — pergunta sem backfill
+(`CLAUDE.md` §7.10). Acrescentado em 2026-09-12 pela segunda passada do invariante 10; o valor
+continua sendo do humano, e nada aqui o antecipa.
+
 **O que não é linha aqui, e por quê.** **Exportar** relatório não é linha de `REL`: exportação do próprio
 dado pelo cliente é **núcleo** (`PN-10`, e `modulos/relatorios.md` §1 já a põe fora da fronteira do
 módulo), e exportação de **documento fiscal** é outra operação, com lacuna própria
@@ -148,7 +165,8 @@ módulo), e exportação de **documento fiscal** é outra operação, com lacuna
 
 ## 3. O que esta folha pede, em um lugar
 
-- **§1:** 14 linhas × 3 papéis = **42** células, mais 14 na coluna `Sem contato`.
+- **§1:** 15 linhas × 3 papéis = **45** células, mais 15 na coluna `Sem contato` (14 e 42 até
+  2026-09-23, antes de A7).
 - **§2:** 2 linhas × 5 papéis = **10** células, mais 2 na coluna `Offline`.
 - **Nenhum número, nenhum prazo e nenhuma prioridade** são pedidos aqui — e nenhum é escrito aqui.
 

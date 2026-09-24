@@ -12,8 +12,10 @@ Entrada: `vocabulario-e-eixos.md` (§1.4 id imutável, §2.3 o que todo bloco de
 `grade-e-espacos.md` (§5.1 bloco fora da faixa, §5.2 transbordo, §6.3 as garantias de `PN-06`),
 `estados-e-interacao.md` (§3.1, §3.4, §5), `docs/arquitetura/d-01-d-02-stack-opcoes.md` (§3.4).
 
-Este arquivo define **comportamento**, não mecanismo: o parse, o despacho e o cache são código, e
-código é **D-02**.
+Este arquivo define **comportamento**, e o comportamento é contrato. O mecanismo existe desde
+2026-09-12 (T-0012) em `packages/sdui/src/manifest/`: `parse.ts` (análise tolerante), `dispatch.ts`
+(despacho tipado com piso garantido) e `screen.ts` (a escada rede → cache → piso). Divergiu do que
+está escrito aqui? O defeito é do código.
 
 ## 4. Tolerância de versão
 

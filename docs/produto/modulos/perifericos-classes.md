@@ -125,10 +125,13 @@ o produto ou se chama alguém — nas próximas duas palavras, não no chamado d
 **Aceite** ler um código desconhecido durante um lançamento: o pedido em construção fica **intacto**, a
 recusa nomeia o que foi lido e o que aquele contexto esperava, e o operador segue pela digitação
 (`RN-PER-015`) sem reabrir nada.
-**Infeliz** o código é válido e o produto não o encontra no catálogo que o terminal retém, sem contato
-(`RN-OFF-020`) → a leitura é aceita como leitura e a **resolução** é que falha, dizendo que falta
-contato para resolver aquele identificador. Qual é a regra do núcleo para identificador não resolvível
-offline é `[[LACUNA-PER-6]]` — não a invento aqui.
+**Infeliz** o código é válido (chegou completo, `RN-NUC-063` f) e o produto não o encontra no catálogo
+que o terminal retém, sem contato (`RN-OFF-020`) → a leitura é aceita como leitura e a **resolução** é
+que falha. A regra é do núcleo, `RN-NUC-063` (`fatos-de-operacao-dominios-fechados.md` §1), e `PER` a
+cita sem reescrever: o lançamento é recusado com motivo `item_identifier_unresolved`, a recusa diz que
+o item não está no catálogo que **este terminal** tem e que sem contato não deu para conferir versão
+mais nova, e nunca afirma que o item não existe. A leitura incompleta ou ilegível não chega lá: é tentativa que **falhou**
+(`RN-PER-004`). `[[LACUNA-PER-6]]` fechou assim em 2026-09-23.
 
 ### RN-PER-015 — Nenhum caminho existe só por leitura, e nenhum existe só por toque
 
@@ -186,6 +189,13 @@ o último conteúdo indefinidamente: passa a estado neutro, e a venda segue sem 
 ## 4. Quantidade medida
 
 ### RN-PER-018 — Quantidade medida é leitura transportada com origem declarada; `PER` não converte, não arredonda e não decide tolerância
+
+> **Indisponível — conformidade da quantidade medida com a norma do instrumento.** Não funciona: afirmar
+> tolerância, arredondamento e casas exigidos para o que se cobra por medida, e verificar exigência sobre
+> o instrumento. Falta: a norma aplicável, confirmada (`LACUNA-PER-2`). Responde: humano.
+> Enquanto isso: a leitura entra como leitura, com unidade e origem declaradas, e `PER` não converte nem
+> arredonda (`RN-PER-018`); sem instrumento, a quantidade é informada e marcada (`RN-PER-019`). Desde:
+> 2026-09-23.
 
 **Enunciado** `PER` entrega a leitura **como leitura**, com a unidade em que ela foi obtida e o instante,
 e marca a quantidade do item como **medida** (em oposição a informada). Conversão de unidade,

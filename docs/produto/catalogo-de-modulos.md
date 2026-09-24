@@ -4,7 +4,7 @@ Todos os módulos previstos da Forja — **inclusive os de verticais que ainda n
 catálogo existe para que a próxima vertical não renegocie o núcleo: quando chegar posto ou varejo, a
 resposta "isso é módulo, e o módulo já tem código e fronteira" já está escrita. Aqui é **uma entrada
 curta por módulo**; spec profunda mora em `modulos/<modulo>.md` e só existe para módulo que o humano
-cortar para construir.
+cortar para construir. A camada 2 (§4) mora em `catalogo-de-modulos-camada-2.md` desde 2026-09-23.
 
 ## 1. Como ler, e o que vale para toda entrada
 
@@ -44,7 +44,8 @@ ali contradiria a postura (relatório gerencial elaborado é outra coisa, e é m
 ### `NUC` — Núcleo de venda · núcleo
 Vender, receber, conferir o dinheiro e guardar o fato — em qualquer ramo, com rede ruim, sem perder
 venda. **Escopo** núcleo: é o conjunto que os três negócios **quebram** sem (`fronteira` §2, item por
-item) — catálogo com preço e vigência, pedido, venda imutável, correção por fato novo, pagamento e
+item) — catálogo com preço e vigência (com agrupamento opcional e marca de fora de venda, `RN-NUC-068`,
+`RN-NUC-071`), pedido, venda imutável, correção por fato novo, pagamento e
 troco, sessão de caixa e turno, operador com papel e trilha, âncora da obrigação, idempotência e
 continuidade offline; mais **modo de atendimento** e **observação do item de pedido** (`glossario.md`
 §1.3, `fronteira` §2.3). **Ativação** sempre ligado; não existe cliente sem núcleo.
@@ -90,14 +91,16 @@ o módulo **ligado** e o equipamento falhando. **Sensível** conteúdo do compro
 ### `EST` — Estoque · módulo
 Saber quanto existe de cada item e registrar entrada, saída, perda e contagem. **Escopo** módulo:
 padaria produz, posto mede tanque, loja conta peça — nem a necessidade nem a mecânica são comuns aos
-três (`fronteira` §2.2). **Ativação** isolado, só núcleo. **Expõe** disponibilidade por item, evento
-de movimento, resultado de contagem. **Exige** do núcleo: item com unidade de medida declarada, e a
+três (`fronteira` §2.2). **Ativação** isolado, só núcleo. **Expõe** saldo por item, evento
+de movimento, resultado de contagem. Tirar item de venda não é daqui: é marca publicada do núcleo
+(`RN-NUC-071`), e saldo zero só a produz se uma regra de `EST` disser isso. **Exige** do núcleo: item com unidade de medida declarada, e a
 venda concluída como origem da baixa.
 **Desligado** a venda não consulta disponibilidade, nada é baixado, sem aviso de falta nem tela de estoque; o caixa vende igual. **Sensível** —
 
 ### `PUB` — Publicação de catálogo · módulo
 Dar ao item o conteúdo que um canal externo precisa exibir: descrição, imagem, atributo público,
-agrupamento, disponibilidade por canal. **Escopo** módulo: só faz sentido onde existe canal para o
+seção de canal (`channel_section`, distinta do grupo de catálogo do núcleo, `RN-NUC-068`),
+disponibilidade por canal. **Escopo** módulo: só faz sentido onde existe canal para o
 cliente-final ver (`fronteira` §2.2) — catálogo com código e preço é núcleo, conteúdo publicável não
 é. **Ativação** isolado, só núcleo (o cliente mantém conteúdo antes de existir canal). **Expõe**
 catálogo publicável por canal, já filtrado pelo disponível. **Exige** do núcleo: item, preço vigente e
@@ -226,7 +229,9 @@ Comprometer antecipadamente um horário e, quando existir, um lugar — com conf
 não comparecimento. **Escopo** módulo: nenhum dos três quebra sem ela (`fronteira` §4, resposta 2).
 **Ativação** isolado, só núcleo; com `MSA` a reserva aponta para um lugar, sem `MSA` é só horário e
 quantidade de pessoas. **Expõe** agenda e estado de cada reserva, evento de chegada e de ausência.
-**Exige** do núcleo: estabelecimento, turno e fuso do cliente (reserva é um instante no fuso dele).
+**Exige** do núcleo: estabelecimento e o fuso dele (reserva é um instante no fuso da unidade,
+`RN-NUC-057`). Até 2026-09-23 dizia "turno e fuso do cliente"; turno é opcional e nada o exige
+(`RN-NUC-062`), e o núcleo não tem fuso do cliente.
 **Desligado** não há agenda; o atendimento é por ordem de chegada. **Sensível** nome e contato de quem reservou.
 
 ### `REL` — Relatórios gerenciais · módulo
@@ -236,7 +241,7 @@ exportação do próprio dado é núcleo** (`PN-10`) e não depende deste módul
 núcleo; enriquece com o que estiver ligado (`EST`, `COM`, `FIS`…) lendo o que cada um **expõe**, nunca
 o de dentro deles. **Expõe** consultas agregadas por período e por estabelecimento, sempre dentro de
 um cliente. **Exige** do núcleo: venda, pagamento e sessão de caixa como fatos imutáveis, e o fuso do
-cliente para o corte de "hoje".
+estabelecimento para o corte de "hoje" (`RN-NUC-057`; até 2026-09-23, "fuso do cliente").
 **Desligado** o cliente tem o fechamento do dia e a exportação do núcleo; nenhuma análise elaborada é
 composta. **Sensível** agregado de dado de pessoa quando `CLF` está ligado; desempenho por operador.
 
@@ -250,13 +255,48 @@ por papel, trilha de quem consumiu o quê.
 **Desligado** nenhum terceiro tem acesso; a saída de dado é a exportação do núcleo, feita pelo cliente.
 **Sensível** credencial do parceiro e todo dado que o contrato expõe — é a superfície externa.
 
-### `GRD` — Grade de variantes · módulo, ligado por vertical (varejo de moda)
+### `GRD` — Grade de variantes · módulo **cross-vertical**
 Tratar um mesmo item em combinações de eixos (cor, tamanho, sabor) sem multiplicar cadastro à mão.
-**Escopo** módulo: padaria e posto não precisam, loja de roupa não vive sem (`fronteira` §2.2).
+**Escopo** módulo, **não de ramo**: padaria e posto não precisam, loja de roupa não vive sem
+(`fronteira` §2.2), e uma loja de polpa precisa de sabor com o mesmo contrato sem ser moda
+(`dois-varejos-corpo-de-prova-2026-09-11.md` §4). O carimbo "varejo de moda" caiu em 2026-09-11 porque
+contradizia o "sabor" desta mesma entrada e `receitas-por-vertical.md:69`; reclassificação registrada
+(`fronteira` §7) em `[[decision-grd-e-cross-vertical-nao-e-de-moda]]`. O degrau de baixo, eixo único
+com preço próprio, também é daqui: `G-04` fechou em 2026-09-23 (`RN-NUC-069`), e o núcleo vende item
+atômico. **Fora do MVP 1** por decisão do thread de 2026-09-23.
 **Ativação** isolado, só núcleo; conversa com `EST` por evento quando há controle por combinação.
 **Expõe** a combinação vendável e o código dela, consulta de eixos de um item. **Exige** do núcleo:
 item com código e preço.
 **Desligado** cada combinação é um item de catálogo próprio, cadastrado individualmente. **Sensível** —
+
+> **Indisponível — variação de um item por eixo (tamanho, sabor, cor).** Não funciona: vender o mesmo
+> item em combinações de eixo, como bebida em 300 ml e 500 ml, sem cadastrar cada combinação. Falta:
+> `GRD` no MVP. Responde: humano (escopo comercial; `GRD` fora do MVP 1 por decisão de 2026-09-23).
+> Enquanto isso: cada combinação é item de catálogo próprio, cadastrado individualmente
+> (`catalogo-de-modulos.md:270`, `GRD` desligado). Desde: 2026-09-23.
+
+### `ADI` — Adicional · módulo **cross-vertical**
+Acrescentar a um item uma opção com preço próprio, escolhida na hora e em quantidade (bacon ×2,
+gravação, ajuste de barra cobrado, embrulho pago), cadastrada uma vez e reusada entre itens. **Escopo**
+módulo: o posto não usa (`fronteira` §2.2), e compor valor sobre a linha é capacidade ativável; código
+reservado em 2026-09-23 (`glossario.md` §4.3), fecha `G-05` (`RN-NUC-070`). É **multiconjunto**: cada
+adicional com quantidade própria, porque conjunto proibiria "bacon duplo" e o contorno multiplica
+cadastro. Não é `GRD`: grade produz item por combinação, e dez adicionais com até três de cada dariam
+4¹⁰ itens. **Ativação** isolado, só núcleo. **Expõe** os adicionais aplicáveis a um item, com preço
+vigente, e o componente composto em cada linha (`order_item_component`). **Exige** do núcleo: item de
+catálogo, linha de pedido e o contrato de publicação (`RN-NUC-013`, última linha da tabela): o artefato
+dele diz quais adicionais valem para quais itens, a que preço e com que vigência, e a venda congela a
+versão. **Desligado** a linha não tem componente; a opção cobrada é item de catálogo próprio em linha
+própria, e a observação da linha do item diz o que fazer (`RN-NUC-070` c). **Sensível** —
+**Registra** cada componente congelado na linha, e o acrescentado e retirado antes da conclusão
+(`RN-NUC-053`, `RN-NUC-054`). **Não registra** o cálculo interno do módulo: a versão do artefato basta
+para reconstruí-lo.
+
+> **Indisponível — adicional cadastrado uma vez e aplicado a vários itens.** Não funciona: escolher, na
+> linha de um item, adicionais com preço próprio e quantidade. Falta: `ADI` no MVP 1, onde o roadmap não
+> o põe. Responde: humano (escopo comercial). Enquanto isso: a opção cobrada é item de catálogo próprio,
+> lançado em linha própria, com a instrução na observação da linha do item (`RN-NUC-070` c; `ADI`
+> desligado, acima). Desde: 2026-09-23.
 
 ### `ETQ` — Etiqueta · módulo, ligado por vertical (varejo)
 Gerar identificação afixável à mercadoria (código, preço, validade, origem) e imprimi-la. **Escopo**
@@ -279,92 +319,9 @@ declaradas (§2.2 — é por isso que ela é núcleo), pedido e venda.
 
 ## 4. Camada 2 — módulos que exigem outro módulo
 
-A dependência é contrato ou evento, verificada na ativação. Nenhum destes lê o de dentro do outro.
-
-### `FTC` — Ficha técnica · módulo
-Declarar de que insumos um item preparado é feito, e em que quantidade. **Escopo** módulo: quem
-revende embalado não precisa (`fronteira` §2.2). **Ativação** isolado só para **documentar**
-composição e custo; para baixar insumo ao vender, **exige `EST`**. **Expõe** composição e custo de um
-item, evento de consumo previsto por item vendido. **Exige** do núcleo: item e unidade de medida; de
-`EST`: o movimento de insumo, por evento.
-**Desligado** o item preparado é vendido como item simples, sem consumo de insumo. **Sensível** —
-
-### `FRN` — Fornecedor e compra · módulo
-Registrar de quem se compra e o que entrou, com custo, para alimentar estoque e custo do item.
-**Escopo** módulo: só faz sentido onde há controle do que entra (`fronteira` §4, resposta 2).
-**Ativação** **exige `EST`** — sem estoque a entrada não tem para onde ir e o módulo viraria cadastro
-sem consequência. **Expõe** compra e custo de entrada, evento de recebimento. **Exige** do núcleo:
-item e estabelecimento; de `EST`: o movimento de entrada.
-**Desligado** a entrada é lançada direto em `EST` (ou não é lançada); sem histórico de fornecedor nem
-de custo de compra. **Sensível** identificação e contato do fornecedor (pessoa ou empresa).
-
-### `FID` — Fidelidade · módulo
-Acumular e resgatar benefício por compra recorrente de um cliente-final identificado. **Escopo**
-módulo: política de cliente, não de ramo (`fronteira` §2.4; `glossario.md` §3.4). **Ativação** **exige
-`CLF`** — sem identidade de quem compra não há a quem acumular; usa `VOU` quando o resgate vira
-crédito. **Expõe** saldo de benefício, evento de acúmulo e de resgate. **Exige** do núcleo: venda
-concluída como origem do acúmulo e o abatimento decidido no backend (`PN-13`); de `CLF`: a identidade
-do cliente-final.
-**Desligado** nenhum benefício é acumulado; a venda não muda. **Sensível** histórico de consumo ligado a pessoa identificada.
-
-### `ENT` — Entrega em endereço · módulo
-Levar o pedido até um endereço: destino, responsável pela entrega, estado do trajeto e comprovação.
-**Escopo** módulo: loja de roupa e farmácia entregam igual ao serviço de alimentação — é módulo, não
-vertical (`glossario.md` §3.4). **Ativação** **exige `CMP`**, porque entrega é um destino de
-cumprimento e sem fila/estado não há o que acompanhar; usa `ECG` para taxa de entrega nomeada e `CLF`
-para endereço guardado. **Expõe** estado da entrega e destino, evento de saída e de conclusão.
-**Exige** do núcleo: pedido e venda; de `CMP`: o estado de cumprimento.
-**Desligado** o pedido é retirado no estabelecimento. **Sensível** endereço, telefone e nome do destinatário; localização de quem entrega.
-
-### `TRC` — Troca · módulo
-Substituir mercadoria devolvida por outra, resolvendo a diferença de valor. **Escopo** módulo:
-devolução é núcleo (`fronteira` §2.3), e troca com substituição e saldo é comportamento a mais, que
-padaria e posto não usam. **Ativação** isolado para troca de valor igual ou com pagamento da
-diferença; **exige `VOU`** quando sobra saldo a favor do cliente-final. **Expõe** a troca como par de
-fatos ligados à venda original, evento de crédito gerado. **Exige** do núcleo: devolução como fato
-novo referenciando o original (`PN-07`) e autorização por papel.
-**Desligado** o cliente resolve com devolução + venda nova, sem vínculo entre elas. **Sensível** identificação de quem trocou, se a política do cliente exigir.
-
-### `CSG` — Condicional · módulo, ligado por vertical (varejo de moda)
-Deixar mercadoria sair sem venda, para decisão posterior, e cobrar ou receber de volta. **Escopo**
-módulo: os três negócios do teste operam sem (`fronteira` §4, resposta 2). **Ativação** **exige
-`EST`** — mercadoria fora sem venda é posse a controlar; usa `CLF` para saber com quem está. **Expõe**
-o que está fora, com quem e desde quando, evento de retorno e de conversão em venda. **Exige** do
-núcleo: item e a venda concluída quando a condicional se converte; de `EST`: o movimento.
-**Desligado** não existe saída sem venda; o cliente controla por fora. **Sensível** identificação de
-quem levou a mercadoria.
-
-### `PCF` — Pedido pelo cliente-final · módulo
-Deixar o cliente-final montar o próprio pedido, no dispositivo dele ou em terminal de autoatendimento,
-e mandar para dentro do PDV. **Escopo** módulo: os três negócios vendem sem canal para o cliente-final
-(`fronteira` §4, resposta 2), e o canal (dispositivo do cliente-final ou terminal de autoatendimento)
-é **configuração**, não módulo novo. **Ativação** **exige `PUB`** (não há canal sem conteúdo a exibir)
-e **exige um destino**: `MSA` quando o pedido cai em consumo em aberto, `CMP` quando cai em
-fila/retirada — sem destino declarado, a ativação é recusada; usa `PGO` para pagamento antecipado e
-`CLF` quando o pedido é identificado. **Expõe** o pedido de origem externa, marcado pelo canal, para o
-núcleo tratar como qualquer pedido. **Exige** do núcleo: pedido, preço vigente e **todo** cálculo de
-valor, desconto e disponibilidade — `PCF` coleta e exibe (`PN-13`); exige também a identidade do
-interlocutor como **requisito** (anônimo por sessão, identificado por contato, ou conta), cuja
-estratégia é **D-03** e não se presume aqui.
-**Desligado** todo pedido nasce de um operador; nenhuma superfície externa existe.
-**Sensível** contato e identificação do cliente-final, endereço quando há `ENT`, e o vínculo entre
-sessão externa e pedido.
-
-### `ATI` — Atendimento com IA · módulo
-Atender em linguagem natural: tirar dúvida sobre o catálogo, montar pedido e passar para humano quando
-não sabe. **Escopo** módulo: os três negócios operam sem (`fronteira` §4, resposta 2) — é capacidade,
-não postura, e `PN-16` vale com ele ligado ou desligado. **Ativação** **exige `PUB`** (é sobre o
-catálogo publicado que ele responde); para atender cliente-final, **exige `PCF`**, que é quem define
-canal, destino do pedido e identidade do interlocutor — ligado sem `PCF`, atende **operador** e nada
-mais. **Expõe** proposta de pedido e proposta de ação, sempre como **proposta pendente**, e evento de
-transferência para humano. **Exige** do núcleo: cálculo de valor, disponibilidade e autorização — nada
-disso vive aqui; e o limite de `PN-16`: automação **propõe**, o que move valor ou altera fato
-concluído exige confirmação de operador com papel autorizado, com proposta + confirmação na trilha, e
-sem resposta confiável ela entrega a conversa a um humano em vez de improvisar.
-**Desligado** o atendimento é humano; nenhuma proposta automática existe e nenhum canal muda.
-**Sensível** **conteúdo de conversa** (pode conter qualquer coisa que o interlocutor escreva, inclusive
-dado de pessoa não solicitado), identificação do interlocutor, e o que sai para provedor externo de
-modelo. Retenção de conversa é decisão de produto pendente, declarada na spec do módulo, não aqui.
+**Mudou para `catalogo-de-modulos-camada-2.md` em 2026-09-23**, com o texto de antes, quando a entrada de
+`ADI` levou este arquivo acima de 400 linhas. Lá estão `FTC`, `FRN`, `FID`, `ENT`, `TRC`, `CSG`, `PCF` e
+`ATI`. O número da seção ficou aqui, vago, para não invalidar citação.
 
 ## 5. Verticais — a receita mora em outro arquivo
 

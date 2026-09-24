@@ -369,6 +369,34 @@ autorizado, nunca exposto como ranking na operação — e que `ATI` **não comp
 (`RN-ATI-013`, `RN-ATI-015`). Nenhum dado de pagamento existe em `ATI`. Toda categoria tem prazo
 declarado; proteção é de `seguranca`, e os prazos são do humano (§8).
 
+**Registra** (acrescentado em 2026-09-12, `CLAUDE.md` §7.10): cada proposta pendente, com o
+interlocutor e a conversa referenciados · a confirmação, a recusa e a **expiração** da proposta · a
+escalada para humano, com o contexto coletado (`RN-ATI-007`, `RN-ATI-012`) · o desfecho da conversa,
+inclusive **"não sei"**, que é medição e não falha (`RN-ATI-006`) · a **origem declarada** de cada
+item de contexto recuperado, do vocabulário fechado (`RN-ATI-019`) — e é por ela que a ocorrência de
+texto que se declara instrução fica reconhecível na trilha (`RN-ATI-018`, aceite) · o estado da
+capacidade para quem opera.
+
+**Não registra**, e cada um com o motivo:
+
+- **Conteúdo de texto como campo de decisão.** Presença e origem, nunca o que o texto diz
+  (`RN-ATI-009`, `RN-ATI-018`, `RN-OFF-027`) — e o conteúdo em si tem prazo declarado por categoria
+  (`RN-ATI-013`), cujo valor é do humano (§8).
+- **Tentativa de injeção como categoria contável.** A ocorrência é **reconhecível** na trilha pela
+  origem declarada (`RN-ATI-018`, aceite); o que não existe é contá-la como espécie, porque
+  classificar exige decidir o que o interlocutor **quis**, e inferir intenção do texto é exatamente o
+  mecanismo que aquela regra fecha. Querer a série é decisão do humano, e o custo dela é reabrir a
+  regra, não acrescentar um campo.
+- **Histórico de conversa recuperável por alvo ou por dispositivo.** Morta a sessão, a conversa
+  começa do zero (`RN-ATI-014`): a perda é preferível a entregar histórico a um desconhecido.
+- **Agregação sobre conduta de pessoa identificada.** Ela não é composta sem declaração do cliente
+  (tenant), com o dado nomeado (`RN-ATI-017`, `LACUNA-ATI-3`) — e nunca como efeito colateral de uma
+  conversa.
+- **Uma ausência que não é decisão.** O instante em que um humano **assume** a escalada, e o desfecho
+  da escalada que **ninguém** assumiu, não existem: `RN-ATI-012` registra a escalada e o outro lado do
+  marco falta. É o achado 2.6 de `captura-varredura-invariante-10-2026-09-11.md`, e é o dado que
+  responde a pendência 4 desta §8 — hoje decidível só por opinião.
+
 ## 8. Lacunas e pendências
 
 `LACUNA-ATI-3` (que agregação sobre conduta pode ser declarada) e `LACUNA-ATI-4` (o vocabulário fechado

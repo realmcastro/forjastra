@@ -8,29 +8,25 @@
 > precondição, o que produz, comportamento nos três domínios de falha, caminho infeliz e critério de
 > aceite.
 >
-> **Três arquivos, um conjunto normativo.** O núcleo estourou o teto de 400 linhas e foi partido no
-> eixo **operação**, que é o eixo pelo qual ele é lido e citado: **este** arquivo tem o cabeçalho
-> normativo, a tabela das operações (§1), pedido/venda/pagamento/correção (`RN-NUC-001` a
-> `RN-NUC-008`, mais `RN-NUC-038` — resolução escopada, acrescentada em 2026-08-23 — §2) e as lacunas de
-> todos (§6); `nucleo-caixa-e-turno.md` tem caixa, dinheiro na
-> gaveta e turno (`RN-NUC-009` a `RN-NUC-012`); `nucleo-publicacao-e-texto.md` tem publicação de
-> artefato e texto guardado (`RN-NUC-013` a `RN-NUC-016`). Numeração **contínua e imutável** entre os
-> três (`glossario.md` §4.2), e a numeração de **seção** deste arquivo também não foi reaproveitada:
-> §3, §4 e §5 mudaram de arquivo e os números ficaram vagos de propósito, para não invalidar citação
-> já feita. Regra de qualquer um dos três é regra do núcleo, sem hierarquia entre eles.
+> **Um conjunto normativo, partido por teto de 400 linhas no eixo operação.** **Este** arquivo tem o
+> cabeçalho, a tabela das operações (§1), `RN-NUC-001` a `008` e `038` (§2) e as lacunas de todos (§6);
+> §3 a §5 mudaram de arquivo e os números ficaram vagos, para não invalidar citação. Os irmãos que
+> partiram daqui: `nucleo-caixa-e-turno.md` (caixa, gaveta, turno), `nucleo-publicacao-e-texto.md`
+> (publicação, texto e, desde 2026-09-23, catálogo e preço: `068`–`072`) e `nucleo-venda-congelamento.md`
+> (rateio, arredondamento da linha e reservas: `064`, `065`, `067`). A lista completa é a busca
+> `^### RN-NUC-`. Numeração **contínua e imutável** (`glossario.md` §4.2), sem hierarquia entre arquivos.
 >
-> **Nível de heading é contrato de busca, não estética.** Nos três arquivos, toda regra é um heading
+> **Nível de heading é contrato de busca, não estética.** Em todos os arquivos, toda regra é um heading
 > `### RN-NUC-nnn — <enunciado curto>`, e `##` é só agrupamento. Conformidade do repo é conferida por
 > busca (`^### RN-NUC-`); dois níveis quebrariam a busca e a regra sumiria da contagem.
 >
-> **O que o conjunto fecha.** `LACUNA-OFF-001` (as sete linhas do núcleo sem regra citável — ver §6,
-> `LACUNA-NUC-007`, para o que **não** fechou), a costura de `LACUNA-OFF-010` (que artefato o núcleo
-> publica — `RN-NUC-013` a `RN-NUC-015`) e `LACUNA-GLO-002` (`service_mode`, `order_item_note`,
-> `pending_operation_queue`, `work_list`, `published_artifact` sem regra).
+> **O que o conjunto fecha.** `LACUNA-OFF-001` (as linhas do núcleo sem regra citável), a costura de
+> `LACUNA-OFF-010` (que artefato o núcleo publica: `RN-NUC-013` a `RN-NUC-015`) e `LACUNA-GLO-002`.
 >
 > **O que este arquivo não é.** Não é papel nem permissão (passo 2 e 3 da T-0003) — aqui a autoridade
 > aparece só como **requisito por operação**. Não é tela, bloco, componente nem relatório. Não é
-> tabela, coluna, endpoint, formato de identificador nem stack: **D-01 a D-04 estão ABERTAS**. Não é
+> tabela, coluna, endpoint, formato de identificador nem stack, que são de outros agents (`D-01`, `D-02`
+> e `D-04` fecharam em 2026-09-11 sem mudar nada aqui; `D-03` segue aberta). Não é
 > regra fiscal: fato fiscal aqui só é **remetido** a `RN-FIS`/`RN-EMI`.
 >
 > **Nenhum número.** Prazo, teto, limite, tolerância, quantidade e casas decimais concretas são
@@ -55,7 +51,7 @@ reger a célula lá; **linha herdada** é como a operação estava escrita antes
 | # | Operação | D1 | D2 | D3 | Classe | Regida por |
 |---|---|---|---|---|---|---|
 | 1 | Abrir pedido, lançar item, corrigir pedido em construção | integral | integral | integral | 1 | `RN-NUC-001`, `RN-NUC-002` |
-| 2 | Compor o valor devido: preço, desconto no limite, encargo, tributo | integral | integral | integral | 1 (aplica) | `RN-NUC-006`, `RN-NUC-013` (+ `RN-OFF-020`) |
+| 2 | Compor o valor devido: preço, desconto no limite, encargo, tributo | integral | integral | integral | 1 (aplica) | `RN-NUC-006`, `RN-NUC-013`, `RN-NUC-067`, `RN-NUC-070` (+ `RN-OFF-020`) |
 | 3 | Concluir venda com pagamento em espécie | integral | integral | integral | 1 + 3 | `RN-NUC-003`, `RN-NUC-004` |
 | 4 | Concluir venda com pagamento que exige adquirente | recusa | recusa | recusa | 4 | `RN-NUC-005` |
 | 5 | Aplicar desconto acima do limite do papel | recusa | recusa | recusa | 4 | `RN-NUC-007` |
@@ -125,6 +121,8 @@ terminal é o terminal decidindo dinheiro, que `PN-13` recusa.
 **Infeliz** o item não está no artefato publicado (cadastrado enquanto o terminal estava offline, ou
 preço vencido) → o **item** não é lançado, a **venda continua** com o que existe, e o produto diz que
 falta publicação daquele item — nunca inventa preço, nunca lança sem preço "para acertar depois".
+Identificador que não corresponde a item nenhum na versão aplicada é outro caso, com motivo próprio
+(`RN-NUC-063`, cláusula b); linha que precisa arredondar sem modo publicado é `RN-NUC-067`.
 Necessidade legítima por trás disso: **vender algo cujo preço não está publicado** (item novo,
 sobra, item avariado). O mecanismo velho — valor livre digitado no caixa — é recusado por `PN-13`; o
 mecanismo que a atenderia sem fabricar decisão é **item de preço aberto publicado, com teto por
@@ -145,7 +143,8 @@ referência humana é escopada antes de resolver, e não depois: `RN-NUC-038`.
 **Precondição** pedido com ao menos um item; valor composto por artefato publicado (`RN-NUC-006`);
 contrapartida registrada e suficiente (`RN-NUC-004`, `RN-NUC-005`); faixa com número disponível.
 **Produz** venda **append-only** — nunca editada, nunca apagada (`PN-07`) — mais a referência ao
-estado da obrigação documental, cujo significado é de `FIS`/`EMI`, não do núcleo.
+estado da obrigação documental, cujo significado é de `FIS`/`EMI`, não do núcleo. A referência, o grão
+do congelado e o lugar do número documental existem desde a primeira venda (`RN-NUC-065`).
 **Motivo** duas identidades porque elas resolvem problemas diferentes: uma impede que reenvio duplique
 (`PN-02`), a outra permite que uma pessoa localize a venda no balcão sem sistema na mão — e é dela
 que dependem devolução, reimpressão e conferência.
@@ -154,8 +153,11 @@ faixa finita). Nenhuma das duas identidades é pedida ao servidor.
 **Infeliz** (a) a faixa esgota offline → a **venda continua existindo** e a referência que faltou é
 pendência nomeada, no tratamento de `RN-OFF-006`, infeliz (a); nunca referência inventada, nunca
 reuso. (b) a resposta do servidor se perde depois do commit → reenvio devolve o mesmo resultado
-(`RN-OFF-013`). (c) o operador desiste no meio → o pedido morre, e pedido morto não é venda: nada
-sobe.
+(`RN-OFF-013`). (c) o operador desiste no meio → o pedido morre e **não vira venda**; o pedido em si
+não sobe (`RN-NUC-001`), e o **fato** de ele ter existido e morrido sobe como fato aditivo próprio
+(`RN-NUC-055`), que não carrega estado mutável nem torna o pedido compartilhado entre terminais. O
+"nada sobe" desta cláusula foi **revogado em 2026-09-11**, por decisão do humano sobre
+`LACUNA-NUC-038` (saída `B`); "pedido morto não é venda" não foi tocado.
 **Aceite** cortar o link, concluir três vendas em terminais diferentes, restabelecer: existem três
 vendas, nenhuma duplicada, cada uma com o instante do fato (`RN-OFF-019`), com as versões de artefato
 aplicadas e com referência humana distinta; nenhuma referência foi alocada duas vezes.
@@ -186,6 +188,13 @@ troco: a venda fecha, o pagamento existe, o esperado da sessão sobe pelo recebi
 ocorre sem nenhum modal de rede (`RN-OFF-018`).
 
 ### RN-NUC-005 — Pagamento que exige autorização de terceiro só existe com o resultado dela presente
+
+> **Indisponível — pagamento por meio que exige terceiro, sem o resultado dele.** Não funciona: registrar
+> pagamento de cartão ou de outro meio que exige autorização de terceiro com o terminal sem contato ou o
+> terceiro fora, inclusive captura pré-autorizada. Falta: o que o adquirente admite, e quais meios exigem
+> autorização. Responde: humano, com o adquirente. Enquanto isso: recusa em D1, D2 e D3 (linha 5 da
+> matriz, esta regra); meio sem a marca de exigência publicada é recusado (`RN-NUC-013`, infeliz (a)).
+> Desde: 2026-09-23.
 
 **Enunciado** meio de pagamento que dependa de autorização de terceiro **não** se torna pagamento sem
 o **resultado** dessa autorização; ausência de resultado é ausência de pagamento — nunca "pago,
@@ -266,6 +275,11 @@ mesma operação é autorizada por papel que a permite e o ato fica registrado.
 
 ### RN-NUC-008 — Correção de fato concluído é fato novo, e ela não se resolve offline enquanto a obrigação documental não está resolvida
 
+> **Indisponível — correção aditiva de venda concluída sem contato, antes da autorização do documento.**
+> Não funciona: corrigir no mesmo dia, sem rede, uma venda já concluída. Falta: confirmação de que a
+> correção aditiva antes da autorização é admitida. Responde: humano, com o contador. Enquanto isso:
+> recusa até haver conexão (infeliz, abaixo; linha 9 da matriz). Desde: 2026-09-23.
+
 **Enunciado** cancelamento de venda, devolução e estorno de pagamento são **fatos novos** que
 referenciam o original, com autor, instante e motivo; o original nunca é editado nem apagado
 (`PN-07`). Enquanto a obrigação documental da venda original **não está resolvida**, a correção não
@@ -338,16 +352,13 @@ que ele não retém não é localizado nem inventado (`RN-NUC-032`, offline).
 
 ## 6. Lacunas do núcleo
 
-`001` a `008` abertas em 2026-08-22, `036` em 2026-08-23; todas valem para os **três** arquivos do
-conjunto. Nenhuma bloqueia as regras —
-todas mudam quem constrói o quê, e cada regra que depende de uma delas foi escrita para **sobreviver às
-duas respostas**.
+`001` a `008` abertas em 2026-08-22, `036` em 2026-08-23; valem para todos os arquivos do conjunto, e
+cada regra que depende de uma delas foi escrita para **sobreviver às duas respostas**. Em 2026-09-23
+(T-0014, `F-018`) fecharam `001` e `007`, e `004` na parte que é regra nossa.
 
-- **`LACUNA-NUC-001`** — **conflito de fuso, aberto.** Com estabelecimentos em fusos diferentes, qual
-  fuso decide vigência, "hoje", turno e fechamento: o do **estabelecimento** (`RN-FIS-008`) ou o do
-  **cliente (tenant)** (`fronteira-do-nucleo.md` §2.1, `.claude/rules/dados.md` §3)? Os dois estão
-  escritos hoje. **Dono:** humano. É a mesma pergunta de `LACUNA-GLO-001` e `LACUNA-OFF-006`. Até
-  fechar, `RN-NUC-010` e `RN-NUC-013` **declaram** o fuso que usaram em vez de presumir qual manda.
+- **`LACUNA-NUC-001`** — fuso do estabelecimento ou do cliente (tenant). **FECHADA em 2026-09-23** →
+  `RN-NUC-057` ([[decision-fuso-e-moeda-sao-do-estabelecimento]]): é o do estabelecimento, e o núcleo
+  não tem fuso do cliente. Fecha junto `LACUNA-GLO-001` e `LACUNA-OFF-006`.
 - **`LACUNA-NUC-002`** — existe **item de preço aberto** no núcleo (valor informado pelo operador)? Se
   existir, ele é artefato publicado com **teto por papel**, nunca valor livre (`RN-NUC-002`, infeliz;
   `PN-13`). **Dono:** humano. Bloqueia a capacidade, não a regra.
@@ -356,37 +367,33 @@ duas respostas**.
   (`RN-OFF-006`) e sequência densa diária são incompatíveis, e escolher uma custa a outra. Formato é
   **D-04**; o grão e o reinício são de produto com o humano. **Dono:** humano, com entrada de
   `arquiteto-dados`.
-- **`LACUNA-NUC-004`** — **precisão e arredondamento** da composição do valor: qual é a regra, e ela é
-  publicada pelo núcleo ou por `FIS`? Não afirmada aqui, porque errar arredondamento é erro
-  financeiro sistemático e ele aparece no fechamento do contador. **Dono:** humano (com o contador);
-  forma, depois, de `arquiteto-dados` (`.claude/rules/dados.md` §3 já veta ponto flutuante).
-- **`LACUNA-NUC-005`** — existe caminho **aditivo** para corrigir venda concluída offline no mesmo dia,
-  **antes** de o documento fiscal ser autorizado (`RN-NUC-008`, infeliz)? Hoje o desfecho é recusa até
-  haver conexão. **Dono:** humano com o contador; entrada de `FIS`/`EMI`.
-- **`LACUNA-NUC-006`** — o **domínio fechado de meios de pagamento** não existe: `glossario.md` §1.4
-  declara que ele é fechado e não o enumera, e `RN-NUC-005` depende de saber **quais** exigem
-  autorização de terceiro. Junto: existe captura offline pré-autorizada, na forma de `RN-OFF-025`?
-  **Dono:** humano (com o adquirente), mais `ADQ`, `PGO`, `PRZ`.
-- **`LACUNA-NUC-007`** — **fechada pela metade em 2026-08-23; o que resta é turno.** Ela nasceu com duas
-  operações do núcleo (`fronteira-do-nucleo.md` §2.5) fora da tabela §4 de
-  `operacao-offline-e-sincronizacao.md`, logo recusadas pelo default de `RN-OFF-008`. **Metade fechada:**
-  o **fechamento do dia por estabelecimento** ganhou regra dona (`RN-NUC-031`) e a linha entrou na §4 por
-  transcrição — `degradado` em D1 e D3, **recusa** em D2, classe 1 no fato e 2 na precondição. **Metade
-  aberta:** **abertura e fechamento de turno** continua sem nenhuma regra numerada e por isso continua
-  recusada pelo default — e isso **não é defeito**: o humano respondeu "não sei ainda / depende do
-  cliente" sobre turno ser ou não a sessão de caixa, e classificar sem saber exigiria inventar a operação
-  (quem abre, o que ele encerra, o que acontece com sessão aberta na virada). `RN-NUC-010` só o nomeia
-  como pendência; `RN-NUC-018` mantém que turno **não** é escopo de autorização. Enquanto assim, a recusa
-  é dívida declarada, não desfecho aprovado, e é a última contradição com `PN-01` no núcleo. **Dono:**
-  humano, para dizer o que é turno; depois `produto`. A parte de fuso é `LACUNA-NUC-001`.
+- **`LACUNA-NUC-004`** — precisão e arredondamento da composição do valor. **Fechada em 2026-09-23 no
+  que é regra nossa:** o rateio (`RN-NUC-064`, [[decision-rateio-pelo-maior-resto-congelado-na-linha]]) e o
+  modo de arredondar a linha, publicado pelo estabelecimento (`RN-NUC-067`). **Fica:** qual modo a norma
+  exige com `FIS` ou `EMI` ligados, e o arredondamento do tributo, de `FIS`. **Dono:** humano, com contador.
+
+  > **Indisponível — modo de arredondamento conforme a norma.** Não funciona: afirmar que o modo publicado
+  > pelo `owner` é o que a norma exige quando `FIS` ou `EMI` estão ligados, e arredondar tributo. Falta: a
+  > regra aplicável, confirmada. Responde: humano, com o contador. Enquanto isso: a linha compõe e vende
+  > pelo modo que o estabelecimento publicou (`RN-NUC-067`); sem modo publicado, a linha que precisa
+  > arredondar não é lançada e a venda continua (`RN-NUC-013`, infeliz (a)); tributo não é composto
+  > enquanto `FIS` estiver fora do modelo (`modulos/fiscal.md:80`). Desde: 2026-09-23.
+- **`LACUNA-NUC-005`** — caminho **aditivo** para corrigir venda concluída offline no mesmo dia, antes da
+  autorização do documento (`RN-NUC-008`, infeliz). **Dono:** humano com o contador; aviso no topo de
+  `RN-NUC-008`. Com `EMI` desligado não há documento do produto, e a recusa vem da linha 9 da matriz:
+  abrir esse perfil seria decisão de produto, não do contador, e ninguém a tomou.
+- **`LACUNA-NUC-006`** — o domínio fechado de meios de pagamento não está enumerado (`glossario.md` §1.4),
+  e `RN-NUC-005` depende de saber quais exigem terceiro; junto, se existe captura offline pré-autorizada
+  (`RN-OFF-025`). **Dono:** humano, com o adquirente, mais `ADQ`, `PGO`, `PRZ`; aviso no topo de `RN-NUC-005`.
+- **`LACUNA-NUC-007`** — turno. **FECHADA em 2026-09-23** → `RN-NUC-062`
+  ([[decision-turno-e-agrupamento-opcional-de-sessoes-de-caixa]]): agrupamento opcional de sessões, de que
+  nada depende. O fechamento do dia já era `RN-NUC-031`.
 - **`LACUNA-NUC-036`** — **existe operação de localizar venda, pagamento ou movimento de caixa de outro
-  estabelecimento do mesmo cliente (tenant)?** Hoje não existe em nenhuma das duas matrizes, logo é negada
-  a todos (`RN-NUC-026`, `RN-NUC-038`, infeliz). A necessidade é real e conhecida (o cliente-final compra
-  numa loja e volta noutra), e o conteúdo em jogo é o mesmo do documento fiscal — valor, itens e, onde a
-  entrega exigiu, identificação do comprador. Se existir, entra na matriz com papel, escopo e registro, e
-  passa por `seguranca` antes: é travessia entre pessoas jurídicas. **Dono:** humano; irmã de
-  `LACUNA-NUC-019`, aberta em 2026-08-23.
-- **`LACUNA-NUC-008`** — quanto tempo vale o **papel retido** no terminal (`RN-OFF-024`), do qual
-  `RN-NUC-009`, `RN-NUC-011` e `RN-NUC-012` dependem para operar offline. É `LACUNA-OFF-011`, e está
-  repetida aqui porque três regras do conjunto (todas em `nucleo-caixa-e-turno.md`) param de valer sem
-  ela. **Dono:** humano.
+  estabelecimento do mesmo cliente (tenant)?** Não existe em nenhuma matriz, logo é negada a todos
+  (`RN-NUC-026`, `RN-NUC-038`, infeliz). A necessidade é real (o cliente-final compra numa loja e volta
+  noutra), e o conteúdo é o do documento fiscal: valor, itens e, onde exigido, identificação do comprador.
+  Se existir, entra na matriz com papel, escopo e registro, e passa por `seguranca` antes: é travessia
+  entre pessoas jurídicas. **Dono:** humano; irmã de `LACUNA-NUC-019`.
+- **`LACUNA-NUC-008`** — quanto tempo vale o **papel retido** no terminal (`RN-OFF-024`), de que
+  `RN-NUC-009`, `011` e `012` dependem offline. É `LACUNA-OFF-011`, repetida aqui porque essas três regras
+  (em `nucleo-caixa-e-turno.md`) param de valer sem ela. **Dono:** humano.

@@ -46,7 +46,7 @@ cláusula que dá honestidade à matriz: célula negada **porque ninguém decidi
 | `P` | permitido | o papel realiza a operação por si |
 | `N` | negado | negado **por decisão**, com a regra que a sustenta em `Regida por` |
 | `N·cfg` | negado | negado por default, e a configuração do cliente pode conceder (`RN-NUC-033`); concedida, herda o registro que a `RN` do módulo exige. **É negado**, não um quinto valor |
-| `A:<papel>` | permitido com autorização de outro papel | o ato de autorizar é do autorizador, e é registrado (`RN-NUC-022`) |
+| `A:<papel>` | permitido com autorização de outro papel | o ato de autorizar é do autorizador, que é **outro sujeito**, e é registrado (`RN-NUC-022`); quem porta o papel autorizador pratica o ato pela célula do próprio papel (`RN-NUC-066`) |
 | `R` | permitido com registro de auditoria | quem, quando, o quê — precondição do ato (`RN-NUC-029`) |
 | `?` | negado | **negado porque ninguém decidiu.** Lacuna nomeada; falha fechado até ser decidida |
 

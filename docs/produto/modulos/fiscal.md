@@ -77,6 +77,14 @@ Três consequências práticas que sustentam a partição:
 
 ## 2. `FIS` — Tributação
 
+> **Indisponível — tributo composto no total da venda.** Não funciona: compor o IBS/CBS no total que o
+> cliente-final paga, porque não se sabe se o tributo está contido no preço praticado ou é acrescido a ele
+> no fechamento. Falta: a regra de composição do preço ao consumidor (`LACUNA-FIS-002`). Responde: humano,
+> com o contador.
+> Enquanto isso: `FIS` não entra no modelo da Fase 1 enquanto `D-05` estiver aberta
+> (`roadmap-de-modulos.md:317-319`), e a venda conclui como com `FIS` desligado, sem tributo composto e com
+> comprovante não fiscal (§2.1, `Desligado`). Desde: 2026-09-23.
+
 **Propósito.** Dado um fato comercial, responder **o que incide, sobre que base, em que regime, sob
 que versão de regra** — e congelar a resposta junto com o fato.
 
@@ -198,6 +206,20 @@ dele, não degradação nossa.
 **Sensível** dado tributário do catálogo · regime e identidade fiscal do estabelecimento · nenhum dado
 de pessoa é necessário para tributar, exceto quando a natureza da operação depende do destinatário
 (`RN-FIS-017`) — e aí é o mínimo que a norma exige.
+**Registra** (acrescentado em 2026-09-12, `CLAUDE.md` §7.10) o fato tributado congelado, decomposto
+por tributo, base, redutor e regime, com a versão de regra usada (`RN-FIS-004`, `RN-FIS-014`) · a
+segregação por regime **e o fallback** quando ela não foi possível, sempre marcado como fallback
+(`RN-FIS-015`) · a natureza da operação **aplicada** quando ela não foi declarada, para que a
+divergência fique auditável (`RN-FIS-017`) · a exclusão de base **não** aplicada, com o porquê
+(`RN-FIS-016`) · a pendência tributária aberta e resolvida, com a causa nomeada (`RN-FIS-011`,
+`RN-FIS-018`).
+**Não registra** dado de pessoa fora do caso de `RN-FIS-017`, pela mesma razão da linha `Sensível`
+acima · **nenhum valor tributário inventado para fechar conta**: onde o tributo não pôde ser composto,
+o que existe é a pendência, e ela é o registro (`RN-FIS-014`, infeliz) · **nenhuma versão "corrigida"
+do passado**, porque recálculo retroativo não escreve no fato e correção é fato novo (`RN-FIS-005`,
+`RN-FIS-006`) — o que não se guarda é o número que nunca existiu · **apuração de outra pessoa
+jurídica**, inclusive crédito do adquirente, que é `APU` dele e depende de dado que não temos
+(`RN-FIS-020`).
 
 ## 3. `EMI` — Emissão de documento fiscal
 
@@ -265,6 +287,26 @@ cliente, provedor dele, ou `[[LACUNA-FIS-010]]`). É **configuração suportada*
 comprovante do PDV é não fiscal e o cliente sabe disso.
 **Sensível** credencial de assinatura e transmissão do cliente (nunca no repositório) · documento de
 pessoa do destinatário quando a obrigação exige · o próprio documento emitido.
+**Registra** (acrescentado em 2026-09-12, `CLAUDE.md` §7.10) cada transição de estado do documento,
+pela máquina de `fiscal-emissao-contingencia.md` §1 · a **entrada e a saída de contingência**, por
+ponto de emissão, com motivo, mais a contagem e o tempo acumulado (`RN-EMI-024`, `RN-EMI-032`) · o
+**desfecho de cada número consumido**, com a data-limite quando ele ainda está pendente
+(`RN-EMI-022`) · a resposta do autorizador **preservada literal**, inclusive a que a nossa versão não
+reconhece (`RN-EMI-018`) · a **consulta** feita antes de qualquer ação irreversível e a resposta que a
+justificou (`RN-EMI-029`) · cada **ato de assinatura**, append-only, com ativo identificado de forma
+não secreta (`RN-EMI-035`) · a revogação de capacidade **com a lista dos pontos de emissão não
+alcançados** e o prazo restante de cada um (`RN-EMI-037`) · o comprometimento de ponto de emissão com
+as duas janelas datadas (`RN-EMI-038`) · toda exportação, com quem pediu, o escopo e o volume
+(`RN-EMI-039`).
+**Não registra** valor de credencial, de código de segurança do contribuinte ou de código de
+responsável técnico, em superfície nenhuma **e nem em repouso no ponto de emissão** (`RN-EMI-007`) ·
+identificação do comprador que a entrega escolhida não exigiu (`RN-EMI-017`, `fatos-de-operacao.md`
+§6, item 3) · o **conteúdo** do retorno do autorizador como campo de decisão — ele é preservado e
+opaco, nunca reinterpretado (`RN-EMI-018`, `RN-OFF-027`) · consolidado que só existe somando clientes,
+em nenhuma superfície de cliente (`RN-EMI-040`). **Uma ausência que não é decisão:** a **entrega** do
+documento ao cliente-final não produz fato quando o meio é eletrônico — a impressa produz, pelo
+desfecho da tentativa de `RN-PER-004`. É o achado 2.11 de
+`captura-varredura-invariante-10-2026-09-11.md`, e a metade normativa dele é `LACUNA-EMI-017`.
 
 ## 4. `APU` — Apuração e obrigação acessória (fora do MVP, por decisão do humano)
 
@@ -340,7 +382,8 @@ brasileiro que não esteja aqui **não existe** neste arquivo. Apuração: dossi
   2026-08-22]]`** F-14 põe a base como "o valor integral cobrado pelo fornecedor" e F-15 exclui dela o
   próprio IBS e a própria CBS; nenhum dossiê traz regra sobre a composição do preço ao consumidor.
   **Responde:** humano / contador. **Consequência:** decide se publicar uma alíquota muda o total que o
-  cliente-final paga ou só o destaque no documento.
+  cliente-final paga ou só o destaque no documento. **Aviso de indisponibilidade** no topo da §2, desde
+  2026-09-23 (`F-018`).
 - **`[[LACUNA-FIS-003: gorjeta acima de 15% — só o excedente entra na base, ou a gorjeta inteira? e
   encargo compulsório (taxa de serviço) conta como "gorjeta repassada integralmente ao empregado"
   para esse efeito? — sem fonte em 2026-08-22]]`** F-25 dá as duas condições e o limite, e não diz o

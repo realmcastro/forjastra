@@ -5,8 +5,17 @@
 > em `fila-local-conteudo-e-repouso.md` está o **conteúdo** da fila; aqui está **um** assunto: **de quem
 > é cada número**, que grandezas existem, com que unidade, e sob que condição o orçamento do caixa vale.
 >
-> **Nenhum valor.** Este arquivo nomeia grandeza e unidade e **não escreve número** — nem "padrão
-> razoável", nem exemplo. Número não medido em spec vira orçamento por acidente.
+> **Nenhum valor aqui.** Este arquivo nomeia grandeza e unidade e **não escreve número** — nem "padrão
+> razoável", nem exemplo. Os valores de partida decididos em 2026-09-23 moram em
+> `fila-local-valores-de-partida.md`, e o do espaço de diagnóstico em `RN-NUC-083`
+> (`fatos-de-operacao-retencao-e-descarte.md`), cada um rotulado como não medido e com a série que o
+> revisa. Número não medido espalhado por spec vira orçamento por acidente.
+>
+> **Alterado em 2026-09-23** (`T-0014`, A.2c). Os aceites de `RN-OFF-028` e `RN-OFF-029` diziam que nenhuma
+> spec contém o número, e isso passou a contradizer `fila-local-valores-de-partida.md`, que os escreve por
+> decisão delegada ([[decision-valores-de-partida-da-continuidade-offline]]). Os dois aceites agora dizem
+> onde o número mora e proíbem repeti-lo fora dali. As lacunas da §3 foram marcadas conforme fecharam. O
+> texto anterior está no histórico do arquivo.
 >
 > `RN-OFF-028` a `RN-OFF-031`. Numeração continua a sequência dos irmãos e é imutável (`glossario.md`
 > §4.2).
@@ -29,8 +38,10 @@ número inventado hoje de virar orçamento amanhã: valor publicável nasce **va
 alguém mede.
 **Aceite** mudar qualquer um desses valores para um cliente não exige release nem migration; o valor em
 vigor é consultável por cliente, com quem o definiu e desde quando; o fato concluído registra os valores
-em vigor que o afetaram, como `RN-OFF-020` exige de artefato publicado; e **nenhuma** spec deste produto
-contém o número (eles moram em `LACUNA-OFF-004`, `005`, `011`, `013`, `014` e `LACUNA-EMI-014`).
+em vigor que o afetaram, como `RN-OFF-020` exige de artefato publicado; e o valor de partida de cada um
+mora em `fila-local-valores-de-partida.md`, rotulado como não medido; nenhuma outra spec o repete. Os que
+ainda não têm valor de partida continuam em lacuna: `LACUNA-OFF-005` (todo número operacional da fila) e
+`LACUNA-EMI-014` (prazo da capacidade de assinar).
 **Infeliz** o valor não está configurado para o cliente → vale o **padrão declarado**, e o padrão é
 sempre o mais **conservador**: recusa mais cedo, retém mais, expira mais rápido — nunca o mais
 permissivo; e a ausência de configuração é visível, não silenciosa.
@@ -45,8 +56,10 @@ escolhe o valor (`RN-OFF-028`).
 **Motivo** grandeza sem nome não é medida, e o que não se mede é preenchido com palpite que depois vira
 compromisso. Nomear separa "o que precisamos saber" de "o que achamos": é o que permite ao auditor medir
 a coisa certa e ao humano decidir sabendo o que está decidindo.
-**Aceite** toda decisão de construção que precise de um valor **cita a `LACUNA`** que o contém, e não
-estima; nenhuma grandeza da §2 aparece com número em spec de produto; e cada uma tem dono nomeado.
+**Aceite** toda decisão de construção que precise de um valor **cita a regra** que o fixa, ou a `LACUNA`
+que ainda o contém, e não estima; nenhuma grandeza da §2 aparece com número em spec de produto fora de
+`fila-local-valores-de-partida.md` (e de `RN-NUC-083`, para o espaço de diagnóstico); e cada uma tem dono
+nomeado.
 **Infeliz** a construção precisa de um valor antes de a medida existir → usa o padrão conservador de
 `RN-OFF-028`, **declara** que o usou e por quê, e o item entra na pauta de medição; nunca fixa constante
 no código como se tivesse sido decidida.
@@ -68,7 +81,7 @@ terminal-alvo modesto, e o número medido nessa condição é o que vale; interr
 retomar não reenvia agregado já confirmado (`RN-OFF-013`, `RN-OFF-022`) e não perde progresso; a contagem
 de pendências não gera consulta por apresentação.
 **Infeliz** o orçamento só fecha com a fila em repouso → é **achado** de `performance` contra o produto,
-não licença: ou a drenagem cede mais recurso, ou o teto é menor (`RN-OFF-014`, `LACUNA-OFF-004`). Nunca
+não licença: ou a drenagem cede mais recurso, ou o teto é menor (`RN-OFF-014`, `RN-OFF-037`). Nunca
 "mede-se em repouso porque em repouso fecha".
 
 ### RN-OFF-031 — O teto de `RN-OFF-014` é por terminal; a soma é grandeza própria, de plataforma, e tem dono declarado
@@ -100,7 +113,7 @@ Cada linha é uma grandeza que alguma decisão depende de conhecer. **Nenhuma te
 
 | Grupo | Grandeza | Unidade | Mede | Decide |
 |---|---|---|---|---|
-| fila | vendas concluídas pendentes de sincronização, por terminal | contagem | `performance` | humano (`LACUNA-OFF-004`) |
+| fila | vendas concluídas pendentes de sincronização, por terminal | contagem | `performance` | humano (`RN-OFF-037`) |
 | fila | agregados pendentes, por terminal | contagem | `performance` | humano |
 | fila | itens por agregado | contagem | `performance` | humano |
 | fila | espaço por venda pendente | bytes | `performance` | `arquiteto-dados` |
@@ -121,7 +134,7 @@ Cada linha é uma grandeza que alguma decisão depende de conhecer. **Nenhuma te
 | caminho crítico | adicionar item, **medido sob drenagem no teto** | ms | `performance` | humano (`RN-OFF-030`) |
 | fato | custo do registro durável de **um** fato no caminho crítico, sob drenagem no teto | ms | `performance` | humano (é o operando que falta ao freio (a) de `RN-NUC-041`) |
 | fato | fatos de operação **por lançamento** — o multiplicador não é 1 e não é conhecido | contagem | `performance` | `produto` (o grão, `RN-NUC-041`) |
-| fato | espaço de fato de diagnóstico retido, por terminal | bytes | `performance` | humano (`LACUNA-NUC-039`) |
+| fato | espaço de fato de diagnóstico retido, por terminal | bytes | `performance` | humano (`RN-NUC-083`) |
 | caminho crítico | apresentar a contagem de pendências | ms | `performance` | `ui` |
 | caminho crítico | detectar perda de contato | ms | `performance` | humano |
 | retaguarda | itens na lista de trabalho (`RN-OFF-012`) | contagem | `performance` | humano |
@@ -153,9 +166,12 @@ As duas grandezas convivem na tabela acima e se medem separadamente. Unificar a 
   drenagem; e **quem** opera esse limite do nosso lado. Não é configuração de cliente. **Dono:** humano,
   com `performance` (medida) e `backend` (o que espaçar significa no contrato). Unidade declarada; valor
   não.
-- Herdadas: `LACUNA-OFF-004` (teto por terminal), `LACUNA-OFF-005` (todo número operacional da fila),
-  `LACUNA-OFF-011` (validade do papel retido), `LACUNA-OFF-014` (janela do registro operacional retido),
-  `LACUNA-EMI-014` (prazo da capacidade de assinar). Todas com dono nomeado nos arquivos onde nascem.
+- Herdadas, abertas: `LACUNA-OFF-005` (todo número operacional da fila) e `LACUNA-EMI-014` (prazo da
+  capacidade de assinar), com dono nomeado nos arquivos onde nascem.
+- Herdadas, **FECHADAS em 2026-09-23** em `fila-local-valores-de-partida.md`: `LACUNA-OFF-004` (teto por
+  terminal) → `RN-OFF-037`, `LACUNA-OFF-011` (validade do papel retido) → `RN-OFF-034`, `LACUNA-OFF-014`
+  (janela do registro operacional retido) → `RN-OFF-038`. E `LACUNA-NUC-039` (espaço de diagnóstico, §2) →
+  `RN-NUC-083`.
 
 **Pergunta para o humano, uma linha:** o limite de drenagem simultânea da plataforma é decisão de
 operação nossa (e de quem, do nosso lado?), ou entra como compromisso com o cliente?

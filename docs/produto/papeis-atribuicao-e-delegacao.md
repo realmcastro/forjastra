@@ -243,6 +243,28 @@ resolve em silêncio: é conflito entre a regra geral e a vontade de um cliente,
 o custo declarado. **Que outras operações pertencem ao piso além destas três** é `LACUNA-NUC-013`, com
 entrada da auditoria do passo 4 — que é quem tem o cenário concreto de escalonamento.
 
+### RN-NUC-090 — O primeiro `owner` é atribuído no ato que provisiona o cliente, e só enquanto não há nenhum; nós nunca conhecemos a prova dele
+
+**Enunciado** (2026-09-23, `LACUNA-IDE-002`, `identidade-necessidade-e-fronteira-2026-09-23.md` §2) o
+primeiro `owner` é atribuído por papel nosso **no ato que provisiona o cliente** (linha `A7` de
+`matriz-celulas-a-valorar.md`; candidato `provider_operator`), à pessoa que o contrato nomeia, só com
+zero `owner` no cliente; ela recebe convite e define a própria prova. Depois, atribuir ali é só do
+`owner` (linha 20). **Motivo** nenhum papel de cliente cria o primeiro, e no mesmo ato o alvo é o cliente
+que o ato cria, sem vir do pedido (`RN-PRV-004` b; separado, cairia em d). **Recusado:** definirmos a
+prova inicial, ou usuário provisório nosso passado depois: é a credencial compartilhada de `RN-NUC-024`.
+**Aceite** (1) provisionar K nomeando P: um `owner`, P, com autor nosso e motivo no fato; P define a
+prova antes de agir; o `owner` lista o ato (`RN-PRV-006` a). (2) nova atribuição nossa em K: recusada.
+**Infeliz** (a) P não aceita o convite: K fica sem `owner` utilizável, e o provisionamento incompleto é
+fato (`RN-PRV-013`). (b) cliente que perdeu o único `owner`:
+> **Indisponível — recuperar o acesso de cliente sem `owner` utilizável.** Não funciona: atribuir `owner`
+> num cliente que já existe. Falta: o que prova legitimidade contratual para substituir o responsável.
+> Responde: humano, com advogado. Enquanto isso: recusa, por esta regra (só com zero `owner`) e pelo
+> default fechado do escopo `provedor` (`RN-PRV-015`). Desde: 2026-09-23.
+
+**Inerte hoje:** `A7` sem célula, nenhum papel nosso atribuível antes da célula de `LACUNA-NUC-031`
+(`RN-PRV-006` b), e registro sem a quarta fonte de `RN-NUC-029` (`RN-PRV-016`). **Registra** a
+atribuição dentro do fato de provisionamento e o convite não aceito. **Não registra** a prova do `owner`.
+
 ---
 
 ## 6. Autoridade retida — o mesmo papel, com prazo

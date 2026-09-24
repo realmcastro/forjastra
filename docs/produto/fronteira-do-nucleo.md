@@ -54,7 +54,7 @@ precisa — é isso que torna a classificação auditável depois.
 | Isolamento de dado por cliente (tenant) | plataforma | Nenhum cliente pode ver dado de outro, independentemente de ramo ou módulo. |
 | Vários estabelecimentos por cliente | núcleo | Os três podem ter mais de uma unidade, e o dinheiro de uma não se mistura com o da outra. |
 | Terminal identificado, vinculado a estabelecimento | núcleo | Sem saber de onde veio a venda não se confere caixa em nenhum ramo. |
-| Fuso e moeda do cliente | núcleo | "Vendas de hoje", turno e fechamento dependem do fuso do cliente, não do servidor. |
+| Fuso e moeda **do estabelecimento** | núcleo | "Vendas de hoje", turno, fechamento e o significado do valor dependem de onde a unidade opera, não do servidor nem do cliente (tenant) — o cliente pode ter unidades em fusos e moedas diferentes (`RN-NUC-057`, `RN-NUC-058`). Até 2026-09-23 a linha dizia "fuso e moeda do cliente". |
 | Registro de módulos ativos por cliente | plataforma | É o mecanismo que faz o resto ser plugável. |
 | Composição de tela por manifesto | plataforma | É como um binário serve ramos diferentes. |
 | Operação com rede instável, sem perder venda | **núcleo** | Os três operam com internet ruim; perder venda é o pior defeito de PDV depois de vazar dado. |
@@ -67,8 +67,12 @@ precisa — é isso que torna a classificação auditável depois.
 |---|---|---|
 | Item vendável com código e preço | núcleo | Sem isso não existe venda em ramo nenhum. |
 | Unidade de medida com casas decimais declaradas | núcleo | Combustível vende em fração, padaria em peso, roupa em unidade — o núcleo tem que servir os três. |
-| Lista de preço por contexto e vigência | núcleo | Os três mudam preço e precisam saber qual valia no dia da venda passada. |
-| Item composto por eixos (cor/tamanho) | módulo | Padaria e posto não precisam; loja de roupa não vive sem. |
+| Lista de preço por **estabelecimento** e vigência | núcleo | Os três mudam preço e precisam saber qual valia no dia da venda passada (`RN-NUC-072`). Até 2026-09-23 a linha dizia "por contexto", e o glossário punha canal no contexto (achado `A-01`). |
+| Preço por canal de entrada do pedido | módulo que cria o canal (`PCF`, `INT`) | Nenhum dos três quebra sem segundo canal, e as duas lojas do corpus vendem só no balcão (`A-01`). |
+| Agrupamento operacional do catálogo | núcleo, **uso opcional**, classificação assumida (§4) | O posto com dez itens vende sem; fica no núcleo porque não tem comportamento a ligar, e zero grupos não custa nada (`RN-NUC-068`). O agrupamento que o cliente-final vê é `PUB`. |
+| Tirar item de venda sem apagá-lo, com vigência | núcleo | Tanque vazio, fornada que acabou, lote interditado: os três precisam (`RN-NUC-071`). Saldo é `EST`. |
+| Item composto por eixos (cor, tamanho, sabor), **inclusive um eixo só** | módulo `GRD` | Padaria e posto não precisam; quem vende o mesmo item em combinação de eixos não vive sem — roupa por tamanho, polpa por sabor. O núcleo vende item atômico (`RN-NUC-069`, `G-04`). |
+| Adicional com preço e quantidade, reusável entre itens | módulo `ADI` | O posto não usa; o núcleo só soma a parte que o módulo compõe (`RN-NUC-070`, `G-05`). |
 | Composição por insumo (ficha técnica) | módulo | Quem revende embalado não precisa. |
 | Promoção condicional (regra de combinação) | módulo | Nenhum dos três quebra sem ela. |
 | Descrição rica e imagem do item | módulo | Só faz sentido onde existe canal para o cliente-final ver. |
@@ -84,7 +88,7 @@ precisa — é isso que torna a classificação auditável depois.
 | Desconto e acréscimo com limite por papel | núcleo | Os três dão desconto e os três precisam limitar quem dá. |
 | Identificação **opcional** do cliente-final na venda | núcleo | Documento do comprador é pedido nos três; guardar histórico dele não. |
 | **Modo de atendimento** declarado no pedido, no mínimo presencial × entrega em endereço | núcleo | O documento fiscal exige saber qual dos dois é, e os três podem entregar; valor a mais (retirada, salão × balcão) é módulo/vertical. |
-| **Observação livre no item de pedido** | núcleo | Os três recebem instrução que muda como a linha é atendida ("sem cebola", "ajustar a barra", "embalar para presente") e hoje a anotam no papel; ela existe sem módulo de produção. |
+| **Observação livre no item de pedido** | núcleo | Os três recebem instrução que muda como a linha é atendida ("sem cebola", "ajustar a barra", "embalar para presente") e hoje a anotam no papel; ela existe sem módulo de produção. Instrução que **cobra** não é observação: é adicional ou item próprio (`RN-NUC-070` c, achado `A-05`). |
 | Cadastro e histórico de cliente-final, fidelidade | módulo | Padaria de balcão vende a vida inteira sem cadastrar ninguém. |
 | Ciclo de cumprimento (fila, preparo, entrega, retirada) | módulo | Loja de roupa entrega na hora; posto entrega na bomba. |
 | Consumo em aberto vinculado a lugar físico | módulo (ligado por vertical) | Só existe onde se consome antes de pagar. |
@@ -110,9 +114,9 @@ precisa — é isso que torna a classificação auditável depois.
 |---|---|---|
 | Sessão de caixa: abertura, fundo, fechamento, conferência | núcleo | Os três recebem dinheiro em espécie e precisam fechar o dia. |
 | Sangria e suprimento | núcleo | Consequência de guardar dinheiro em gaveta, comum aos três. |
-| "Abrir gaveta" como operação sensível autorizada e registrada | núcleo | Onde tem dinheiro tem desvio; o registro é o controle. |
+| "Abrir gaveta" como operação sensível autorizada e registrada | núcleo | Onde tem dinheiro tem desvio; o registro é o controle, e ele vale também com uma pessoa só, que autoriza pelo próprio papel sem autorizar a si mesma (`RN-NUC-066`). |
 | Acionamento do periférico de gaveta | módulo | O driver depende do equipamento do cliente, não do ramo. |
-| Turno operacional do estabelecimento | núcleo | Existe nos três e é o eixo de conferência de responsabilidade. |
+| Turno operacional do estabelecimento | núcleo, **uso opcional** — classificação assumida (§4) | Nenhum dos três quebra sem turno, e nenhum é obrigado a usá-lo: é agrupamento derivado sobre sessões de caixa, sem estado próprio, sem campo em fato e sem precondição (`RN-NUC-062`). Até 2026-09-23 a linha dizia "existe nos três e é o eixo de conferência de responsabilidade" (achado `A-02`). |
 | Fechamento do dia por estabelecimento | núcleo | Saber quanto entrou e comparar com o contado é obrigação dos três. |
 | Relatório gerencial elaborado (curva, comparativo, meta) | módulo | Útil, não indispensável; e é o tipo de coisa que cada cliente quer diferente. |
 
@@ -120,8 +124,8 @@ precisa — é isso que torna a classificação auditável depois.
 
 | Item | Escopo | Motivo |
 |---|---|---|
-| Operador autenticado em cada ação | núcleo | Sem autor, não há trilha; e sem trilha não há controle de dinheiro. |
-| Papel com permissão verificada no backend | núcleo | Os três têm dono, gerente e caixa com poderes diferentes. |
+| Operador identificado como autor de cada ação | núcleo | Sem autor, não há trilha; e sem trilha não há controle de dinheiro. Vale com uma pessoa só: o autor é quem está no balcão, mesmo que seja sempre o mesmo. O item dizia "autenticado em cada ação" até 2026-09-23; sem contato o autor é **identificado** (`RN-OFF-033`). |
+| Papel com permissão verificada no backend | núcleo | Os três precisam limitar quem cancela, dá desconto e mexe no dinheiro fora da venda: com várias pessoas, para separar poderes; com uma só, para o registro dizer com que papel cada ato foi feito (`RN-NUC-066`). Até 2026-09-23 o motivo era "os três têm dono, gerente e caixa com poderes diferentes", que a loja de uma pessoa desmente (achado `A-04`). |
 | Trilha de auditoria de operação sensível | núcleo | É a única prova de quem cancelou, quem descontou, quem abriu a gaveta. |
 | Ponto, escala, folha | fora do produto hoje | Nenhum dos três compra um PDV por isso. |
 

@@ -9,24 +9,29 @@
 > núcleo × módulo, e `fronteira-do-nucleo.md:169` manda que fronteira que não se resolve pelos quatro
 > passos venha como pergunta, nunca por eliminação.
 >
+> **Estado em 2026-09-23.** O humano delegou as decisões pelo critério de escalabilidade (`F-018`,
+> T-0014), e a pergunta foi respondida pela regra, não por eliminação: oito das dez fecharam, cada uma com
+> `RN`, recusado e motivo, e `G-09` só na parte que é regra nossa. A coluna "Estado" da tabela diz onde. O texto de cada seção fica como estava,
+> porque é o registro da pergunta; a linha "Fechada" no topo dela aponta a resposta.
+>
 > **As datas são prazo de entrega do card, não data de início.** Quem pegar o card encontra a lacuna antes
 > disso. Fonte: `duedate` do board, lido em 2026-08-26.
 >
 > **Ordem contra o brief desta passada, e o board é a razão.** A pauta foi encomendada abrindo pelo fuso,
 > em 2026-09-08. `SPR-40` vence em **2026-09-02**, seis dias antes, e é o `G-09`. O fuso é o segundo item.
 
-| # | Lacuna | Morde em | Cards | Dono da resposta |
-|---|---|---|---|---|
-| 1 | `G-09` — arredondamento | **2026-09-02** | 3 | humano, com o contador |
-| 2 | `LACUNA-GLO-001` — fuso | **2026-09-08** | 4 | humano |
-| 3 | `G-03` — agrupamento de catálogo | 2026-09-16 | 2 | humano + `produto` |
-| 4 | `G-05` — adicional | 2026-09-22 | 6 | humano + `produto` |
-| 5 | `G-04` — variação | 2026-09-22 | 5 | humano + `produto` |
-| 6 | `G-01` — as três reservas da Opção B | 2026-10-07 | 2 | humano |
-| 7 | `G-02` — turno | 2026-10-07 | 1 | humano |
-| 8 | `G-06` — contador de comanda por mesa | 2026-11-13 | 3 | humano + `produto` |
-| 9 | `G-07` — disponibilidade | 2026-11-27 | 2 | humano + `produto` |
-| 10 | `G-08` — busca de catálogo | 2026-11-27 | 1 | `produto`, depois os auditores |
+| # | Lacuna | Morde em | Cards | Dono da resposta | Estado em 2026-09-23 |
+|---|---|---|---|---|---|
+| 1 | `G-09` — arredondamento | **2026-09-02** | 3 | humano, com o contador | fechada no que é nosso: `RN-NUC-064` (rateio), `RN-NUC-067` (modo publicado); aviso para o que a norma exige (`nucleo-venda.md` §6) |
+| 2 | `LACUNA-GLO-001` — fuso | **2026-09-08** | 4 | humano | fechada: `RN-NUC-057` |
+| 3 | `G-03` — agrupamento de catálogo | 2026-09-16 | 2 | humano + `produto` | fechada: `RN-NUC-068` |
+| 4 | `G-05` — adicional | 2026-09-22 | 6 | humano + `produto` | fechada: módulo `ADI`, `RN-NUC-070`; aviso de MVP na entrada de `ADI` |
+| 5 | `G-04` — variação | 2026-09-22 | 5 | humano + `produto` | fechada: `RN-NUC-069`; aviso de `GRD` (§5) |
+| 6 | `G-01` — as três reservas da Opção B | 2026-10-07 | 2 | humano | fechada: `RN-NUC-065` |
+| 7 | `G-02` — turno | 2026-10-07 | 1 | humano | fechada: `RN-NUC-062` |
+| 8 | `G-06` — contador de comanda por mesa | 2026-11-13 | 3 | humano + `produto` | aberta |
+| 9 | `G-07` — disponibilidade | 2026-11-27 | 2 | humano + `produto` | fechada: `RN-NUC-071` |
+| 10 | `G-08` — busca de catálogo | 2026-11-27 | 1 | `produto`, depois os auditores | aberta, com a passada A.2c de T-0014 |
 
 Empate em 09-22 e em 10-07 desempatado por quantos cards a resposta solta. `SPR-33` conta em `G-04` e
 `G-05` porque a revisão põe as três lacunas de fronteira travando os três cards de modelagem
@@ -80,6 +85,10 @@ Referências: `docs/produto/glossario.md:395` · `docs/produto/nucleo-publicacao
 
 ## 3. `G-03` — agrupamento de catálogo · 2026-09-16 · 2 cards
 
+**Fechada em 2026-09-23 → `RN-NUC-068`** (`nucleo-publicacao-e-texto.md` §3): a terceira saída, com o
+grupo operacional como núcleo de uso opcional (`catalog_group`) e a seção de canal em `PUB`
+(`channel_section`). O risco nomeado abaixo, confundir os dois termos, está tratado em `glossario.md` §5.
+
 **Pergunta.** Existe agrupamento de item de catálogo no núcleo, ou agrupar é capacidade de `PUB`?
 
 **Trava.** `SPR-31` (09-16, com rótulo `bloqueada`) · `SPR-16` (11-27).
@@ -95,9 +104,15 @@ Referências: `docs/produto/glossario.md:395` · `docs/produto/nucleo-publicacao
 **Sem resposta:** `SPR-31` modela a hierarquia como entidade de núcleo. Hoje o que segura o card é o
 rótulo `bloqueada`, não o calendário — e rótulo sai.
 
-Referências: `docs/produto/catalogo-de-modulos.md:99` · `docs/produto/fronteira-do-nucleo.md:169`
+Referências: `docs/produto/catalogo-de-modulos.md` (entrada `PUB`) · `docs/produto/fronteira-do-nucleo.md:169`
 
 ## 4. `G-05` — adicional · 2026-09-22 · 6 cards
+
+**Fechada em 2026-09-23 → `RN-NUC-070`** (`nucleo-publicacao-e-texto.md` §3): a segunda saída, módulo
+novo `ADI` (código em `glossario.md` §4.3), e **multiconjunto**. O custo apontado abaixo ("o MVP 1 ganha um
+módulo que o roadmap não previu") não se paga sem o humano: pôr `ADI` no MVP 1 é escopo comercial, e a
+entrada de `ADI` em `catalogo-de-modulos.md` tem o aviso. A contradição com `RN-NUC-013` saiu pela linha de
+artefato de módulo que aquela tabela ganhou.
 
 **Pergunta.** "Adicional" pertence ao núcleo, a um módulo novo ou a um módulo existente — e ele é conjunto
 (cada adicional zero ou uma vez) ou multiconjunto (cada um com quantidade própria)?
@@ -124,6 +139,16 @@ Referências: `docs/produto/glossario.md:289` (§4.3) · `revisao-backlog-spr-20
 
 ## 5. `G-04` — variação · 2026-09-22 · 5 cards
 
+**Fechada em 2026-09-23 → `RN-NUC-069`** (`nucleo-publicacao-e-texto.md` §3): a segunda saída, com o
+núcleo vendendo só item atômico. `GRD` fica fora do MVP 1 por decisão do thread de 2026-09-23, o que dá à
+terceira saída o papel de comportamento enquanto isso. O aviso, igual ao da entrada de `GRD`:
+
+> **Indisponível — variação de um item por eixo (tamanho, sabor, cor).** Não funciona: vender o mesmo
+> item em combinações de eixo, como bebida em 300 ml e 500 ml, sem cadastrar cada combinação. Falta:
+> `GRD` no MVP. Responde: humano (escopo comercial; `GRD` fora do MVP 1 por decisão de 2026-09-23).
+> Enquanto isso: cada combinação é item de catálogo próprio, cadastrado individualmente
+> (`catalogo-de-modulos.md:270`, `GRD` desligado). Desde: 2026-09-23.
+
 **Pergunta.** Eixo único com preço próprio — tamanho 300 ml e 500 ml — é do núcleo, ou é o degrau de baixo
 de `GRD`?
 
@@ -140,7 +165,7 @@ de `GRD`?
 **Sem resposta:** a terceira, por omissão. `SPR-19` já manda diferença estrutural para item próprio
 (conferência §2.7) e chega em 11-27 sem entidade de variação em lugar nenhum.
 
-Referências: `docs/produto/fronteira-do-nucleo.md:71` · `docs/produto/catalogo-de-modulos.md:253` ·
+Referências: `docs/produto/fronteira-do-nucleo.md` §2.2 (linha de `GRD`) · `docs/produto/catalogo-de-modulos.md` (entrada `GRD`) ·
 `docs/produto/receitas-por-vertical.md:46`
 
 ## 6. `G-01` — as três reservas da Opção B · 2026-10-07 · 2 cards
@@ -206,6 +231,12 @@ Referências: `docs/produto/nucleo-venda.md:296` (`RN-NUC-038`)
 
 ## 9. `G-07` — disponibilidade · 2026-11-27 · 2 cards
 
+**Fechada em 2026-09-23 → `RN-NUC-071`** (`nucleo-publicacao-e-texto.md` §3): a primeira saída, com a
+marca **fora de venda** como conteúdo da versão de catálogo publicada, com vigência. O custo apontado
+abaixo ("um estado a mais para manter em todo terminal offline") não se paga: a marca viaja na versão
+que já viaja, e não é estado vivo nem membro novo de `RN-NUC-013`. Saldo continua em `EST`. A terceira
+saída, ausência, foi recusada porque confunde item tirado de venda com item não cadastrado.
+
 **Pergunta.** Existe marca de disponibilidade no caminho de venda do núcleo, ou indisponível é sempre
 ausência do artefato publicado, com disponibilidade real morando em `EST`?
 
@@ -215,7 +246,7 @@ ausência do artefato publicado, com disponibilidade real morando em `EST`?
 - Marca no núcleo. Custo: linha nova na fronteira, e o núcleo passa a exibir item que não pode ser vendido
   — um estado a mais para manter em todo terminal offline.
 - Só `EST`. Custo: `EST` está fora do MVP 1 e, desligado, "a venda não consulta disponibilidade"
-  (`catalogo-de-modulos.md:96`) — `SPR-26` e `SPR-27` deixam de ser construíveis no MVP 1.
+  (`catalogo-de-modulos.md`, entrada `EST`) — `SPR-26` e `SPR-27` deixam de ser construíveis no MVP 1.
 - Ausência com motivo: o item some do artefato publicado e o operador vê por que sumiu. Custo: a publicação
   passa a carregar o motivo, o que é acréscimo a `RN-NUC-013`.
 
@@ -223,7 +254,7 @@ ausência do artefato publicado, com disponibilidade real morando em `EST`?
 2026-08-26 que ninguém retratou (conferência §4.5). Quem chegar depois lê a fronteira que encontrar
 primeiro.
 
-Referências: `docs/produto/catalogo-de-modulos.md:93` e `:96` · `docs/produto/roadmap-de-modulos.md:184`
+Referências: `docs/produto/catalogo-de-modulos.md` (entrada `EST`) · `docs/produto/roadmap-de-modulos.md:184`
 
 ## 10. `G-08` — busca de catálogo · 2026-11-27 · 1 card
 

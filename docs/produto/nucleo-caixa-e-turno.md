@@ -3,8 +3,9 @@
 > **Irmão de `nucleo-venda.md`, com o mesmo peso normativo.** Partido por teto de tamanho, no eixo
 > **venda × caixa**: `nucleo-venda.md` tem o cabeçalho normativo, a tabela das operações do
 > núcleo e as regras de pedido, venda, pagamento e correção (`RN-NUC-001` a `RN-NUC-008`); este tem
-> `RN-NUC-009` a `RN-NUC-012`, mais `RN-NUC-037` (§2, aberta em 2026-08-23 pela correção pós-gate);
-> `nucleo-publicacao-e-texto.md` tem `RN-NUC-013` a `RN-NUC-016`.
+> `RN-NUC-009` a `RN-NUC-012`, mais `RN-NUC-037` (§2, aberta em 2026-08-23 pela correção pós-gate) e
+> `RN-NUC-062` (§3, turno, aberta em 2026-09-23); `nucleo-publicacao-e-texto.md` tem `RN-NUC-013` a
+> `RN-NUC-016`.
 > Numeração é contínua e imutável entre os três (`glossario.md` §4.2). As lacunas de todos moram em
 > `nucleo-venda.md` §6.
 >
@@ -48,7 +49,9 @@ sessão é ato ordinário e acontece (`RN-OFF-032`). O que é recusado até **re
 sensível (`RN-OFF-024`b) — e abrir sessão em nome de outro é sensível (`RN-NUC-037`). (c) o operador
 **não é identificável** naquele terminal (contratado durante a queda, nunca esteve no conjunto retido) →
 a sessão não abre para ele, o produto diz que a identificação exige contato, e o caminho é outro operador
-identificado (`RN-OFF-033`, infeliz (b)); nunca sessão sem autor, nunca "operador padrão".
+identificado (`RN-OFF-033`, infeliz (b)); nunca sessão sem autor, nunca "operador padrão". E a tentativa
+**produz fato de recusa**, com motivo `identity_unrecognized` (`RN-NUC-056`) — sem ele, um posto que não
+abre caixa por conjunto defasado é indistinguível, no servidor, de um posto que ninguém tentou abrir.
 **Aceite** com o link cortado desde antes do expediente, abrir sessão com fundo contado e vender em
 espécie na sequência; ao restabelecer, a sessão aparece com o instante da abertura, o autor e o fundo,
 sem nada ter sido perguntado ao servidor. E a **mesma** abertura acontece no minuto seguinte ao
@@ -73,9 +76,9 @@ outros terminais não convergirem. Em D2 isso é a regra, não a exceção.
 terminal do mesmo posto) → o esperado é declarado como **parcial**, com o que falta nomeado; nunca
 apresentado como completo. (b) a divergência de relógio cruza a fronteira de turno ou de dia → o fato
 não é atribuído em silêncio: vira pendência com as duas interpretações à vista (`RN-OFF-019`). (c)
-**qual fuso decide "hoje", turno e fechamento** quando o estabelecimento está em fuso diferente do
-cliente (tenant) → `LACUNA-NUC-001`; até fechar, o fechamento **declara** o fuso que usou, e é por
-isso que esta regra sobrevive às duas respostas.
+o fuso que decide "hoje", turno e fechamento é o **do estabelecimento**, publicado (`RN-NUC-057`), e o
+fechamento declara a versão que usou. Até 2026-09-23 esta cláusula remetia a `LACUNA-NUC-001` e mandava
+declarar o fuso porque o dono dele estava aberto; a declaração ficou, o motivo mudou.
 **Aceite** em D2, fechar a sessão informando o contado: o fechamento existe como fato, com esperado
 marcado como parcial e a pendência do fechamento do estabelecimento nomeada e contável; ao voltar a
 rede, nada do fechamento é reescrito e a divergência remanescente, se houver, é fato novo.
@@ -184,3 +187,79 @@ dona. Esta regra entrega o **lugar** de verificar; **qual** papel a alcança con
 célula, do humano (`LACUNA-NUC-016`, cuja metade de papel é a que fica respondida: quem abre por outro
 não é o papel-piso). Citar esta regra na linha 11 é edição de `matriz-operacao-papel.md`, fora deste
 despacho.
+
+## 3. Turno
+
+Aberta em 2026-09-23 (T-0014, `F-018`): `G-02`, a metade que restava de `LACUNA-NUC-007` e o achado
+`A-02` de `dois-varejos-auditoria-do-nucleo-2026-09-12.md`. O humano respondeu "não sei ainda / depende
+do cliente" sobre turno ser a sessão de caixa. A regra abaixo não espera a resposta das lojas (`Q-C`),
+porque vale para as duas: quem troca de responsável no mesmo dia e quem não troca.
+
+### RN-NUC-062 — Turno é agrupamento declarado e opcional de sessões de caixa; nenhum fato depende dele, e trocar de responsável pela gaveta no mesmo dia é da sessão
+
+**Enunciado** turno é o intervalo entre dois atos de um estabelecimento, **abrir turno** e **fechar
+turno**, cada um com autor e instante, e agrupa as sessões de caixa daquele estabelecimento cuja
+**abertura** cai dentro dele. Usar turno é **opcional**: nenhuma venda, sessão, movimento, fechamento do
+dia ou autorização tem turno como precondição, e quem nunca abre turno opera por sessão e por dia sem
+nada a menos. Nenhum fato carrega o turno: pertencer a ele é derivação dos instantes, na leitura
+([[convention-fato-nao-carrega-campo-de-calendario]]). **Trocar de responsável pela gaveta no mesmo
+dia** é fechar a sessão de um e abrir a do outro no mesmo posto (`RN-NUC-010`, `RN-NUC-009`), com ou sem
+turno. Há no máximo **um** turno aberto por estabelecimento, e turno continua **não sendo** escopo de
+autorização (`RN-NUC-018`).
+
+**O que a definição deixava aberto, e o desfecho de cada um**
+- **Quem abre e quem fecha:** `manager` ou `owner`, com registro (matriz, linha 42). Fechar pode ser de
+  outra pessoa, e o registro nomeia as duas, como em `RN-NUC-030`.
+- **O que fechar encerra:** só o turno. Sessão pertencente ainda aberta não é fechada por ele; fica
+  nomeada como pendência do turno, e o que o terminal não conhece é declarado parcial (`RN-NUC-010`,
+  infeliz (a)).
+- **Turno aberto na virada do dia:** não é cortado pela meia-noite e não bloqueia o fechamento do dia
+  (não está na lista de `RN-NUC-031`). Cada fato é do dia local do próprio instante (`RN-NUC-057`); a
+  leitura por turno declara o intervalo, a leitura por dia não usa turno.
+- **Sessão aberta sem turno aberto:** é "fora de turno", declarada na leitura; nunca erro, nunca
+  atribuída ao turno seguinte.
+- **Dois turnos abertos sem que um terminal saiba do outro** (D2): os dois fatos existem, a sobreposição
+  é pendência nomeada, e a sessão que cai nos dois intervalos é declarada ambígua na leitura; nenhum
+  turno "vence" em silêncio. Sabendo do aberto, o terminal recusa abrir outro e oferece fechá-lo.
+
+**Escala** o eixo é ramos e clientes. Quem não usa turno não paga nada — nenhuma coluna em fato,
+nenhuma etapa de tela, nenhuma precondição. Quem usa paga dois fatos por turno. E como o fato não
+carrega turno, mudar depois o que turno significa muda uma leitura, não N schemas.
+
+**Motivo** a necessidade é real e não é de todos: quem tem mais de um responsável no mesmo dia,
+cobrindo vários postos, precisa conferir o período de cada um, e a sessão de caixa não agrupa postos.
+Quatro mecanismos recusados: **turno = sessão** não agrupa postos, e quem precisa de turno é quem tem
+mais de um; **turno obrigatório** impõe à loja de uma pessoa a cerimônia que `A-02` e `A-04` apontaram;
+**turno por janela de relógio publicada** atribui pelo relógio, e a troca que atrasa dez minutos põe dez
+minutos no turno errado; **turno como campo do fato** é campo de calendário com outro nome, e mudar a
+regra vira backfill. O nosso atende quem precisa com dois atos e não cobra de quem não precisa, e o
+aceite (1) prova o segundo lado.
+
+**Por que núcleo e não módulo, e é classificação assumida** (`fronteira-do-nucleo.md` §4): os três
+negócios do teste **não** quebram sem turno, então pelo passo 1 ele não seria núcleo. Fica no núcleo
+porque não tem estado próprio — é agrupamento derivado sobre sessões de caixa, que são do núcleo — e
+porque o que torna a promoção cara (`fronteira-do-nucleo.md` §5.1: campo inútil, etapa a mais) está
+excluído por construção. Módulo exigiria registro de ativação e contrato de desligado para uma coisa
+cujo desligado já é "nunca abrir".
+
+**Aceite** (1) padaria que nunca abre turno: vende, abre e fecha sessões, fecha o dia; nenhuma tela pede
+turno e nenhum fato tem turno. (2) dois postos: `manager` M abre turno às 6h; sessões dos postos 1 e 2
+abertas às 6h05 e 6h20 pertencem a ele; às 14h o `manager` N fecha o turno de M com a sessão 2 aberta →
+fechamento com os dois nomes e a sessão 2 como pendência; N abre o seguinte. (3) mesma gaveta, mesmo dia,
+dois responsáveis, nenhum turno: A fecha a sessão às 14h, B abre a dela às 14h02 no mesmo posto, e os
+dois fundos e as duas diferenças ficam separados. (4) turno das 22h às 6h: vendas antes da meia-noite
+local são do dia D, as de depois do D+1, e o turno aparece inteiro na leitura por turno. (5) `cashier`
+tenta abrir turno: negado.
+
+**Infeliz** a autoridade retida de quem vai abrir venceu com o link caído → abrir turno recusa até
+reconectar (`RN-OFF-024`b), e **a venda continua**, porque nada depende de turno; as sessões abertas no
+intervalo ficam "fora de turno" e aparecem assim.
+
+**Offline** degradado em D1, D2 e D3; classe 1 no fato, 4 na autoridade, satisfeita por autoridade retida
+válida (linha 42, `retida`), a forma de `RN-NUC-011`. Em D2, "já existe turno aberto" é o que o terminal
+conhece; o desconhecido cai na sobreposição declarada. A linha desta operação na tabela §4 de
+`operacao-offline-e-sincronizacao.md` entra por transcrição desta regra, como entrou a de `RN-NUC-031`.
+
+**Registra** abrir e fechar turno, com autor, papel, estabelecimento e instante; a recusa de abrir, com o
+motivo; a sobreposição, como pendência. **Não registra** turno dentro de fato nenhum, pelo motivo acima,
+nem "turno padrão" para quem não usa: ausência de turno é ausência, não valor.

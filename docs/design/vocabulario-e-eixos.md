@@ -14,10 +14,16 @@ Contrato de produto: `postura-nova-geracao.md` (`PN-05`, `PN-06`, `PN-09`, `PN-1
 núcleo e §5 formas proibidas), `docs/arquitetura/d-01-d-02-stack-opcoes.md` (§3.4, catálogo
 embarcado e tolerância de versão nos quatro arranjos).
 
-Este arquivo define **nome, eixo e papel**. Ele **não** define mecanismo: como o bloco é resolvido,
-como a prop é tipada, como o parse é escrito, como o tema chega — **D-02**, fora daqui.
+Este arquivo define **nome, eixo e papel**. Ele **não** define mecanismo: como a prop é tipada e
+como o tema chega ficam fora daqui.
+
 Ele **não** contém componente, prop, variante enumerada nem número novo: toda grandeza que pediria
 valor está em outro arquivo desta camada ou é lacuna nomeada (§6).
+
+**Espelho executável desde 2026-09-12 (T-0012):** `packages/sdui/src/vocabulary/` carrega a mesma
+lista como tipo fechado, e `packages/sdui/src/manifest/` implementa o §4. Este arquivo continua
+sendo a autoridade sobre **significado**; o pacote é a autoridade sobre **compilação**, e
+`checkVocabulary` cobra as leis do §1 e do §5 em teste.
 
 **Partido em dois arquivos em 2026-08-22, no mesmo passo.** O arquivo único fechou em **425** linhas
 contra teto de 400. O **eixo do corte é o sujeito**: o que o manifesto **diz** fica aqui — nome,
@@ -80,8 +86,8 @@ aparece aqui" nem "com que forma".
 3. **Nome de aparência, de forma, de cor ou de posição.**
 4. **Nome de espaço, de densidade, de alvo ou de tamanho** — são eixos (§2), e eixo no id é o `if`
    estrutural de `ui.md` §2 escrito no vocabulário.
-5. **Nome de framework, de biblioteca ou de primitiva de plataforma** (**D-02** está aberta, e id
-   publicado sobreviveria à troca dela).
+5. **Nome de framework, de biblioteca ou de primitiva de plataforma** (id publicado sobrevive à
+   troca de qualquer uma delas — **D-02** fechou em 2026-09-11 e isso não muda a regra).
 6. **Identificação de cliente (tenant) ou de estabelecimento** — `PN-09`: diferença de cliente é
    módulo, configuração ou dado, nunca vocabulário próprio.
 7. **Estado** (`state.*`) e **domínio de rede** (`net.*`) — são recebidos, não são papéis (§2.4).
@@ -127,7 +133,7 @@ prefixo que atravessa a rede é contrato com terminal em versão antiga e cai na
 | `grid.` · `target.` · `measure.` · `density.` | medida e faixa de densidade | `grade-e-espacos.md` §3, §5 | não — densidade é resolvida no cliente |
 | `zone.` | zona de layout | `grade-e-espacos.md` §6 | **sim** — zona e ordinal vêm do manifesto e são contrato (`PN-06`) |
 | `state.` · `net.` | estado visível e domínio de rede | `estados-e-interacao.md` §3, §5 | **sim** para o fato (o servidor o decide); o nome do campo é **V-02** |
-| `block.` | **papel de bloco** | este arquivo, §3 | **sim** — é o próprio vocabulário do manifesto |
+| `block.` | **papel de bloco** | este arquivo, §3 | **sim** para os papéis emitidos (§3.2); **não** para as duas entradas de piso (§3.4), que só o cliente usa |
 | `input.` | **modo de interação** | este arquivo, §2.1 | não — é o hardware que o terminal tem |
 
 **Regra de formação** — quatro cláusulas, e é ela que impede o **próximo** prefixo duplicado de entrar
@@ -281,7 +287,7 @@ virou catálogo de componentes disfarçado.
 | id | Papel — o trabalho que se faz ali | Não faz | Estados aplicáveis |
 |---|---|---|---|
 | `block.region` | agrupa nós filhos e é a **unidade que carrega estado**: a precedência de `estados-e-interacao.md` §3.5 é resolvida por região | não apresenta dado próprio, não invoca operação, não é alvo focável por si | `empty` · `stale` · `loading` · `error` · `unavailable` |
-| `block.line-collection` | apresenta **repetição ordenada** de linhas, uma por registro da fonte | não soma, não calcula, não pagina por conta própria além do transbordo declarado (`grade-e-espacos.md` §5.2) | `empty` · `stale` · `loading` · `error` · `unavailable`; `pending` coexiste, por linha |
+| `block.record-collection` | apresenta **repetição ordenada**, um item por registro da fonte | não soma, não calcula, não pagina por conta própria além do transbordo declarado (`grade-e-espacos.md` §5.2) | `empty` · `stale` · `loading` · `error` · `unavailable`; `pending` coexiste, por linha |
 | `block.record-summary` | apresenta os campos nomeados de **um** registro, com contagem de slots fixa | não calcula nenhum dos campos: valor devido, troco e total vêm do backend (`ui.md` §4) | `empty` · `stale` · `loading` · `error` · `unavailable`; `pending` coexiste |
 | `block.entry` | coleta **um** valor do operador (código, quantidade, valor, texto) e pode ser **destino de leitura** da região (`foco-teclado-e-leitor.md` §7) | não valida regra de negócio, não decide disponibilidade, não interpreta o que foi lido como comando | `error` · `unavailable` |
 | `block.option-set` | escolhe **uma** opção de um conjunto **fechado recebido do servidor** | não descobre opção, não ordena por conta própria (ordinal é contrato), não esconde opção por permissão | `empty` · `stale` · `error` · `unavailable` |
@@ -298,6 +304,13 @@ Notas que não são detalhe:
   cliente-final algo que não sabe (`estados-e-interacao.md` §3.1).
 - **`state.pending` não é declarado por papel**: ele coexiste com qualquer estado porque descreve
   fato concluído, não a região (`estados-e-interacao.md` §3.5).
+
+**`block.line-collection` virou `block.record-collection` em 2026-09-12 (T-0012).** "Linha" é
+aparência, e o §1.2 usa esse mesmo par como argumento: o que é cartão em um espaço é linha em
+outro. O papel é repetição de **registros**, que é o que `record-summary` já nomeia no singular. O
+rename é legal porque o livro de ids publicados está **vazio**
+(`packages/sdui/src/vocabulary/published.ts`): nenhum servidor emitiu o id, nenhum terminal o
+entende. Depois da primeira emissão, o §1.4 fecha essa porta.
 
 ### 3.3 Zona × papel — quem pode ocupar o quê
 
@@ -333,9 +346,7 @@ Nada abaixo é decidido aqui, e tentar decidir agora é criar estrutura de fase 
 - **inventário de glifos** — uma silhueta por estado e por domínio de rede (`S-03`);
 - **chaves do catálogo de mensagens** (nada de texto solto — `ui.md` §3);
 - **foco inicial e destino de leitura**, que são declarados **por tela**, não por bloco
-  (`foco-teclado-e-leitor.md` §6.3);
-- **o parse, as guardas nomeadas e o despacho tipado** de `tolerancia-de-versao.md` §4 —
-  comportamento é contrato aqui, código é **D-02**.
+  (`foco-teclado-e-leitor.md` §6.3).
 
 ---
 

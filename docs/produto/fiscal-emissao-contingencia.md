@@ -135,6 +135,12 @@ natureza **fiscal-contábil** escalada ao responsável e ao contador do cliente,
 
 ### RN-EMI-022 — Número não se reusa, e queimar número é evento previsto com desfecho declarado
 
+> **Indisponível — numeração fiscal pré-alocada por terminal.** Não funciona: emitir documento fiscal sem
+> contato consumindo faixa de número alocada a um terminal. Falta: confirmação de que a faixa por terminal
+> é admissível e se ela exige série por ponto de emissão (`LACUNA-OFF-002`). Responde: humano, com o contador.
+> Enquanto isso: `EMI` fica desligado por padrão (`roadmap-de-modulos.md:159`), e a reserva da Fase 1 é por
+> estabelecimento e série, sem presumir série por terminal (`roadmap-de-modulos.md:258-259`). Desde: 2026-09-23.
+
 **Motivo** a numeração é **sequencial por estabelecimento e por série** (F-35) e a norma trata a quebra
 de sequência como coisa a resolver: número não utilizado tem **inutilização pedida até o dia 10 do mês
 seguinte**
@@ -365,6 +371,15 @@ Nenhum foi verificado por mim na fonte primária; o dossiê expira a cada nota t
   clientes-alvo, e qual o custo de habilitar cada uma? Sem isso, o produto especifica **uma**
   contingência (a off-line) e declara as outras como não habilitadas. **Responde:** humano, e nova
   pesquisa por UF.
+- **`LACUNA-EMI-017`** (`RN-EMI-017`) — **a entrega do documento ao cliente-final precisa de prova
+  registrada, e em que forma?** A regra manda entregar e declara que o meio eletrônico substitui o
+  impresso onde a norma o admite (F-64), sem dizer se o emitente precisa **poder demonstrar** que
+  entregou. A diferença é de produto: com exigência, o fato de entrega tem valor probatório e prazo de
+  guarda próprio; sem ela, ele continua sendo fato **nosso** de operação, útil e sem efeito perante
+  terceiro. **Nada é afirmado por analogia**, e nenhuma retenção é presumida (`LACUNA-EMI-007` segue
+  valendo). **Responde:** humano / contador. Aberta em 2026-09-12 pela segunda passada do invariante
+  10 — achado 2.11 de `captura-varredura-invariante-10-2026-09-11.md`, que é onde está o custo de a
+  entrega não produzir fato nenhum hoje.
 - Herdadas e citadas aqui: `LACUNA-EMI-009` (a especificação não foi lida integralmente — nenhum campo é
   afirmado neste arquivo), `LACUNA-EMI-010` (a denegação foi reintroduzida?), `LACUNA-EMI-007` (prazo de
   guarda em anos), `LACUNA-EMI-014` a `016` (prazo, papel e escopo da capacidade de assinar — de que

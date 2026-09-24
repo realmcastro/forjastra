@@ -189,25 +189,28 @@ implementação decide, provavelmente liberando a quem já tem a tela na frente.
 
 | Bloco | Linhas | Células | `?` |
 |---|---|---|---|
-| Núcleo (`matriz-operacao-papel.md` §4) | 39 | 195 | 5 |
+| Núcleo (`matriz-operacao-papel.md` §4) | 42 | 210 | 5 |
 | `MSA` (§2) | 9 | 45 | 0 |
 | `COZ` (§3) | 4 | 20 | 0 |
 | `PCF` e `ATI` (§4) | 5 | 25 | 3 |
 | `FIS` e `EMI` (§5) | 13 | 65 | 20 |
 | Vertical (§6) | 2 | 10 | 3 |
 | Eixo de leitura (§7) | 4 | 20 | 12 |
-| **Total** | **76** | **380** | **43** |
+| **Total** | **79** | **395** | **43** |
 
 **Atualizado em 2026-08-23:** o núcleo foi de 35 para 39 linhas pela partição da linha 18 em cinco
 (`AUT-02`), e as quatro linhas novas herdaram as células da original — logo **o total de `?` não mudou**,
 e as duas leituras do parágrafo seguinte continuam válidas com o denominador novo (43 de 380, 11%).
+**Atualizado em 2026-09-23:** o núcleo foi de 39 para 42 linhas (40, habilitar terminal; 41, encerrar e
+reabrir estabelecimento; 42, turno), e as três nasceram valoradas, sem `?`
+(`matriz-operacao-papel.md` §8). O total passou a 395 células, e os `?` continuam 43, agora 10,9%.
 
 Onde a indecisão está, e é o que esta contagem existe para mostrar: **35 das 43 células `?` estão em ato
 fiscal irreversível (20) ou em leitura (12)**. O caminho crítico do caixa tem **duas**, as duas na mesma
 operação — abrir sessão em nome de outro operador (`LACUNA-NUC-016`). Nenhuma célula `?` está em venda,
 item, pagamento, desconto, gaveta, sangria ou fechamento de sessão.
 
-Duas leituras opostas do mesmo número, e as duas são verdadeiras: **11% das células ainda não foram
+Duas leituras opostas do mesmo número, e as duas são verdadeiras: **cerca de 11% das células ainda não foram
 decididas por ninguém**, o que é dívida declarada e não comportamento aprovado (`RN-OFF-008`); e
 **nenhuma delas está no que o caixa faz cem vezes por dia**, o que é a prova de que a fronteira do
 passo 1 e do passo 2 estava no lugar certo.
@@ -275,3 +278,13 @@ Aberta em 2026-08-23, pela varredura de conformidade de `RN-NUC-039`:
   (uma por escopo), com valor em branco e com o que já está decidido em volta, estão em
   `matriz-celulas-a-valorar.md` §2 — que **não é matriz** e cujas células não entram na contagem da §8
   deste arquivo. Valoradas, elas migram para cá como bloco próprio, na mesma passada, e a cópia de lá sai.
+  **Acrescentado em 2026-09-12, pela segunda passada do invariante 10:** esta célula decide **duas**
+  coisas, e a segunda passa despercebida porque a lacuna está escrita como pergunta de autorização.
+  `R` e `P` diferem em **autorização** e em **registro** (`RN-NUC-029`), e `REL` é o único módulo que
+  **não produz fato nenhum** (`modulos/relatorios.md` §3, "Nenhum evento") — então, valorada `P`, a
+  leitura de relatório não deixa rastro em lugar nenhum, e "este relatório é usado, e por quem" deixa
+  de ser respondível para sempre, sem backfill (`CLAUDE.md` §7.10). Quem valorar decide o registro
+  junto, com o custo dos dois lados à vista: `R` cria trilha por leitura de gestão, e a leitura dessa
+  trilha por pessoa continua fora por `RN-REL-008`; `P` deixa `RN-REL-001` — "relatório existe pela
+  decisão que informa" — sem nenhuma forma de conferir o desfecho. Achado 2.9 de
+  `captura-varredura-invariante-10-2026-09-11.md`.

@@ -3,12 +3,15 @@
 > **Irmão de `fatos-de-operacao.md`, com o mesmo peso normativo.** Primeiro eixo da partição: **quem
 > pratica o fato**. Lá, o que a operação do cliente produz (caminho de venda, conectividade, tempo,
 > `RN-NUC-041` a `046`). Aqui, o que os **papéis nossos** praticam e o **ciclo de vida** do cliente, do
-> módulo, do schema e do terminal (`RN-PRV-011` a `014`, mais `RN-PRV-021`, de 2026-08-23). Em
+> módulo, do schema e do terminal (`RN-PRV-011` a `014`, mais `RN-PRV-021`, de 2026-08-23; `RN-PRV-011`
+> ganhou as cláusulas (h) a (j) em 2026-09-23). Em
 > `fatos-de-operacao-dominios-fechados.md` — terceiro irmão, nascido em 2026-08-23 —, o fato de recusa e
 > as três listas fechadas de valor (`RN-NUC-047`, `048`), inclusive a que este arquivo cita para a
 > tentativa recusada. Em `fatos-de-operacao-retencao-e-descarte.md` — quarto irmão, da mesma data —, **o
-> fato depois do instante**: recurso local (`RN-NUC-046`) e retenção × janela (`RN-NUC-049`). **As lacunas
-> e as perguntas dos quatro moram no primeiro irmão** (§7).
+> fato depois do instante**: recurso local (`RN-NUC-046`) e retenção × janela (`RN-NUC-049`). Em
+> `fatos-de-operacao-ciclo-de-vida-do-pedido.md` — quinto irmão, de 2026-09-11 —, **o pedido × o fato
+> sobre o pedido** (`RN-NUC-052` a `055`). **As lacunas
+> e as perguntas dos cinco moram no primeiro irmão** (§7).
 >
 > **Por que este arquivo existe separado do conjunto `operacao-do-provedor*.md`.** Lá estão os
 > **papéis** e o **alcance** deles (`RN-PRV-001` a `010`); aqui está **o que fica registrado** quando
@@ -29,6 +32,19 @@
 ## 1. As regras
 
 ### RN-PRV-011 — Leitura nossa é fato de igual peso ao ato; ela nomeia o que foi alcançado e nunca copia o que foi lido
+
+> **Indisponível — nome da pessoa nossa na trilha visível ao cliente.** Não funciona: o cliente ver o
+> nome de quem, do nosso lado, agiu ou leu no ambiente dele. Falta: saber se o cliente tem direito ao
+> nome (`state-pendencias` §4.3). Responde: humano, com o advogado.
+> Enquanto isso: o cliente vê o papel e um pseudônimo próprio do ambiente dele (cláusula j). Desde:
+> 2026-09-23.
+
+> **Indisponível — leitura, do nosso lado, da trilha do nosso uso.** Não funciona: qualquer pessoa
+> nossa ler os fatos da trilha, inclusive quem praticou o ato. Falta: o leitor nomeado (`PRV-09`,
+> `state-pendencias` §4.4). Responde: humano.
+> Enquanto isso: a linha `R7` não tem célula, e sem célula a leitura é negada aos três papéis
+> (`RN-PRV-015`); toda tentativa é recusada e vira fato de tentativa recusada (cláusula f). Desde:
+> 2026-09-23.
 
 **Enunciado** toda leitura de dado de negócio de um cliente por um papel nosso produz fato **no
 instante da leitura**, com: quem (pessoa e papel de `RN-PRV-003`), quando (`RN-NUC-042`), qual cliente
@@ -133,6 +149,38 @@ o ato já foi recusado.
 cresceu para "atos **e leituras** nossas", e a célula é do passo 7 — regra que muda desfecho de célula
 e não entrega a célula **nasce inerte** (`AUT-14`). E se o cliente alcança ou não as leituras
 **derivadas** que fazemos da operação dele é `LACUNA-PRV-008`, não presumido aqui.
+
+**Enunciado, cláusulas acrescentadas em 2026-09-23 (`T-0019`, `F-019`).** (h) **A residência de (d)
+está decidida:** a autoridade do fato mora do nosso lado e sobrevive à saída do cliente, e o cliente lê
+uma projeção derivada dela, no ambiente dele ([[decision-d-06-ii-trilha-no-platform-com-projecao-no-cliente]];
+forma em `docs/arquitetura/d-06-trilha-residencia-2026-09-23.md` §5), e o aceite (d) continua sendo o
+critério. (i) **Leitura automática nossa é leitura desta regra.** A que percorre N clientes para responder pergunta de gestão
+(`RN-PRV-014`) produz **um fato por cliente alcançado e por classe de objeto**, a cada rodada, e nunca
+um fato só para a rodada. A sustentação é o item declarado que a autoriza (`RN-PRV-009`, `RN-PRV-014`);
+no lugar da pessoa, o fato declara a origem automática e o papel nosso que declarou a leitura, e nunca
+nomeia quem estava de plantão. (j) **Quem, visto pelo cliente:** o fato que o cliente lê nomeia o papel
+e um **pseudônimo próprio daquele cliente** para a pessoa nossa. O pseudônimo da mesma pessoa em outro
+cliente é outro, e nada entregue a um cliente liga os dois. A pessoa se resolve do nosso lado, pela
+autoridade; o nome dela não está em fato nenhum enquanto o aviso do topo estiver de pé.
+
+**Motivo das cláusulas (h) a (j)** saber, no cliente, que o ambiente dele foi lido e quando é
+irrecuperável se não for gravado no instante, e a leitura automática é a que mais lê: fora da regra,
+ela seria o caminho de maior volume sem trilha. A ordem de grandeza sobe de 10⁵–10⁶ para 10⁶–10⁷ fatos
+(ESTIMATIVA de `d-06-trilha-residencia-2026-09-23.md` §11, parâmetros ilustrativos), e o lado nosso
+suporta isso por partição (decisão do thread, `tarefas/T-0019-d-06-ii-residencia-da-trilha.md`, seção
+"thread — 2026-09-23 (respostas às perguntas do F.1)"). O pseudônimo por cliente é o que impede a
+trilha de virar chave de correlação de pessoas entre clientes, e é a única parte irreversível: o que já
+saiu numa exportação não volta (`d-06-trilha-residencia-2026-09-23.md` §9).
+
+**Aceite das cláusulas (h) a (j)** (iv) rodada automática sobre os clientes A, B e C, lendo duas classes
+→ seis fatos; o `owner` de A lista os dois dele, com a origem automática, e nenhum de B ou de C. (v) a
+mesma pessoa nossa lê A e depois B → A e B veem pseudônimos diferentes, nenhum com o nome, e juntar as
+exportações dos dois não liga as linhas à mesma pessoa. (vi) o cliente C encerra o contrato → a lista
+dele sai com ele, e a autoridade continua respondendo "o que lemos em C", do nosso lado.
+
+**Infeliz das cláusulas (h) a (j)** a gravação falha para B no meio da rodada → a leitura de B não
+acontece (cláusula c), A e C seguem, e a falha é visível do nosso lado. Agrupar os fatos da rodada por
+dia para economizar é o contador por dia que a tabela da §2 recusa.
 
 ### RN-PRV-012 — Ato nosso no ambiente do cliente é fato append-only, com motivo enumerado e efeito declarado
 
@@ -296,7 +344,7 @@ com fato do cliente cai em `LACUNA-GLO-001` como qualquer outra. "Consome": **C*
 
 | Fato | Instante | Decisão que informa (e de quem) | Consome | Grão candidato |
 |---|---|---|---|---|
-| `provider_read` — leitura nossa de dado de negócio do cliente | ao alcançar o dado | **C** (`owner`): conferir que o alcance corresponde à cláusula (`RN-PRV-010`). **P**: quanto acesso ao dado do cliente a nossa operação realmente exige — e um alcance usado toda semana é sinal de que falta capacidade de diagnóstico que não precisa ler faturamento (`RN-PRV-004`, infeliz) | C · P | uma linha por leitura, com classe de objeto, autoridade e motivo enumerado; **nunca** o conteúdo lido, nunca contador por dia |
+| `provider_read` — leitura nossa de dado de negócio do cliente | ao alcançar o dado | **C** (`owner`): conferir que o alcance corresponde à cláusula (`RN-PRV-010`). **P**: quanto acesso ao dado do cliente a nossa operação realmente exige — e um alcance usado toda semana é sinal de que falta capacidade de diagnóstico que não precisa ler faturamento (`RN-PRV-004`, infeliz) | C · P | uma linha por leitura, com classe de objeto, autoridade e motivo enumerado; a automática, uma por cliente e por classe a cada rodada (`RN-PRV-011` i); **nunca** o conteúdo lido, nunca contador por dia |
 | `provider_read_refused` — tentativa nossa recusada | na recusa | **P**: papel mal configurado, alcance mal desenhado, ou alguém pedindo o que não deve | P · **C**? → `LACUNA-PRV-009` | uma linha por tentativa, com o motivo enumerado de `RN-NUC-043` e o **identificador pretendido** marcado como tal; **sem** cliente-alvo resolvido quando a resolução é o que falhou, e **nunca** residente no ambiente do cliente apontado pelo identificador pretendido (`RN-PRV-011` e–g) |
 | `provider_user_edit` — suporte editou usuário, papel ou atribuição do cliente | no ato | **C**: o que mudou no acesso da equipe dele, e por quem. **P**: qual edição repetimos tanto que ela é **capacidade faltando** na superfície do cliente | C · P | uma linha por ato, com objeto e **quais campos**; nunca valor de credencial |
 | `provider_module_change` — módulo ativado ou desativado por papel nosso | no ato | **C**: por que a fatura dele mudou. **P**: base de cobrança, e módulo contratado que nunca produziu fato de operação | C · P | fato append-only com efeito de cobrança declarado no ato (`RN-PRV-007`); três atos = três linhas |

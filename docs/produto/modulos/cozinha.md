@@ -332,6 +332,31 @@ cruzada entre pedidos (`[[LACUNA-COZ-2]]`). Etapas por autor são dado sobre des
 identificada: lidas por papel autorizado, nunca expostas como ranking na operação. Proteção e retenção
 são de `seguranca` e do humano.
 
+**Registra** (acrescentado em 2026-09-12, `CLAUDE.md` §7.10): a emissão de cada trabalho, com ponto,
+etapa e instante · a apresentação confirmada, e o **pendente de apresentação** quando o caminho não
+estava disponível · cada mudança de etapa, com autor · "pronto" e entrega · o **encerramento sem
+produzir**, com autor e motivo, inclusive quando o pedido morreu sem virar venda — o trabalho já
+emitido não é apagado (`RN-COZ-001`, infeliz) · o trabalho que foi ao ponto padrão por falta de
+roteamento, **marcado como sem roteamento** (`RN-COZ-002`, infeliz) · e a disponibilidade do caminho
+de apresentação de cada ponto, com instante.
+
+**Não registra**, e cada um com o motivo:
+
+- **Dado de pessoa, endereço, contato, valor cobrado e qualquer dado de pagamento.** A via fica em
+  ambiente aberto — bancada, chão, lixo da área de produção — e o que não viaja nela também não vira
+  fato deste módulo (§6, Sensível).
+- **A instrução de preparo como histórico.** Ela pode carregar condição de saúde do cliente-final:
+  entra só quando necessária ao preparo, não vira série e não é cruzada entre pedidos
+  (`[[LACUNA-COZ-2]]`).
+- **Duração de preparo como campo.** Os marcos já estão registrados e a duração deriva deles
+  (`RN-NUC-045`).
+- **Agregado de desempenho por pessoa.** As etapas têm autor porque a trilha exige; compor ranking a
+  partir disso é decisão do humano (`RN-REL-008`), nunca consequência do registro.
+- **A pessoa, quando o ponto opera em dispositivo compartilhado.** A granularidade do autor ali é a
+  **sessão do ponto**, e isso é dívida declarada em §5, não descoberta depois.
+- **O insumo perdido** no encerramento sem produzir: quantificá-lo só existe com `EST` ligado
+  (`RN-COZ-001`, infeliz), e o módulo não estima o que não mede.
+
 ## 7. Lacunas e pendências
 
 - `[[LACUNA-COZ-1: a via de produção (impressão dirigida ao ponto) tem qualquer exigência ou vedação de forma para não ser confundida com documento fiscal ou comprovante? — sem fonte em 2026-08-22]]`

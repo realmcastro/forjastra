@@ -312,6 +312,33 @@ desempenho · a trilha de retiradas de item, que é dado sobre conduta de pessoa
 é lida por papel autorizado, não exposta na operação. Nenhum dado de pagamento existe em `MSA`: o meio
 e o resultado do pagamento são do núcleo. Proteção e retenção são de `seguranca` e do humano.
 
+**Registra** (acrescentado em 2026-09-12, `CLAUDE.md` §7.10): a abertura do consumo, com alvo,
+responsável e instante · cada lançamento, com o autor — que muda quando ele vem do cliente-final por
+`PCF`, e é o autor que muda, nunca a regra (§6) · cada retirada de item, com autor e a autoridade que
+a permitiu (`RN-MSA-004`) · transferência, junção e separação, cada uma com o antes e o depois, que é
+o que mantém "de onde veio este item" respondível depois de o alvo mudar · troca de responsável · o
+encerramento **com o desfecho** — cobrança ou cancelamento —, nunca o consumo saindo da lista sem
+dizer em quê deu · a repartição entregue no fechamento · e a recusa de qualquer uma delas, pelo fato
+de recusa do núcleo (`RN-NUC-043`).
+
+**Não registra**, e cada um com o motivo:
+
+- **Quem é o cliente-final.** O nome de exibição existe só quando a ficha é nominal (`RN-MSA-014`);
+  identidade persistente é de `CLF`, opt-in, e `MSA` não passa a guardar por conta própria (§4,
+  infeliz).
+- **Por que o operador retirou a linha.** Obter o motivo exige perguntar no meio do serviço, que é
+  etapa a mais no caminho crítico; onde ele existe sem perguntar, já é enumerado na lista fechada de
+  recusa (`RN-NUC-054`, motivo).
+- **Duração de nada** — tempo de mesa, tempo até fechar e ocupação são derivados dos marcos
+  (`RN-NUC-045`), e marco é o que se registra.
+- **Duas ausências que não são decisão, e ficam aqui para não passarem por uma.** A **colisão** —
+  dois operadores, ou um operador e o canal externo, sobre o mesmo consumo, e um perde — produz
+  recusa, mas o motivo disponível não a diagnostica (achado 2.3 de
+  `captura-varredura-invariante-10-2026-09-11.md`). E o **segundo consumo aberto no mesmo alvo** não
+  distingue operação real de operador que não achou o consumo certo (achado 2.7). As duas são
+  ausência **acidental**, com card e dono; escrevê-las nesta lista não as converte em ausência
+  decidida.
+
 ## 6. Fronteira com os outros módulos
 
 - **`COZ`** — `MSA` expõe o lançamento; `COZ` decide o que fazer com ele. `MSA` **não** lê fila nem

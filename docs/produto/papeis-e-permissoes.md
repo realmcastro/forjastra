@@ -21,7 +21,8 @@
 >
 > **Numeração.** Papel com autorização verificada no backend é **núcleo** (`fronteira-do-nucleo.md`
 > §2.6), então a sequência é `RN-NUC`, continuando os três arquivos do núcleo: **os dois arquivos de
-> papel consomem `RN-NUC-017` a `RN-NUC-025`**, e quem numerar depois começa em `026`.
+> papel consomem `RN-NUC-017` a `RN-NUC-025`**, e quem numerar depois começa em `026`. Em 2026-09-23
+> entrou `RN-NUC-066` (§3.2, a loja de uma pessoa só), no número que estava livre naquele dia.
 > `LACUNA-NUC-001` a `008` moram em `nucleo-venda.md` §6; `009` a `014` nascem aqui (§6), mais
 > `LACUNA-NUC-034`, aberta em 2026-08-23 — `015` a `033` já estavam nos arquivos de matriz e superfície,
 > e numeração **não se renumera**.
@@ -103,11 +104,10 @@ resolvido não há autorização, e o pedido é recusado como incidente, não co
 **Offline** o escopo é retido junto com a autoridade (`RN-OFF-024`) e não se amplia sem contato:
 terminal sem rede não descobre estabelecimento novo nem papel novo.
 
-**Nota sobre turno, e ela é dívida, não desfecho.** Abrir e fechar turno não é operação classificada
-hoje (`LACUNA-NUC-007`, ainda aberta): não há operação para pendurar papel. Se o humano decidir que
-turno é operação própria, distinta da sessão de caixa, ela entra na matriz com o papel que a
-autoriza — e **continua não sendo** um nível de escopo. Nada aqui inventa a operação para ter onde
-pendurar o papel.
+**Nota sobre turno.** Até 2026-09-23 abrir e fechar turno não era operação (`LACUNA-NUC-007`) e esta nota
+a declarava dívida. Desde então é `RN-NUC-062`, na linha 42 da matriz, com papel na célula — e turno
+**continua não sendo** um nível de escopo: a atribuição não se escopa a turno, e nenhum papel nasce
+dele.
 
 ---
 
@@ -163,6 +163,58 @@ núcleo:
 | Operador de produção | `production_operator` | `COZ` | sem ele, quem registra avanço de etapa precisa de `cashier` ou `manager`, pelo mesmo motivo |
 
 Que outro módulo traz papel próprio é decisão da spec de cada módulo, não deste arquivo.
+
+### 3.2 A loja de uma pessoa só
+
+Aberta em 2026-09-23 (T-0014, `F-018`), pelo achado `A-04` e pela pergunta `Q-A` de
+`dois-varejos-auditoria-do-nucleo-2026-09-12.md`. A regra vale para qualquer resposta da loja, então
+não espera a resposta.
+
+### RN-NUC-066 — Ninguém autoriza a si mesmo: quem porta o papel que autorizaria pratica o ato por ele, e a trilha tem uma entrada por pessoa
+
+**Enunciado** a célula `A:<papel>` (`RN-NUC-026`, `RN-NUC-022`) só se satisfaz com autorizador que é
+**outro sujeito**, distinto do requerente. Quem porta, ele mesmo, atribuição do papel que a célula
+exigiria como autorizador não pede autorização a si: pratica o ato **pela célula do próprio papel** que
+o alcança, pela contenção de `RN-NUC-028`, e o registro nomeia essa atribuição (`RN-NUC-029`, fonte
+(1)). Um ato, um sujeito, uma entrada. "Mesmo sujeito" é o mesmo operador (`glossario.md` §1.6), qualquer
+que seja a opção de `D-03` sobre onde ele mora, e nunca um nome digitado.
+
+**O que isso dá à loja de uma pessoa** quem porta `cashier`, `manager` e `owner` (`RN-NUC-020`, motivo)
+faz tudo o que a loja de duas faz, sem passo de autorização: o desconto acima do limite do `cashier` ele
+aplica como `manager` (linha 6, até o limite de `manager`); o cancelamento ele registra como `manager`
+(linha 9); acima do limite de `manager`, aplica como `owner` (linha 6). Continua sem caminho o que não
+tinha em loja nenhuma — acima do limite do `owner` (`LACUNA-NUC-015`) — e o sensível sem contato pede
+atribuição de `cashier` ou `manager`, não de `owner` (`RN-NUC-028`, infeliz).
+
+**Escala** o eixo é pessoas por estabelecimento, de uma a muitas, e a regra é a mesma nas duas pontas.
+Admitir autoautorização não daria capacidade a ninguém — quem porta o papel autorizador já alcança o ato
+pela célula dele — e daria a toda loja trilhas em que requerente e autorizador são a mesma pessoa, lidas
+como controle de duas.
+
+**Motivo** quatro partes. **Necessidade:** a loja operada só pelo dono pratica o que o negócio precisa,
+sem cerimônia e sem o produto pressupor separação de funções que ela não tem (`A-04`). **Recusado:** a
+mesma pessoa preencher requerente e autorizador — a trilha exibe duas assinaturas onde houve uma, e
+`A:` deixa de significar, em qualquer loja, que duas pessoas viram o ato; e restrição de atribuição a
+terminal (`RN-NUC-020`) passaria a ser contornável pela própria pessoa. **Nosso:** o ato pela célula do
+papel mais alto que ela porta, com essa atribuição no registro. **Melhor** porque a trilha diz a verdade
+nas duas pontas — uma pessoa, uma entrada e o papel usado; duas pessoas, duas entradas —, e nenhuma
+operação nova precisou nascer.
+
+**Aceite** (1) loja de uma pessoa com `cashier`, `manager` e `owner`: desconto acima do limite do
+`cashier` e dentro do de `manager` entra sem pedido de autorização, e a trilha tem **uma** entrada,
+nomeando `manager`. (2) pessoa com `manager` restrito ao terminal 1, operando como `cashier` no terminal
+2: o `A:manager` da linha 7 não se satisfaz com ela, e no terminal 2 o excesso é negado. (3) loja de
+duas: `cashier` C pede, `manager` M autoriza → duas entradas, dois sujeitos (`RN-NUC-022`, inalterado).
+(4) quem porta `manager` e `owner` e pede acima do limite de `manager`: aplica como `owner`, uma entrada.
+
+**Infeliz** a pessoa sozinha precisa de operação sensível com o link caído → `RN-NUC-028`, infeliz: com
+`cashier` ou `manager` a autoridade retida a sustenta; só com `owner`, espera o contato, e isso é
+declarado na habilitação, não descoberto no pico.
+
+**Offline** as células `A:` já são recusa sem contato (linhas 7 e 9), e nenhuma coluna `Offline` muda.
+**Onde a célula está:** matriz do núcleo, linhas 7 e 9, nota ¹⁷ — nenhum valor de célula muda, a nota
+diz como `A:` se lê. O vocabulário de `A:` mora em `matriz-operacao-papel-contrato.md` (`RN-NUC-026`),
+que passa a citar esta regra na próxima edição dele.
 
 ---
 
@@ -265,6 +317,46 @@ expiração técnica; SSO; e se o mesmo humano existe em mais de um cliente. **D
 já não é fronteira:** reautenticar **sem contato não existe** — a divergência de `RN-OFF-024`(b)×(d)
 está fechada no texto da regra dona, e o produto nunca oferece "reautentique" sem rede
 (`papeis-atribuicao-e-delegacao.md` §6.1).
+
+### 5.1 O que de `D-03` é produto, e já tem regra
+
+Aberta em 2026-09-23 (`T-0015`, B.1, `identidade-necessidade-e-fronteira-2026-09-23.md` §2 e §3). As
+duas regras valem nas três opções de `D-03`: quem cria o primeiro `owner` é `RN-NUC-090`
+(`papeis-atribuicao-e-delegacao.md` §5), e o segundo fator é esta.
+
+### RN-NUC-091 — Segundo fator é exigido por classe de ato, só com contato; o núcleo fixa o piso, e o cliente só o aumenta
+
+**Enunciado** (`LACUNA-IDE-005`) o segundo fator é conferido **só com contato** e é exigido, no mínimo:
+(a) em todo ato e toda leitura de `provider_operator` e `provider_administrator`, e de `provider_support`
+sob concessão; (b) em ato de `owner` nas linhas 18 a 23, 36 a 39 e 41 (meta-autoridade, publicação,
+encerrar e reabrir); (c) em ato sobre a capacidade de assinar de `fiscal_officer`
+(`RN-EMI-037`); (d) em ato de `manager` ou `owner` praticado **fora** de terminal habilitado para o
+estabelecimento do objeto, o que inclui habilitar terminal (linha 40). De `cashier`, `attendant` e
+`production_operator` o núcleo não exige. O cliente pode exigir de mais papéis e atos, nunca de menos.
+Sem contato nunca é pedido, e o ato ordinário não passa a depender dele. Qual fator é mecanismo
+(`LACUNA-OFF-015`), de `backend` com `seguranca`.
+
+**Motivo** o critério é o alcance de uma credencial roubada, por classe de ato. A credencial nossa
+alcança N clientes. O `owner` está no conjunto retido de todo terminal do estabelecimento (`RN-OFF-033`
+b): se a prova da retaguarda for só a que o terminal confere, terminal furtado vira meta-autoridade. No
+terminal habilitado a prova é conferida num dispositivo habilitado para aquela unidade (`RN-OFF-032` i);
+fora dele, só a prova existe, e habilitar terminal acontece por construção num dispositivo ainda não
+habilitado e cria o ponto que vende sem contato em nome da unidade (`RN-NUC-061`). **Recusado:** exigir
+por papel só, que poria segundo fator no `owner` operando o balcão sem rede, onde ele não existe; e
+exigir de `cashier`, que quebraria `RN-OFF-032`.
+
+**Aceite** (1) `owner` publica preço pela retaguarda: segundo fator pedido; sem ele, negado, e a recusa
+é fato. (2) o mesmo `owner` vende no balcão sem contato: nada pedido, a venda segue. (3) `manager`
+habilita terminal: pedido. (4) cliente exige segundo fator de `cashier`: vale; tenta dispensar o do
+`owner`: recusado.
+
+**Infeliz** perder o segundo fator: restabelecê-lo é ato com contato, de outro papel que alcance a
+pessoa; para o `owner` único, é o indisponível de `RN-NUC-090` (b). Nunca "pular desta vez".
+**Gate** `seguranca`, no B.3 de `D-03`: se terminal habilitado basta para dispensar o `manager` em (d), e
+que campos a recusa de prova fora do terminal carrega sem revelar que a conta existe.
+**Registra** a recusa por prova ou por segundo fator em superfície sem terminal, nos campos que o B.3
+admitir; onde ela mora antes de o tenant ser resolvido é de `backend` com `arquiteto-dados`. **Não
+registra** nada do fator apresentado, nem digitação abortada (B.1 §7).
 
 ---
 

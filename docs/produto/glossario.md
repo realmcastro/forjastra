@@ -27,25 +27,23 @@ padaria e loja de roupa precisam **todos** do conceito.
 |---|---|---|---|
 | Cliente (tenant) | `tenant` | A empresa que contrata a Forja. É a unidade de isolamento de dado. | cliente-final |
 | Cliente-final | `customer` | Quem compra. Pode ser anônimo. | cliente (tenant) |
-| Estabelecimento | `establishment` | Unidade de operação de um cliente (tenant), com **identidade jurídica própria**: é dele que a venda sai, é em nome dele que o documento é emitido, e o dinheiro de um não se mistura com o do outro. Um cliente (tenant) tem **uma ou mais**. | cliente (tenant); terminal |
+| Estabelecimento | `establishment` | Unidade de operação de um cliente (tenant), com **identidade jurídica própria**: é dele que a venda sai, é em nome dele que o documento é emitido, e o dinheiro de um não se mistura com o do outro. Um cliente (tenant) tem **uma ou mais**. Regra dona: `RN-NUC-050` e `RN-NUC-051` (`nucleo-estabelecimento.md`). | cliente (tenant); terminal |
 | Terminal | `terminal` | O dispositivo onde se opera o PDV, vinculado a um estabelecimento. | posto de caixa |
-| Terminal habilitado a vender por um estabelecimento | `sales_enabled_terminal` | Terminal cujo vínculo com **um** estabelecimento foi estabelecido **com contato** e fica retido nele. É esse fato — mais o operador identificado — que sustenta o **ato ordinário** sem rede (`RN-OFF-032`), e é ele que escopa a resolução de venda por referência humana (`RN-NUC-038`). Furto, perda ou destruição **revogam** a habilitação **no servidor** (`RN-OFF-016`, `RN-EMI-038`) — no terminal offline ela cai quando **vence por tempo sem contato**, com aviso antes — sem prazo, revogação de terminal é promessa que o offline não cumpre (`LACUNA-OFF-017`). | autoridade retida; atribuição restrita a terminal |
-| Fuso do cliente | `tenant_time_zone` | Fuso em que "hoje", turno e fechamento são interpretados. | fuso do servidor |
-| Fuso do estabelecimento | `establishment_time_zone` | Fuso da unidade onde a operação de fato acontece. Existe porque um cliente (tenant) pode ter estabelecimentos em fusos diferentes. | fuso do cliente (tenant) |
-| Moeda do cliente | `tenant_currency` | Moeda em que valor é exibido e cobrado. | — |
+| Terminal habilitado a vender por um estabelecimento | `sales_enabled_terminal` | Terminal cujo vínculo com **um** estabelecimento foi estabelecido **com contato** e fica retido nele. Quem habilita: `manager` ou `owner`; a renovação é efeito do contato (`RN-NUC-061`). É esse fato — mais o operador identificado — que sustenta o **ato ordinário** sem rede (`RN-OFF-032`), e é ele que escopa a resolução de venda por referência humana (`RN-NUC-038`). Furto, perda ou destruição **revogam** a habilitação **no servidor** (`RN-OFF-016`, `RN-EMI-038`) — no terminal offline ela cai quando **vence por tempo sem contato**, com aviso antes — sem prazo, revogação de terminal é promessa que o offline não cumpre (`LACUNA-OFF-017`). | autoridade retida; atribuição restrita a terminal |
+| Fuso do estabelecimento | `establishment_time_zone` | O **único** fuso do núcleo: nele se interpretam "hoje", turno, fechamento e vigência por data daquele estabelecimento. Membro da configuração publicada dele, com vigência, identificado pela região e nunca por deslocamento fixo (`RN-NUC-057`). | fuso do servidor; fuso do terminal |
+| Moeda do estabelecimento | `establishment_currency` | Moeda em que o valor dos fatos do estabelecimento é expresso e cobrado. Membro da mesma configuração publicada; leitura que soma unidades não soma moedas (`RN-NUC-058`). | moeda de exibição de relatório |
+| ~~Fuso do cliente~~ · ~~Moeda do cliente~~ | ~~`tenant_time_zone`~~ · ~~`tenant_currency`~~ | **Aposentados em 2026-09-23**, e os identificadores não se reaproveitam (§4.1, pelo mesmo motivo). Diziam "fuso em que 'hoje', turno e fechamento são interpretados" e "moeda em que valor é exibido e cobrado", ambos do cliente (tenant); `RN-NUC-057` e `RN-NUC-058` puseram os dois no estabelecimento. | — |
+| Encerramento do estabelecimento | `establishment_closure` | Fato datado que tira a unidade de operação sem apagar nada; reabrir é fato também (`RN-NUC-059`). Pausa não é encerramento. | exclusão; unidade inativa por campo |
 
 **Proibido**: usar "cliente" sem qualificador em spec, código ou conversa. Sempre "cliente (tenant)"
 ou "cliente-final".
 
-**Estabelecimento é entidade de primeira classe, não atributo do cliente (tenant).** Nada no produto
-presume um estabelecimento por cliente: turno, sessão de caixa, numeração de documento, regime
-tributário, identidade fiscal, ponto de emissão (§6) e configuração de módulo são **por
-estabelecimento**. Consequência aberta, e é conflito de **regra**, não de forma: a vigência fiscal se
-resolve no fuso do **estabelecimento** (`modulos/fiscal.md`, `fiscal-regimes-e-vigencia.md`), enquanto
-"hoje", turno e fechamento estão declarados no fuso do **cliente (tenant)**
-(`fronteira-do-nucleo.md` §2.1). Os dois não podem valer ao mesmo tempo para um cliente com
-estabelecimentos em fusos diferentes → `[[LACUNA-GLO-001]]`. Até fechar, nenhuma spec presume qual
-dos dois manda, e quem escrever regra que dependa disso cita a lacuna.
+**Estabelecimento é entidade de primeira classe, não atributo do cliente (tenant)** — a regra dona é
+`RN-NUC-050`, em `nucleo-estabelecimento.md`. Nada no produto presume um estabelecimento por cliente: turno, sessão de caixa, numeração de documento, regime
+tributário, identidade fiscal, ponto de emissão (§6), configuração de módulo, **fuso e moeda** são **por
+estabelecimento**. O conflito de regra que havia aqui — vigência fiscal no fuso do estabelecimento,
+"hoje" e fechamento no do cliente (tenant) — fechou em 2026-09-23 pelo estabelecimento (`RN-NUC-057`,
+`[[LACUNA-GLO-001]]`).
 
 ### 1.2 Catálogo e preço
 
@@ -56,9 +54,12 @@ dos dois manda, e quem escrever regra que dependa disso cita a lacuna.
 | Código do item | `item_code` | Identificador do item legível por máquina ou digitável pelo operador. | identificador interno |
 | Unidade de medida | `unit_of_measure` | Em que se conta o item, com casas decimais declaradas. | embalagem |
 | Quantidade | `quantity` | Quanto do item, na unidade dele. Pode ser fracionária. | contagem de linhas |
-| Preço | `price` | Valor unitário de um item para um contexto e um período. | preço pago |
-| Lista de preço | `price_list` | Conjunto de preços aplicável a um contexto (estabelecimento, canal, período). | tabela de desconto |
-| Vigência | `effective_period` | Janela em que um preço ou uma regra vale. | data de criação |
+| Preço | `price` | Valor unitário de um item num estabelecimento, com vigência (`RN-NUC-072`). | preço pago; preço de canal, que é de módulo |
+| Lista de preço | `price_list` | Conjunto de preços que vale para um estabelecimento ou para todos os do cliente (tenant) naquela moeda, com vigência; o do estabelecimento vence (`RN-NUC-072`). Até 2026-09-23 dizia "contexto (estabelecimento, canal, período)": canal é de módulo. | tabela de desconto |
+| Grupo de catálogo | `catalog_group` | Conjunto nomeado e **opcional** de itens, que pode conter outros grupos, para o operador achar item sem código; item em nenhum, um ou vários. Nunca muda preço nem é condição de venda (`RN-NUC-068`). | seção de canal (`channel_section`, §6) |
+| Fora de venda | `not_for_sale` | Marca de um item **numa versão** do catálogo publicado: o item continua no catálogo e não é lançado enquanto ela vigorar (`RN-NUC-071`). Decisão do negócio, com vigência; nunca estado vivo. | sem saldo em estoque (`EST`); item não cadastrado |
+| Classe estrutural do identificador · Simbologia | `identifier_structural_class` · `symbology` | Duas listas fechadas de `RN-NUC-063`, calculadas no terminal sobre o identificador apresentado para lançar item. Classe: `gtin_global`, `gtin_restricted` ou `not_gtin`, pela tabela GS1 da regra; decide só o que do identificador entra no fato, nunca o desfecho do lançamento. Simbologia: `ean_upc`, `other_linear`, `two_dimensional` ou `unknown`, e `unknown` é o caso comum; digitação não tem simbologia. | identificador válido, que é "entregue completo" (`RN-NUC-063` f); código do item |
+| Vigência | `effective_period` | Janela em que **uma versão de artefato publicado** vale — e são todos, não só preço e regra: catálogo, preço e lista de preço, limite por papel, o que cada papel autoriza, configuração do estabelecimento, exceção pré-autorizada e versão de regra tributária. **Toda** publicação nasce com versão e vigência declaradas (`RN-NUC-013`, `RN-NUC-014`): não existe membro publicado sem vigência, e o fato concluído congela a versão que vigia no instante dele (`RN-NUC-015`). | data de criação; instante em que o terminal recebeu a versão |
 
 **Proibido**: `product` como nome de entidade. "Produto" é ambíguo (é também o software e é o nome
 de um papel do processo). Use `catalog_item`.
@@ -71,9 +72,11 @@ de um papel do processo). Use `catalog_item`.
 | Item de pedido | `order_item` | A linha que liga um item de catálogo a uma quantidade e a um preço dentro de um pedido. | item de catálogo |
 | Venda | `sale` | O fato comercial **concluído**: composição de itens, valor e contrapartida fechados. Imutável. | pedido |
 | Item de venda | `sale_item` | A linha congelada de um item na venda concluída. | item de pedido |
+| Componente do item de pedido | `order_item_component` | Parte do valor de uma linha que um **módulo** ligado compõe sobre ela (o adicional de `ADI` é o primeiro caso), com módulo dono, valor e versão do artefato dele, congelada na venda. O núcleo soma e não interpreta (`RN-NUC-070`). | observação do item, que nunca muda valor |
 | Desconto | `discount` | Redução deliberada de valor, com origem e autorização identificáveis. | erro de preço |
 | Acréscimo | `surcharge` | Aumento deliberado de valor sobre item ou venda. | imposto |
 | Total | `total_amount` | Valor devido pela venda, calculado no backend. | soma vista na tela |
+| Rateio | `allocation` | Repartição, na conclusão, de desconto ou acréscimo da venda inteira entre as linhas, exata na menor unidade da moeda, pelo maior resto; a parcela congela na linha (`RN-NUC-064`). | arredondamento de linha ou de tributo |
 | Cancelamento de venda | `sale_cancellation` | Fato novo que anula uma venda concluída inteira. | apagar venda |
 | Devolução | `return` | Fato novo que desfaz parte do que foi vendido, referenciando a venda original. | cancelamento |
 | Comprovante | `receipt` | Documento **não** fiscal entregue como prova de operação. | documento fiscal |
@@ -92,9 +95,8 @@ item existe **sem** `COZ` (embalagem, presente, "sem gelo" no balcão), então d
 tiraria de quem não tem produção a capacidade que o caderno de papel já dá hoje (regra núcleo §12).
 Valor de modo além do mínimo é extensão de módulo — retirada posterior é `CMP`, salão × balcão é
 refino de `MSA`/vertical, e o que a norma exige para retirada presencial de pedido remoto é
-`LACUNA-RES-002`. **Atualização de 2026-08-22:** a spec do núcleo passou a existir, com `RN-NUC-001` a
-`RN-NUC-016` em três arquivos. A **observação do item** ganhou regra própria (`RN-NUC-016`); o **modo de
-atendimento** continua sem regra numerada (`[[LACUNA-GLO-002]]`, reduzida).
+`LACUNA-RES-002`. Regras donas: observação em `RN-NUC-016`, e instrução que cobra não é observação
+(`RN-NUC-070` c); modo de atendimento em `RN-NUC-048` (`[[LACUNA-GLO-002]]`, fechada em 2026-08-23).
 
 ### 1.4 Pagamento
 
@@ -105,7 +107,7 @@ atendimento** continua sem regra numerada (`[[LACUNA-GLO-002]]`, reduzida).
 | Pagamento dividido | `split_payment` | Mais de um pagamento para a mesma venda. | divisão de conta |
 | Troco | `change_due` | Valor devolvido ao cliente-final quando o pago excede o devido. | diferença de caixa |
 | Estorno de pagamento | `payment_reversal` | Fato novo que desfaz um pagamento já registrado. | cancelamento de venda |
-| Chave de idempotência | `idempotency_key` | Identificador enviado pelo chamador que garante que repetir não duplica. | identificador da venda |
+| Chave de idempotência | `idempotency_key` | A identidade **da operação enfileirável**, cunhada no terminal no instante do fato, sem consultar servidor, estável entre reenvios: reenviar com ela devolve o **mesmo** resultado (`RN-OFF-013`). Quando quem chama é o **nosso** terminal, ela **é** a identidade daquela operação — a venda nasce com a dela (`RN-NUC-003`) e **cada pagamento nasce com a sua**, porque uma venda tem N pagamentos e a identidade da venda não deduplica pagamento nenhum. Chave vinda de chamador **externo** (`INT`, `PCF`, `ADQ`) é **entrada não confiável**: ela serve para reconhecer repetição **daquele** chamador e **nunca** vira a identidade do nosso fato. | referência humana da venda (`RN-NUC-003`), que é para pessoa e é única só no escopo do estabelecimento |
 
 ### 1.5 Caixa e turno
 
@@ -117,7 +119,7 @@ atendimento** continua sem regra numerada (`[[LACUNA-GLO-002]]`, reduzida).
 | Sessão de caixa | `register_session` | Da abertura ao fechamento: um operador responsável, um posto, um fundo. |
 | Gaveta | `cash_drawer` | O compartimento físico de dinheiro. |
 | Operador de caixa | papel `cashier` | A pessoa no papel de cobrar. |
-| Turno | `shift` | Janela operacional do estabelecimento. Eixo **independente** da sessão de caixa: um turno contém várias sessões, e uma sessão não define um turno. |
+| Turno | `shift` | Intervalo entre **abrir** e **fechar turno** num estabelecimento, que agrupa as sessões de caixa abertas dentro dele. **Opcional**: nada depende dele, e nenhum fato o carrega (`RN-NUC-062`). Um turno contém várias sessões; uma sessão não define um turno; trocar de responsável pela gaveta no mesmo dia é da sessão. |
 | Fundo de troco | `opening_float` | Dinheiro colocado na gaveta na abertura da sessão. |
 | Movimento de caixa | `cash_movement` | Qualquer entrada/saída de dinheiro que não é pagamento de venda. |
 | Sangria | `cash_withdrawal` | Retirada de dinheiro da gaveta durante a sessão. |
@@ -239,7 +241,6 @@ mapeado para o léxico de módulo em `verticais/restaurante.md` §3, que é onde
 
 | Termo | No código | Ramo | Significado |
 |---|---|---|---|
-| Grade | `variant_matrix` | moda | Combinação de eixos (cor, tamanho) de um mesmo item. |
 | Etiqueta | `label` | varejo | Impresso de identificação/preço afixado à mercadoria. |
 | Condicional | `consignment_out` | moda | Mercadoria que sai sem venda, para decisão posterior. |
 | Troca | `exchange` | varejo | Devolução com substituição, não com dinheiro. |
@@ -330,15 +331,14 @@ módulos **não está fechada aqui** — fechar é do catálogo de módulos.
 | `EMI` | módulo | Emissão de documento fiscal | reservado |
 | `APU` | módulo | Apuração e obrigação acessória | reservado |
 | `PRV` | **provedor** | Operação do provedor — o quinto escopo (`operacao-do-provedor.md`) | reservado |
+| `ADI` | módulo | Adicional (`RN-NUC-070`, 2026-09-23) | reservado |
 
-As linhas de `PER` para baixo foram acrescentadas por `catalogo-de-modulos.md` (T-0001, passo 2), que
-é onde a **lista de módulos** e a fronteira de cada um vivem; este arquivo continua sendo o registro
-único dos **códigos**. Uma eventual partição do fiscal reserva os códigos dela aqui, não lá.
+As linhas de `PER` para baixo vieram de `catalogo-de-modulos.md` (T-0001, passo 2), onde a **lista de
+módulos** e a fronteira de cada um vivem; este arquivo continua sendo o registro único dos **códigos**.
 
-**Partição do fiscal (T-0001, passo 3a):** `FIS` passou a nomear a **tributação** — decidir o que
-incide, sobre que base, em que regime, sob que versão de regra. `EMI` e `APU` são as outras duas
-partes, ambas **camada 2** (exigem `FIS`). Fronteira, justificativa e regras em `modulos/fiscal.md`
-§1. Nenhum código foi renomeado nem aposentado, e nenhuma `RN-FIS-nnn` havia sido emitida antes.
+**Partição do fiscal (T-0001, passo 3a):** `FIS` nomeia a **tributação** (o que incide, sobre que base,
+em que regime, sob que versão de regra); `EMI` e `APU` são **camada 2** e exigem `FIS`. Fronteira e regras
+em `modulos/fiscal.md` §1. Nenhum código foi renomeado nem aposentado.
 
 Códigos **bloqueados**, para não gerarem ambiguidade: `PDV`, `POS`, `NFE`, `NF`, `SAT`, `TEF` — os
 três primeiros por colisão de leitura, os demais por parecerem afirmar sigla de documento ou de
@@ -359,6 +359,7 @@ integração que ainda não confirmamos (ver `PERGUNTAS` da ficha T-0001).
 | `qtd`, `vlr`, `dt`, `nf`, `desc` | nome inteiro em inglês | Abreviação não sobrevive a quem entra depois. |
 | "apagar" venda, pagamento, movimento | cancelar / estornar / devolver (fato novo) | Fato concluído não se apaga; a palavra errada convida o modelo errado. |
 | "mesa", "bomba", "comanda" em spec de núcleo | conceito de núcleo equivalente | Termo de ramo no núcleo vaza para tabela e não sai sem migration. |
+| "complemento"; "categoria" | adicional (`add_on`); grupo de catálogo (`catalog_group`) ou seção de canal (`channel_section`) | "Complemento" era o sinônimo de adicional em `SPR-32`; "categoria" junta o agrupamento do operador e o do cliente-final, que são dois (`RN-NUC-068`). |
 
 ---
 
@@ -370,6 +371,9 @@ serve ramos diferentes, então o vocabulário dele também. Não confundir com �
 
 | Termo | No código | Módulo | Significado | Não confundir com |
 |---|---|---|---|---|
+| Grade | `variant_matrix` | `GRD` | Combinação de eixos (cor, tamanho, sabor) de um mesmo item, produzindo as unidades que se vendem, cada uma com código próprio. **Variação exige conjunto de valores fechado**, definido no cadastro; valor medido no ato (balança, bomba) não tem conjunto fechado e é `quantity` do núcleo. **Um eixo só também é grade** (`RN-NUC-069`): o núcleo vende item atômico. Saiu de §3.3 (`moda`) em 2026-09-11: uma loja de polpa precisa de grade e não é moda — mesmo caso dos termos de produção, que saíram pela mesma razão. | quantidade (`quantity`); adicional (`add_on`); descrição que só descreve o item, que é de `PUB` |
+| Adicional | `add_on` | `ADI` | Opção com preço próprio que se acrescenta a um item, reusável entre itens, em **quantidade** (bacon ×2, gravação, ajuste de barra cobrado). Na linha, vira componente (`order_item_component`, `RN-NUC-070`). | grade, que produz item próprio; observação, que não muda valor |
+| Seção de canal | `channel_section` | `PUB` | Agrupamento que o cliente-final vê num canal, segundo a vitrine. | grupo de catálogo (`catalog_group`), que é do operador |
 | Ponto de produção | `production_point` | `COZ` | Posto de trabalho que prepara, monta ou transforma antes da entrega. Quais existem e como se chamam é configuração do cliente. | estabelecimento; terminal |
 | Trabalho a produzir | `production_work` | `COZ` | A unidade de `COZ`: o que precisa ser feito, derivado de um item de pedido (ou de parte dele), endereçado a um ponto. Nasce no lançamento, não na venda. | item de pedido; pedido (`order`) |
 | Etapa de produção | `production_stage` | `COZ` | Estado do trabalho: pendente, em produção, pronto, entregue, encerrado sem produzir. | estado de cumprimento (`CMP`) |
@@ -392,5 +396,5 @@ núcleo. Nenhum código ou regra numerada os citava.
 
 ## 7. Lacunas do vocabulário
 
-- `[[LACUNA-GLO-001: quando um cliente (tenant) tem estabelecimentos em fusos diferentes, qual fuso decide vigência de regra, "hoje", turno e fechamento — o do estabelecimento ou o do cliente? Os dois estão declarados hoje, em arquivos diferentes. **Dono:** humano; é a mesma pergunta 3 do fim de `operacao-offline-e-sincronizacao.md`]]`
+- `[[LACUNA-GLO-001 — **FECHADA em 2026-09-23** → `RN-NUC-057` ([[decision-fuso-e-moeda-sao-do-estabelecimento]]). Perguntava, para cliente (tenant) com estabelecimentos em fusos diferentes, se vigência, "hoje", turno e fechamento seguem o fuso do estabelecimento ou o do cliente. Seguem o do estabelecimento, e `tenant_time_zone` foi aposentado (§1.1)]]`
 - `[[LACUNA-GLO-002 — **reduzida em 2026-08-22**, e a redução foi conferida termo por termo: a spec do núcleo existe (`RN-NUC-001` a `RN-NUC-025`, em `nucleo-venda.md`, `nucleo-caixa-e-turno.md`, `nucleo-publicacao-e-texto.md`, `papeis-e-permissoes.md`, `papeis-atribuicao-e-delegacao.md`). Ganharam regra: `order_item_note` (`RN-NUC-016`), `pending_operation_queue` (`RN-NUC-001`), `published_artifact` (`RN-NUC-013`), `work_list` (`RN-OFF-012` + `RN-NUC-020`). **FECHADA em 2026-08-23:** o resíduo era `service_mode`, e ele passou a ser regido por `RN-NUC-048` (`fatos-de-operacao-dominios-fechados.md` §3) — domínio fechado do núcleo, ausência não é valor (a venda não conclui sem modo), cada fato carrega o modo vigente no instante dele, valor novo só por alteração daquela regra com o teste dos três negócios, e efeito sobre preço/encargo/tributo é do módulo dono. Nada foi renomeado e a linha de §1.3 não muda]]`

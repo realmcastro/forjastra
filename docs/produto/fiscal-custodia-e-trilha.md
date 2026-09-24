@@ -241,19 +241,19 @@ não sabe (`RN-OFF-016`).
 (a) revogação da capacidade daquele ponto (`RN-EMI-037`); (b) **encerramento** da faixa que ele retinha,
 com desfecho por número não usado (`RN-EMI-022`, `RN-OFF-006` infeliz (c)); (c) **notificação ao cliente**
 com o que estava retido, o que pode ter sido emitido e **as duas janelas** — até quando a capacidade de
-assinar valia (`RN-EMI-033`) **e** até quando o terminal ainda **vende**, prazo próprio da habilitação
-(`RN-OFF-032`i, `LACUNA-OFF-017`); (d) item na lista do dono da fila (`RN-OFF-011`, `RN-OFF-012`). A perda
-da **fila** segue `RN-OFF-016`: mesmo evento, duas consequências, nenhuma no lugar da outra.
+assinar valia (`RN-EMI-033`) **e** até quando o terminal **vende** (`RN-OFF-035`), esta em horas de
+funcionamento sem contato, **nunca como data**, e dita sem limite de calendário; (d) item na lista do dono
+da fila (`RN-OFF-011`, `RN-OFF-012`). A perda da **fila** segue `RN-OFF-016`: mesmo evento, duas
+consequências, nenhuma no lugar da outra. **Corrigido em 2026-09-23** (`SEG-T14-01`): dizia "três dias".
 **Motivo** correção de defeito declarado: `RN-OFF-016` tratava terminal roubado apenas como **contagem de
 venda perdida**. Com `RN-EMI-033`, o furto leva também a capacidade de assinar não vencida e a faixa
 restante — emitir em nome do emitente, ocupando número que ele terá de justificar (F-35), sob a
 responsabilidade legal e tributária dele (F-39): perda de dado e comprometimento de poder são eventos
 diferentes. **A segunda janela entrou em 2026-08-23 (`AUT-16`):** a primeira diz até quando o dispositivo
 **emite**; só a segunda diz até quando ele **vende** — o intervalo em que há via saindo no nome dele.
-**Aceite** o evento é registrável por papel nomeado (`RN-EMI-036`) em um passo, e produz as quatro
-consequências de forma verificável: capacidade revogada, faixa encerrada com desfecho por número, registro
-da notificação com data **e com as duas janelas datadas**, item na lista de trabalho. Nada disso depende
-de o terminal responder.
+**Aceite** um papel nomeado (`RN-EMI-036`) registra o evento em um passo e as quatro consequências saem,
+sem depender de o terminal responder; a notificação, com data, diz para último contato sexta 20h: "vende
+até 72 h de funcionamento sem contato; em calendário, sem limite até a revogação no primeiro contato".
 **Infeliz** o terminal reaparece → a capacidade encerrada **não** é reativada e a faixa encerrada **não**
 é reaberta: o ponto de emissão é rehabilitado como novo, com faixa nova. Documento que ele tenha assinado
 no intervalo é fato a apurar com o responsável e o contador (`RN-FIS-006`, `RN-EMI-031`) — nunca aceito

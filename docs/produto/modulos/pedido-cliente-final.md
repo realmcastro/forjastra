@@ -378,6 +378,29 @@ consumiu · o próprio fato de existir sessão em um alvo, que revela presença.
 existe em `PCF`: meio e resultado são do núcleo e de `ADQ`/`PGO`. Toda categoria tem prazo declarado
 (`RN-PCF-012`); proteção é de `seguranca`, e os prazos são do humano (§8).
 
+**Registra** (acrescentado em 2026-09-12, `CLAUDE.md` §7.10): a **submissão**, marcada por canal,
+sessão e modo declarado · a **aceitação** e a **recusa**, esta com o motivo objetivo · a abertura e o
+encerramento da sessão externa, inclusive por revogação (`RN-PCF-016`) · cada proposta que exige
+papel — retirada de item, chamada de atendente, pedido de fechamento — e o desfecho dela · o estado
+do canal (disponível, limitado, desligado) para quem opera.
+
+**Não registra**, e cada um com o motivo:
+
+- **Quem é a pessoa do outro lado.** A sessão externa é anônima por construção e morre com o destino
+  (`RN-PCF-016`); reconhecer a mesma pessoa entre sessões é de `CLF`, opt-in, e **não entra por
+  dependência**.
+- **O texto dele como campo de decisão.** A observação é preservada literal e opaca, com origem
+  declarada (`RN-PCF-013`, `RN-OFF-027`): o que entra em fato e em contagem é presença, nunca
+  conteúdo.
+- **O que ele tocou na tela.** Mesma recusa, com as quatro partes, de `fatos-de-operacao.md` §6,
+  item 4 — os marcos por operação respondem "onde trava" sem gravar sessão de ninguém.
+- **Duas ausências que não são decisão.** O **rascunho** que ele monta e abandona sem submeter (§2,
+  "morre sem consequência") e a **divergência entre o que o canal exibiu e o que foi submetido**
+  (`RN-PCF-001`, infeliz) não produzem fato hoje. São os achados 2.4 e 2.5 de
+  `captura-varredura-invariante-10-2026-09-11.md`, ausência **acidental**, com card e dono — e o
+  primeiro é o único lugar do produto em que o cliente-final opera sozinho, então o que ele desiste
+  de fazer não aparece em nenhum outro.
+
 ## 8. Lacunas e pendências
 
 Perguntas abertas em 2026-08-22. Nenhuma bloqueia o comportamento das regras da §5. `LACUNA-PCF-4`

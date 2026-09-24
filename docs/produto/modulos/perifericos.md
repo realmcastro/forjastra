@@ -217,8 +217,9 @@ com autor (`RN-PER-012`).
 **Exige do núcleo** posto de trabalho e estabelecimento · operador autenticado com papel verificado no
 backend e trilha (`PN-11`) · o **conteúdo já decidido** por quem é dono dele — `PER` nunca o compõe
 (`RN-PER-003`) · a autorização de abrir compartimento de valor, que é operação **do núcleo**
-(`RN-NUC-012`) · continuidade offline (`RN-OFF-004`, `RN-OFF-015`, `RN-OFF-016`) · isolamento por
-cliente.
+(`RN-NUC-012`) · a resolução do identificador lido contra o catálogo aplicado, e a recusa com motivo
+próprio quando ele não resolve (`RN-NUC-063`) · continuidade offline (`RN-OFF-004`, `RN-OFF-015`,
+`RN-OFF-016`) · isolamento por cliente.
 
 **Exige do cliente (configuração)** quais classes existem em cada posto de trabalho, e o destino
 alternativo de cada uma quando existir. Nada disso mora no terminal (`PN-03`).
@@ -256,6 +257,54 @@ cliente-final** é superfície pública dentro do estabelecimento e não leva da
 (`ADQ`, `catalogo-de-modulos.md`). O trabalho **retido** contém o conteúdo já composto e por isso herda
 a mesma classificação enquanto existir. Proteção e retenção são de `seguranca` e do humano.
 
+**Registra** (acrescentado em 2026-09-12, `CLAUDE.md` §7.10): o **desfecho de cada tentativa** — dos
+três de `RN-PER-004`, mais o **indeterminado** do caminho infeliz —, com instante, posto, classe e
+fato de origem · o último estado conhecido por classe, com instante e **origem** dele (`RN-PER-006`)
+· cada via exigida com desfecho próprio, para que a falta seja nomeada por via e não como "não
+imprimiu" (`RN-PER-010`) · o que está retido e não cumprido, por classe e por fato de origem
+(`RN-PER-007`) · cada leitura de código como entrada dirigida a um contexto, inclusive a que **não
+resolveu** (`RN-PER-013`, `RN-PER-014`), com contexto, posto, instante e desfecho; do conteúdo, só o
+que o `Não registra` abaixo admite · a leitura que não resolveu para item, como recusa do núcleo
+com motivo `item_identifier_unresolved`, origem **leitura**, versão do catálogo aplicada, domínio de
+conexão, comprimento, simbologia (ou `unknown`), classe estrutural e, só na classe `gtin_global`, o
+valor (`RN-NUC-063`; acrescentado em 2026-09-23, fecha o achado 2.12) · a recepção de cada versão de
+catálogo pelo terminal, que é o marco de onde a idade do retido se deriva
+(`published_artifact_version_received`, `RN-NUC-063`e) · a quantidade medida com unidade e instante, e a marcação
+**medida × informada** com autor (`RN-PER-018`, `RN-PER-019`) · cada entrega repetida, com autor,
+instante, posto e motivo (`RN-PER-012`).
+
+**Não registra**, e cada um com o motivo:
+
+- **Fabricante, modelo, protocolo ou forma de ligação no fato da tentativa.** A unidade do módulo é a
+  **classe** (`RN-PER-001`), e o equipamento é atributo da habilitação do posto (`RN-PER-001`,
+  infeliz) — a leitura que quiser correlacionar falha com equipamento junta os dois, sem que cada
+  linha carregue um dado que apodrece junto com o parque.
+- **Uma cópia própria do conteúdo impresso.** `PER` transporta o que outro compôs e não cria segundo
+  acervo dele; o trabalho retido contém o conteúdo já composto e herda a classificação de quem o
+  compôs, enquanto existir (§3, Sensível).
+- **O que a superfície do cliente-final exibiu.** Encerrada a operação, nada daquele conteúdo
+  sobrevive (`RN-PER-017`) — a tela fica virada para o salão e a pessoa seguinte não é a anterior.
+- **O conteúdo da leitura, fora de um caso único.** Nenhum fato de `PER`, nem a recusa do núcleo,
+  carrega o que foi lido, nem parte, nem derivação (truncado, hash). A exceção é o identificador de classe
+  `gtin_global` apresentado para lançar item e não resolvido, que entra como valor, só para o cliente
+  (`RN-NUC-063` a, alterado em 2026-09-23 a partir de `docs/auditorias/2026-09-23-codigo-lido-no-fato.md`
+  §3). Base: `RN-NUC-056`(a) e `RN-OFF-023` itens 2 a 4, porque o que passa pelo leitor pode ser
+  credencial ao portador (vale, cartão de fidelidade), dado de meio de pagamento ou identificação de
+  pessoa. Perde-se, e está declarado, o valor de código interno sem estrutura de GTIN global (código
+  próprio, etiqueta de balança em faixa `2x`); dele fica a contagem por classe e comprimento.
+- **Nada do conteúdo da leitura em contexto de identificar documento ou pessoa** (`RN-PER-013`; fecha
+  `COD-01`, auditoria `:185`). O fato de leitura ali diz que houve leitura, em que contexto, posto e
+  instante, e com que desfecho. Não carrega valor, parte, derivação, comprimento, simbologia nem classe.
+  No lançamento, comprimento e simbologia medem a leitura errada de rotina; aqui só estreitariam o tipo
+  de documento de uma pessoa, e nenhuma decisão nomeada os pede (`RN-NUC-044`). O que a operação dona
+  guarda da identificação é regra dela (`RN-NUC-056`a para o operador, `RN-EMI-017` para quem compra),
+  e `PER` não guarda cópia.
+- **A idade ou a defasagem do catálogo como campo da recusa.** As duas se derivam do marco de recepção
+  e da versão aplicada (`RN-NUC-045`); gravar a idade seria guardar o mesmo dado duas vezes, e a cópia
+  mente quando a definição de idade mudar.
+- **Duração entre a leitura e a recusa.** Não é fato de negócio; se servir a alguém, é medida de
+  operação de `RN-NUC-045`, com dono `performance`.
+
 ## 4. Lacunas e pendências dos dois arquivos
 
 - `[[LACUNA-PER-1]]` (`RN-PER-007`) — por quanto tempo, e até que acúmulo, o trabalho retido num posto
@@ -265,6 +314,11 @@ a mesma classificação enquanto existir. Proteção e retenção são de `segur
 - `[[LACUNA-PER-2]]` (`RN-PER-018`) — tolerância, arredondamento e casas de quantidade medida, e se
   existe exigência sobre o instrumento usado para medir o que se cobra. **Responde:** humano; conecta
   com `LACUNA-NUC-004` (arredondamento) e é pergunta de norma **não confirmada** — nenhuma analogia.
+  **Indisponível desde 2026-09-23**, com o aviso na forma de `F-018` no topo de `RN-PER-018`
+  (`perifericos-classes.md` §4): a conformidade com a norma do instrumento não é afirmada, a leitura
+  entra como leitura e `PER` não arredonda. Se a norma pedir mais casas que as 3 do envelope de
+  quantidade, o envelope sobe por troca de constraint, sem reescrita
+  (`docs/arquitetura/dinheiro-e-quantidade-2026-09-23.md` §4).
 - `[[LACUNA-PER-3]]` (`RN-PER-009`, `RN-PER-010`) — **a mais importante desta spec.** Imprimir depois
   a via de retenção que faltou **cumpre** a obrigação, ou ela só se cumpre no ato? `RN-EMI-026` (F-70)
   diz que a segunda via fica à disposição do fisco **até a nota ser autorizada** — o que sugere que a
@@ -280,8 +334,14 @@ a mesma classificação enquanto existir. Proteção e retenção são de `segur
   espaço de desenho? `docs/design/grade-e-espacos.md` §10 (G-03) declara que não é E3 nem E4.
   **Responde:** humano / `ui`. A spec declara conteúdo e proibições; não declara espaço.
 - `[[LACUNA-PER-6]]` (`RN-PER-014`) — identificador lido, válido, ausente do catálogo retido sem contato:
-  qual é a regra do núcleo? Hoje nenhuma `RN-NUC` cobre o caso. **Responde:** `produto`, na spec do
-  núcleo (não nesta spec).
+  qual é a regra do núcleo? **FECHADA em 2026-09-23 → `RN-NUC-063`**
+  (`fatos-de-operacao-dominios-fechados.md` §1), por decisão do humano ("A lacuna de periféricos precisa
+  nascer, pois então que ela nasça."). Recusa do lançamento com motivo próprio, e sem contato o terminal
+  nunca afirma que o item não existe. "Válido" quer dizer entregue completo (`RN-NUC-063` f). O código
+  lido entra no fato só no degrau que `seguranca` admitiu (`RN-NUC-063` a).
+- **Indisponível — etiqueta de balança com peso ou preço embutido (faixa `2x`).** O aviso, na forma de
+  `F-018`, está em `RN-NUC-063`, infeliz (f), onde a leitura cai. Até ele cair, a etiqueta é recusada e o
+  operador lança o item com a quantidade informada (`RN-PER-015`, `RN-PER-019`).
 
 **Pendente com o humano, não com fonte:** **os postos de trabalho dos clientes-alvo têm qual conjunto
 de classes?** Já perguntado em `verticais/restaurante.md` §4 para os pontos de produção (tela,

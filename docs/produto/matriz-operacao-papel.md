@@ -27,10 +27,9 @@
 > esta matriz decide **autorização**. Não é superfície, tela, relatório, tabela, coluna, endpoint,
 > componente nem stack.
 >
-> **Fronteira de D-03, ABERTA.** Declarar *quem pode o quê* e *o que acontece sem contato* é daqui.
-> **Como** se prova identidade, onde ela mora, sessão, token, reautenticação e SSO **não são**, e
-> nenhuma célula depende de saber. **Nenhum número:** validade, teto, limite e prazo são lacuna com
-> dono.
+> **Fronteira de D-03, fechada em 2026-09-23.** *Quem pode o quê* e *o que acontece sem contato* é daqui;
+> **como** se prova identidade (sessão, token, SSO) não é, salvo a condição de segundo fator da nota ²⁰.
+> **Nenhum número:** validade, teto, limite e prazo são lacuna com dono.
 
 ---
 
@@ -59,9 +58,9 @@ nega. `?` é negado por ausência de decisão.
 | 4 | Registrar pagamento em espécie | `RN-NUC-004` | P | P | P | N | N | terminal+ident ¹⁴ |
 | 5 | Registrar pagamento que exige terceiro | `RN-NUC-005` | P | P | P | N | N | **recusa** |
 | 6 | Aplicar desconto ou acréscimo **até** o limite do próprio papel | `RN-NUC-006` | R | R | R | N | N | terminal+ident ¹⁴ ¹⁵ |
-| 7 | Aplicar desconto ou acréscimo **acima** do limite do próprio papel | `RN-NUC-007` | A:`manager`+R | A:`owner`+R | N ¹ | N | N | **recusa** |
+| 7 | Aplicar desconto ou acréscimo **acima** do limite do próprio papel | `RN-NUC-007`, `RN-NUC-066` ¹⁷ | A:`manager`+R | A:`owner`+R | N ¹ | N | N | **recusa** |
 | 8 | Autorizar o excesso pedido por outro operador | `RN-NUC-007`, `RN-NUC-022` | N | R | R | N | N | **recusa** |
-| 9 | Cancelar venda concluída, devolver, estornar | `RN-NUC-008` | A:`manager`+R | R | R | N | N | **recusa** |
+| 9 | Cancelar venda concluída, devolver, estornar | `RN-NUC-008`, `RN-NUC-066` ¹⁷ | A:`manager`+R | R | R | N | N | **recusa** |
 | 10 | Abrir sessão de caixa para si | `RN-NUC-009` | R | R | R | N | N | terminal+ident ¹⁴ |
 | 11 | Abrir sessão de caixa **em nome de outro operador** | `RN-NUC-037` + `LACUNA-NUC-016` ¹¹ | N | **?** | **?** | N | N | recusa |
 | 12 | Fechar a **própria** sessão de caixa | `RN-NUC-010`, `RN-NUC-030` | R | R | R | N | N | terminal+ident ¹⁴ |
@@ -73,9 +72,9 @@ nega. `?` é negado por ausência de decisão.
 | 18 | Publicar **catálogo e preço** | `RN-NUC-013`, `RN-NUC-014` ¹² | N | N | R | N | N | **recusa** |
 | 19 | Publicar **o que cada papel autoriza** | `RN-NUC-023` (a) ¹³ | N | N | R | N | N | **recusa** |
 | 20 | Criar, alterar e revogar **atribuição** | `RN-NUC-020`, `RN-NUC-023` (b) | N | N | R | N | N | **recusa** |
-| 21 | Conceder e revogar **delegação** de subconjunto próprio | `RN-NUC-021` ² | N | R | R | N | N | **recusa** |
+| 21 | Conceder e revogar **delegação** de subconjunto próprio | `RN-NUC-021` ² ²⁰ | N | R | R | N | N | **recusa** |
 | 22 | Declarar `queue_owner` e `establishment_responsible` | `RN-NUC-020`, `RN-NUC-023` (c) | N | N | R | N | N | **recusa** |
-| 23 | Criar estabelecimento | `RN-NUC-019` | N | N | R | N | N | **recusa** |
+| 23 | Criar estabelecimento | `RN-NUC-019`, `RN-NUC-050`, `RN-NUC-051` ¹⁶ | N | N | R | N | N | **recusa** |
 | 24 | Habilitar e desabilitar **módulo** para o cliente | `catalogo-de-modulos.md` + `LACUNA-NUC-023` | N | N ³ | **?** | N | N ⁴ | recusa |
 | 25 | Conceder e revogar `provider_support` | `RN-NUC-024`, `LACUNA-NUC-009`, `LACUNA-NUC-011` | N | N | **?** | N | N ⁵ | recusa |
 | 26 | Operar sob concessão de `provider_support` | `RN-NUC-024` | N | N | N | N | R | **recusa** |
@@ -92,6 +91,9 @@ nega. `?` é negado por ausência de decisão.
 | 37 | Publicar **meio de pagamento habilitado e a marca "exige autorização de terceiro"** | `RN-NUC-013`, `RN-NUC-005` + `LACUNA-NUC-035` ¹³ | N | N | R | N | N | **recusa** |
 | 38 | Publicar **configuração do estabelecimento** usada na composição (moeda, fuso, precisão) | `RN-NUC-013`, `RN-NUC-014` ¹³ | N | N | R | N | N | **recusa** |
 | 39 | Publicar **exceção nomeada pré-autorizada** de teto offline | `RN-OFF-025`, `RN-NUC-013` ¹³ | N | N | R | N | N | **recusa** |
+| 40 | Habilitar terminal a vender pelo estabelecimento | `RN-NUC-061`, `RN-OFF-032` ¹⁸ ²⁰ | N | R | R | N | N | **recusa** |
+| 41 | Encerrar e reabrir estabelecimento | `RN-NUC-059` ¹⁶ | N | N | R | N | N | **recusa** |
+| 42 | Abrir e fechar turno do estabelecimento | `RN-NUC-062` ¹⁹ | N | R | R | N | N | retida |
 
 ¹ acima do limite publicado do `owner` **não há papel acima**, e `RN-NUC-023` proíbe que ele amplie o
 próprio limite: negado sem caminho. É `LACUNA-NUC-015`, do humano.
@@ -139,6 +141,22 @@ vocabulário desta coluna e o valor que estas nove carregam nela.
 ¹⁵ o **teto** aplicado sem contato quando não há autoridade retida válida é o do **papel-piso**,
 publicado (`RN-OFF-020`) — nunca o de um papel que só a autoridade retida provaria (`RN-OFF-032`,
 cláusula do teto). Acima dele a operação é a linha 7, que é **recusa** offline.
+¹⁶ citação acrescentada em 2026-09-11: a **entidade** criada aqui passou a ter regra dona
+(`nucleo-estabelecimento.md`), que diz o que ela é (`RN-NUC-050`) e em que forma o ciclo de vida dela é
+registrado (`RN-NUC-051`). **Nenhum valor de célula mudou**, e a coluna offline continua `recusa`;
+`RN-NUC-019` continua sendo quem decide o papel. **Encerrar** estabelecimento era negado a todos pelo
+default até 2026-09-23 (`LACUNA-NUC-042`); desde então é a linha 41, com reabrir, só do `owner`.
+¹⁷ entrou em 2026-09-23: `A:<papel>` só se satisfaz com autorizador que é **outro sujeito**; quem porta o
+papel autorizador pratica o ato pela célula dele (`RN-NUC-066`). Nenhum valor mudou.
+¹⁸ entrou em 2026-09-23: sem linha, habilitar era negado a todos (`RN-NUC-026`) e nenhum terminal
+vendia. **Renovar** não é linha: é efeito do contato autenticado, sem autor humano (`RN-NUC-061`).
+¹⁹ entrou em 2026-09-23: turno é opcional e nada depende dele, então `retida` vencida recusa abrir ou
+fechar turno e a venda continua (`RN-NUC-062`, infeliz).
+²⁰ entrou em 2026-09-23 (`IDN-07`, `docs/auditorias/2026-09-23-d-03-decisao.md:341`): 21 e 40
+estendem autoridade para fora do terminal onde são pedidas, então exigem **segundo fator** de quem as
+pratica, inclusive em terminal habilitado, e ele nunca é algo que o terminal retém; sem ele, recusa, e a
+recusa é fato. Nenhuma célula mudou, e a coluna já era `recusa`: segundo fator só se confere com
+contato. Qual fator é `LACUNA-OFF-015`; o aceite da 40 é `RN-NUC-061` (9).
 
 **O que não é linha, de propósito.** `RN-NUC-016` (texto com origem declarada) é atributo de outras
 operações, não operação — como a §4 do contrato de offline já declara. Delegação concedida não é linha
@@ -232,13 +250,12 @@ fechamento é aditivo e imutável) e **2 na precondição** (a lista depende de 
 outros postos), o que é exatamente o que faz **D2** recusar. Opera em **D1** e em **D3** quando a lista
 está vazia; recusa em **D2** sempre.
 
-**O que esta regra não fecha.** `LACUNA-NUC-007` tem **duas** metades: o fechamento do dia, que esta
-regra classifica, e **abertura e fechamento de turno**, que continua sem regra — o humano respondeu "não
-sei ainda" sobre turno ser ou não a sessão de caixa. Nada aqui inventa a operação de turno, e
-`RN-NUC-018` continua valendo: turno **não** é escopo de autorização. A lacuna fica **reduzida**, não
-fechada. **A linha do fechamento do dia entrou na §4 de `operacao-offline-e-sincronizacao.md` em
-2026-08-23**, por transcrição desta regra: `degradado` em D1 e D3, **recusa** em D2, classe 1 no fato e 2
-na precondição. Sobra a metade de **turno**, que não se fecha por transcrição porque não há regra dona.
+**O que esta regra não fecha.** `LACUNA-NUC-007` tinha **duas** metades: o fechamento do dia, que esta
+regra classifica, e **abertura e fechamento de turno**, que ganhou regra dona em 2026-09-23
+(`RN-NUC-062`, linha 42) e **não** entra na lista de bloqueio acima: turno aberto não impede fechar o
+dia. `RN-NUC-018` continua valendo: turno **não** é escopo de autorização. **A linha do fechamento do dia
+entrou na §4 de `operacao-offline-e-sincronizacao.md` em 2026-08-23**, por transcrição desta regra:
+`degradado` em D1 e D3, **recusa** em D2, classe 1 no fato e 2 na precondição.
 
 ### RN-NUC-032 — Apresentar de novo a via de venda ou documento existente é do papel-piso, com registro; consultar em lote e exportar não são a mesma operação
 **Enunciado** apresentar de novo, ou reimprimir, a via de uma venda ou de um documento fiscal **que já
@@ -337,10 +354,10 @@ os dois casos de aceite. Nada nesta matriz mudou por causa disso.
 ## 8. Contagem — negado por decisão × negado por ausência de decisão
 
 A contagem consolidada está em `matriz-operacao-papel-modulos.md` §8. Deste arquivo, **atualizado em
-2026-08-23** pela partição da linha 18 em cinco (18, 36, 37, 38, 39 — `AUT-02`): **39 linhas × 5 papéis
-= 195 células**, das quais **5 são `?`** — negadas porque ninguém decidiu. A partição **não** criou nem
-resolveu indecisão: as quatro linhas novas herdaram as células da linha original, e o total de `?`
-continua 5.
+2026-08-23** pela partição da linha 18 em cinco (18, 36, 37, 38, 39 — `AUT-02`), e em **2026-09-23**
+pelas linhas 40, 41 e 42, que nasceram valoradas: **42 linhas × 5 papéis = 210 células**, das quais **5
+são `?`** — negadas porque ninguém decidiu. Nem a partição nem as três linhas novas criaram ou
+resolveram indecisão, e o total de `?` continua 5.
 
 | Célula | Linha | Lacuna |
 |---|---|---|
@@ -350,7 +367,7 @@ continua 5.
 | `fiscal_officer` | 28 — ver a superfície da fila | `LACUNA-NUC-028` |
 
 **Do caminho crítico do caixa — linhas 1 a 17 — só duas células ficaram indecisas, e as duas são a mesma
-operação** (linha 11); as outras três estão em atos de administração. Afirmável porque cada uma das 190
+operação** (linha 11); as outras três estão em atos de administração. Afirmável porque cada uma das 205
 células restantes tem `RN` em `Regida por`, e nenhuma delas é `?`.
 
 ---

@@ -6,7 +6,7 @@
 > da venda, nenhuma tela futura responde "qual item não está compensando", porque o dado **nunca
 > existiu**. Daí a ordem desta ficha: fato antes de modelo, modelo antes de tela.
 >
-> **Quatro arquivos, um conjunto normativo.** Primeiro eixo da partição: **quem pratica o fato** — aqui, o
+> **Cinco arquivos, um conjunto normativo.** Primeiro eixo da partição: **quem pratica o fato** — aqui, o
 > que a **operação do cliente** produz (caminho de venda, conectividade, tempo); em
 > `fatos-de-operacao-provedor.md`, o que os **papéis nossos** praticam e o **ciclo de vida** do cliente,
 > do módulo, do schema e do terminal. Segundo eixo, aberto em 2026-08-23 porque este arquivo chegou ao
@@ -15,11 +15,14 @@
 > de recusa, motivo de cancelamento, modo de atendimento). Terceiro eixo, aberto na mesma data pela mesma
 > razão: **o fato depois do instante** — em `fatos-de-operacao-retencao-e-descarte.md` moram a ordem de
 > sacrifício do recurso local (`RN-NUC-046`, movida verbatim) e a relação entre retenção e janela de
-> leitura (`RN-NUC-049`). As **lacunas e as perguntas dos quatro moram aqui** (§7).
+> leitura (`RN-NUC-049`). Quarto eixo, aberto em 2026-09-11 com a decisão de `LACUNA-NUC-038`: **o
+> pedido × o fato sobre o pedido** — em `fatos-de-operacao-ciclo-de-vida-do-pedido.md` moram as quatro
+> regras que tiram os fatos de ciclo de vida de `PROVISÓRIA`. As **lacunas e as perguntas dos cinco
+> moram aqui** (§7).
 >
 > **Numeração.** `RN-NUC-041` a `RN-NUC-045` aqui; `RN-NUC-046` e `RN-NUC-049` no irmão da retenção;
-> `RN-NUC-047` e `RN-NUC-048` no irmão dos domínios
-> fechados; `RN-PRV-011` a `RN-PRV-014` no irmão do provedor. Duas famílias
+> `RN-NUC-047`, `RN-NUC-048`, `RN-NUC-056` e `RN-NUC-063` no irmão dos domínios fechados; `RN-NUC-052` a
+> `RN-NUC-055` no irmão do ciclo de vida; `RN-PRV-011` a `RN-PRV-014` no irmão do provedor. Duas famílias
 > porque são dois escopos, e a fronteira é o teste dos três negócios: registrar o caminho da venda no
 > grão do acontecimento é do **núcleo** — posto, padaria e loja de roupa precisam **todos** dele para
 > saber o que vende, o que se anula e onde a operação trava. Registrar o que **nós** fazemos e o
@@ -101,26 +104,26 @@ irreversível tomada por conveniência.
 **Enunciado** o instante de um fato é medido **no terminal**, no momento em que o fato acontece, e a
 divergência de relógio é fato próprio (`RN-OFF-019`) — isto já é regra e não muda aqui. O que esta
 regra acrescenta: nenhuma spec, leitura ou pergunta desta família usa "hora do dia", "pico", "dia" ou
-"mês" **sem declarar de quem é o fuso** — do **estabelecimento** ou do **cliente (tenant)**. Enquanto
-`LACUNA-GLO-001` estiver aberta, quem escrever regra que dependa disso **cita a lacuna** e declara
-qual dos dois está assumindo; ninguém escolhe "para destravar".
+"mês" **sem declarar de quem é o fuso**, e ele é o **do estabelecimento** do fato (`RN-NUC-057`, que
+fechou `LACUNA-GLO-001`; não há fuso do cliente). Leitura que soma unidades usa o dia local de cada
+uma. Redação de 2026-09-23; antes: "do estabelecimento ou do cliente", citando a lacuna.
 
 **Motivo** o fuso decide a **que dia o fato pertence**, logo decide apuração, fechamento, turno e
-"vendas de hoje" — e há duas regras aprovadas em conflito (vigência no fuso do estabelecimento ×
+"vendas de hoje" — e havia duas regras aprovadas em conflito (vigência no fuso do estabelecimento ×
 "hoje" no fuso do cliente). O defeito é invisível com um estabelecimento só e aparece com dois, o que
-o torna o pior tipo: descoberto em produção, no cliente que cresceu. Resolvê-lo mexe em
-`.claude/rules/dados.md`, que é território do **humano** — então esta regra não resolve, ela impede
-que o conflito seja atravessado por acidente. "Que horas é o pico" é exatamente a pergunta que o faz
-reaparecer.
+o torna o pior tipo: descoberto em produção, no cliente que cresceu. `RN-NUC-057` resolveu pelo
+estabelecimento; esta regra continua valendo para que nenhuma leitura volte a usar dia sem sujeito.
+"Que horas é o pico" é exatamente a pergunta que o faz reaparecer. (`.claude/rules/dados.md` §3 ainda
+diz "fuso do cliente"; a correção é do humano.)
 
 **Aceite** buscar "hora", "pico", "dia" e "mês" nesta família e em toda leitura derivada dela →
-**toda** ocorrência tem sujeito de fuso declarado ou cita `LACUNA-GLO-001`. Cliente com dois
-estabelecimentos em fusos diferentes: o mesmo fato não aparece em dois dias diferentes em duas
-leituras diferentes, porque cada leitura diz de quem é o dia que ela usou.
+**toda** ocorrência tem o estabelecimento como sujeito do fuso. Cliente com dois estabelecimentos em
+fusos diferentes: o mesmo fato não aparece em dois dias diferentes em duas leituras diferentes, porque
+cada leitura usa o dia da unidade do fato (caso de prova em `RN-NUC-057`, Manaus e São Paulo).
 
-**Infeliz** a leitura precisa de "hoje" e a lacuna não fechou → a leitura declara o fuso que usou, na
-própria resposta, e a resposta é comparável só com outra do mesmo fuso. Nunca se soma dia de fuso
-diferente sem declarar, e nunca se apresenta o resultado como se o fuso não importasse.
+**Infeliz** a unidade não tem fuso publicado vigente → nenhum dia dela é derivável, e a leitura diz isso
+em vez de presumir um (`RN-NUC-057`, infeliz a). Nunca se soma dia de fuso diferente sem declarar, e
+nunca se apresenta o resultado como se o fuso não importasse.
 
 ### RN-NUC-043 — A recusa é fato, com motivo **enumerado**; recusa não registrada torna invisível o que nunca foi usado
 
@@ -131,6 +134,19 @@ parte da causa (`D1`/`D2`/`D3`, `RN-OFF-001`) e o **motivo, de lista fechada**
 **código enumerado**, nunca texto livre: o texto que o operador vê é mensagem de operação
 (`RN-OFF-005`, `RN-NUC-036`) e **não** é campo de decisão. Motivo que não está na lista é registrado
 como **não classificado**, e não classificado é **defeito nosso** visível, não categoria de repouso.
+
+**Motivos acrescentados por alteração desta regra.** Cada entrada diz a data, o motivo, a `RN` dona (no
+irmão dos domínios fechados) e o **vizinho** que ele deixa de inflar, que é o que prova a necessidade:
+
+- **2026-09-11 — `identity_unrecognized`, dona `RN-NUC-056`.** O desfecho "o operador não é
+  reconhecido naquele terminal" (`RN-OFF-033` infeliz b, `RN-NUC-009` infeliz c) não tinha fato nem
+  motivo. Vizinho: `authority_absent`, que diagnostica **configuração de papel** quando a causa
+  candidata é a janela de reconciliação do conjunto retido; acomodar um no outro manda consertar o
+  papel de uma pessoa por um defeito que é do terminal.
+- **2026-09-23 — `item_identifier_unresolved`, dona `RN-NUC-063`.** O identificador de item que não
+  resolve no catálogo aplicado (`RN-PER-014` infeliz, `RN-OFF-020`) não tinha regra do núcleo
+  (`LACUNA-PER-6`). Vizinho: `published_artifact_missing`, que diagnostica **publicação** e escondia
+  ali o código não cadastrado e o catálogo retido defasado. Ele não perde nenhum caso que já tinha.
 
 **Motivo** "qual módulo não está sendo usado" é **invisível** se só o sucesso é registrado: ausência
 de uso não deixa rastro nenhum, e a única coisa que deixa rastro é a **tentativa recusada**. Mais: as
@@ -227,16 +243,18 @@ vida do pedido** cedem junto com recusa e conectividade, com o descarte contado.
 ## 3. Os fatos do caminho de venda
 
 Instante: sempre o do terminal (`RN-OFF-019`); **de quem é a hora** para dia e faixa do dia:
-`LACUNA-GLO-001`, e por isso a coluna diz o sujeito de fuso quando ele decide a leitura. Ator, em
-todos: operador autenticado + papel que sustentou o ato + terminal + estabelecimento (+ sessão de
-caixa quando aberta). "Consome": **C** = cliente, **P** = provedor.
+`LACUNA-GLO-001`, e por isso a coluna diz o sujeito de fuso quando ele decide a leitura. Ator, em todo
+fato de **ato do operador**: operador autenticado + papel que sustentou o ato + terminal +
+estabelecimento (+ sessão de caixa quando aberta). Nos fatos de **estado do terminal** — hoje
+`terminal_connectivity_state_change`, `identity_set_reconciled` e `published_artifact_version_received`
+— o ator é o **terminal**, e não há operador a nomear. "Consome": **C** = cliente, **P** = provedor.
 
 | Fato | Instante | Decisão que informa (e de quem) | Consome | Grão candidato |
 |---|---|---|---|---|
-| `order_opened` — pedido aberto · **PROVISÓRIA** (`LACUNA-NUC-038`) | ao nascer o pedido no terminal | **C** (`manager`/`owner`): quantos atendimentos começam e não fecham, e em que faixa do dia — entra na decisão de escala de `RN-REL-012` | C | uma linha por pedido, com terminal, papel e modo de atendimento; **nunca** contador por faixa |
-| `order_item_added` — item lançado | ao lançar a linha | **C** (`owner`): que item sai junto com que item, e o que sustenta o resultado (`RN-REL-010`) | C | uma linha por lançamento, com item, quantidade na unidade dele, preço aplicado e versões (`RN-NUC-002` já as grava); linha retirada depois **continua existindo** |
-| `order_item_removed` — item retirado antes de concluir · **PROVISÓRIA** (`LACUNA-NUC-038`) | ao retirar | **C**: item que entra e sai em massa é erro de operação, indecisão do cliente-final ou falta — três ações diferentes. **P**: o **mesmo** item retirado em massa em N clientes é defeito de superfície **nosso**, não do negócio dele | C · P | uma linha por retirada, com o motivo **quando** ele é enumerável (recusa → irmão dos domínios fechados); nunca só um contador de anulações |
-| `order_abandoned` — pedido morto sem virar venda · **PROVISÓRIA** (`LACUNA-NUC-038`) | ao morrer o pedido | **C**: desistência por faixa do dia e por terminal, e **em que passo** ela acontece | C | uma linha por pedido morto, **com as linhas que ele tinha** e o valor composto no instante da morte — é o "quase vendido", e é o que um contador destrói. Custo: `PERGUNTAS: para performance` |
+| `order_opened` — pedido aberto (`RN-NUC-052`) | ao nascer o pedido no terminal | **C** (`manager`/`owner`): quantos atendimentos começam e não fecham, e em que faixa do dia — entra na decisão de escala de `RN-REL-012` | C | uma linha por pedido, com terminal, papel e modo de atendimento; **nunca** contador por faixa |
+| `order_item_added` — item lançado (`RN-NUC-053`) | ao lançar a linha | **C** (`owner`): que item sai junto com que item, e o que sustenta o resultado (`RN-REL-010`) | C | uma linha por lançamento, com item, quantidade na unidade dele, preço aplicado e versões (`RN-NUC-002` já as grava); linha retirada depois **continua existindo** |
+| `order_item_removed` — item retirado antes de concluir (`RN-NUC-054`) | ao retirar | **C**: item que entra e sai em massa é erro de operação, indecisão do cliente-final ou falta — três ações diferentes. **P**: o **mesmo** item retirado em massa em N clientes é defeito de superfície **nosso**, não do negócio dele | C · P | uma linha por retirada, com o motivo **quando** ele é enumerável (recusa → irmão dos domínios fechados); nunca só um contador de anulações |
+| `order_abandoned` — pedido morto sem virar venda (`RN-NUC-055`) | ao morrer o pedido | **C**: desistência por faixa do dia e por terminal, e **em que passo** ela acontece | C | uma linha por pedido morto, **com as linhas que ele tinha** e o valor composto no instante da morte — é o "quase vendido", e é o que um contador destrói. Custo: `PERGUNTAS: para performance` |
 | `sale_concluded` — venda concluída (`RN-NUC-003`) | conclusão | **C**: o que comprar/produzir (`RN-REL-009`), o que reposicionar ou retirar do catálogo (`RN-REL-010`). **P** (`provider_administrator`): conferir cobrança contestada e diagnosticar defeito relatado — **sob `RN-PRV-010`**, por ocorrência, com motivo enumerado (`RN-PRV-011` §2.1) | C · P | **por item de venda**, nunca só o total; com as versões de artefato congeladas e a referência humana |
 | `payment_registered` — pagamento (`RN-NUC-004`, `RN-NUC-005`) | registro do pagamento | **C**: mix de meio por faixa do dia decide necessidade de troco e sangria, e sustenta negociação de taxa. **P** (`provider_administrator`): conferir cobrança contestada e diagnosticar defeito relatado, na informação bruta — **sob `RN-PRV-010`**, por ocorrência, com motivo enumerado (`RN-PRV-011` §2.1) | C · P | uma linha **por pagamento** (dividido = várias), com meio, valor e resultado; nunca total por meio por dia |
 | `discount_applied` — desconto ou acréscimo aplicado (`RN-NUC-006`) | aplicação | **C** (`owner`): o limite publicado está no lugar certo (`RN-REL-011`) | C | uma linha por aplicação, com o limite vigente e a versão do artefato que o publicou |
@@ -244,6 +262,8 @@ caixa quando aberta). "Consome": **C** = cliente, **P** = provedor.
 | `register_session_opened` · `register_session_closed` · `cash_movement` · `cash_difference` | cada ato | **C** (`manager`/`owner`): a diferença é do caso ou do procedimento (`RN-REL-013`) | C | uma linha por movimento; sessão com esperado e contado. A **composição por espécie** não entra — §6 |
 | `fiscal_document_outcome` — desfecho do documento (autorizado, rejeitado, denegado, contingência) | retorno ou entrada em contingência | **C**: a pendência é do dia ou é estrutural (`RN-REL-014`). **P**: rejeição em massa por UF ou por tipo é **defeito nosso** ou mudança de layout — decide correção nossa, não conversa com o cliente | C · P | fato do módulo dono (`RN-EMI-028` e irmãs); entra nesta lista pelo **grão e pelo leitor**, e nada aqui o redefine |
 | `peripheral_attempt_outcome` — desfecho da tentativa de periférico (`RN-PER-004`) | fim da tentativa | **C**: qual posto tem impressora que falha. **P**: classe que falha em N clientes decide compatibilidade e correção nossa | C · P | uma linha por tentativa, com classe, destino e desfecho |
+| `identity_set_reconciled` — o terminal recebeu a reconciliação do conjunto de identificação (`RN-NUC-056`b) | ao receber | **C** (`manager`/`owner`): terminal que não reconcilia há muito tempo é o que vai impedir alguém de trabalhar — decide levar contato àquele posto **antes** do incidente. **P**: a frequência **real** contra a configurada é o que fecha `LACUNA-OFF-016` por medida | C · P | uma linha por reconciliação recebida, com terminal e instante; **nunca** "última reconciliação" como campo sobrescrito, que apaga a série que a decisão usa |
+| `published_artifact_version_received` — o terminal passou a reter uma versão de artefato publicado (`RN-NUC-063`e, `RN-NUC-015`) | ao passar a reter | **C** (`manager`/`owner`): terminal com catálogo velho é o que vai recusar item que existe — decide levar contato àquele posto antes de o cliente-final ficar sem o produto; e responde "mudei o preço e o caixa vendeu pelo antigo" (`RN-NUC-015`). **P**: recusa por identificador não resolvido que cresce com a idade do retido em N clientes é defeito de **entrega de publicação nossa**, não de cadastro deles — decide correção nossa | C · P | uma linha por terminal, artefato e versão recebida; **nunca** "versão atual" como campo sobrescrito |
 | `terminal_connectivity_state_change` — entrada e saída de `D1`/`D2`/`D3` | transição | **C**: é o link, a LAN ou o serviço externo — decide trocar provedor de internet, não reclamar do PDV. **P**: quantos terminais operam sem contato, e por quanto tempo, decide onde o orçamento offline precisa ser medido de verdade | C · P | uma linha por transição, com o domínio de entrada; **nunca** amostragem periódica de estado |
 
 **O canal do lado `P`, e as três linhas corrigidas em 2026-08-23 (`PRV-12`).** Esta tabela **é** a lista
@@ -304,7 +324,9 @@ com `P` são **observação de operação**, canal `RN-PRV-009` (`RN-NUC-044`, c
    ninguém, inclusive para nós (`.claude/rules/seguranca.md` §3, `RN-NUC-024`,
    `operacao-do-provedor-alcance.md` §2.2). Não é escolha nossa e não tem exceção de utilidade.
 2. **Conteúdo de texto de terceiro como campo de decisão.** O texto é preservado literal e opaco
-   (`RN-OFF-027`); o que entra em fato, contagem ou leitura é **presença**, nunca conteúdo.
+   (`RN-OFF-027`); o que entra em fato, contagem ou leitura é **presença**, nunca conteúdo. **Alterado
+   em 2026-09-23**, uma exceção: o identificador `gtin_global` na recusa `item_identifier_unresolved`
+   entra como valor, só para o cliente, e não decide nada; é chave de catálogo (`RN-NUC-063` a, irmão).
 3. **Identificação do comprador que a entrega escolhida não exigiu** (`RN-EMI-017`).
 4. **Gravação de tela ou de tecla do operador.** *Necessidade legítima:* saber **onde o operador
    trava** — ela é real e continua atendida. *Mecanismo recusado:* gravar a sessão dele, porque é
@@ -325,18 +347,13 @@ com `P` são **observação de operação**, canal `RN-PRV-009` (`RN-NUC-044`, c
 Abertas em 2026-08-23. Nenhuma bloqueia as regras: cada uma foi escrita para sobreviver às duas
 respostas.
 
-- **`LACUNA-NUC-038`** — **a maior desta ficha.** Hoje, por regra aprovada, "iniciou a venda e não
-  terminou" **não existe no servidor**: `RN-NUC-001` mantém o pedido em construção local e fora da
-  fila, e `RN-NUC-003` (infeliz c) diz, com estas palavras, que o pedido morto **não sobe** — "nada
-  sobe". O que o humano pediu ("iniciou a venda, colocou o produto, finalizou a venda", e o tempo até
-  concluir) exige exatamente esses fatos, e eles são **irrecuperáveis**: não registrados no instante,
-  não se reconstituem nunca. **O mecanismo que preserva as duas coisas** e que eu proponho sem
-  decidir: o que sincroniza **não é o pedido** — é um fato aditivo próprio (classe 1, `RN-OFF-004`),
-  append-only, que nunca carrega estado mutável nem torna o pedido compartilhado entre terminais.
-  `RN-NUC-001` fica intacta; o que muda é o "nada sobe" de `RN-NUC-003`. Isso é **revogação de
-  cláusula vigente**, e revogação exige **ato datado do humano**, no arquivo dono, com custo escrito —
-  nunca efeito colateral de uma lista de fatos. **Dono:** humano. Enquanto estiver aberta, os quatro
-  fatos marcados `PROVISÓRIA` na §3 não são agendáveis.
+- **`LACUNA-NUC-038`** — **FECHADA em 2026-09-11, saída `B`** (fato aditivo próprio). O humano decidiu
+  sobre a proposta de `captura-ciclo-de-vida-do-pedido-proposta.md` e **revogou** o "nada sobe" de
+  `RN-NUC-003` infeliz (c) — a revogação está datada no arquivo dono (`nucleo-venda.md:157`), e
+  `RN-NUC-001` ficou intacta. Os quatro fatos saíram de `PROVISÓRIA` e viraram regra:
+  `fatos-de-operacao-ciclo-de-vida-do-pedido.md`, `RN-NUC-052` a `RN-NUC-055`. O que continua aberto
+  não é esta lacuna: é o **grão** (do `arquiteto-dados`), o **custo medido** (pergunta 2, abaixo) e a
+  **retenção** (`LACUNA-NUC-040`).
 - **`LACUNA-NUC-039`** — teto de fato de diagnóstico retido no terminal, e o que se conta ao
   atingi-lo (`RN-NUC-046`). Grandeza, unidade tamanho/contagem, **sem valor**. **Dono:**
   `performance` mede, humano escolhe (regime de `RN-OFF-028`).
