@@ -5,7 +5,7 @@ type: gotcha
 escopo: plataforma
 camada: processo
 data: 2026-08-26
-relaciona: [[reference-jira-projeto-spr]], [[decision-jira-e-o-registro-publico-da-tarefa]]
+relaciona: [[reference-jira-projeto-spr]], [[decision-backlog-e-o-registro-publico-da-tarefa]]
 ---
 
 **Sintoma:** você abre uma issue nova e o título sai em vocabulário de restaurante — "comanda",

@@ -1,12 +1,19 @@
 ---
 name: reference-jira-projeto-spr
-description: o Jira da Forja é o projeto SPR em arturjuliao20.atlassian.net (cloudId 47c620c6-728b-44f0-9aad-91240111566b), com três status (A fazer / Em andamento / Concluído) e nenhum status de bloqueio
+description: HISTÓRICO — o Jira foi abandonado em 2026-09-11 e o conteúdo está em `docs/backlog/`; este registro guarda de onde vieram os identificadores `SPR-<n>` e a mecânica do projeto SPR em arturjuliao20.atlassian.net enquanto ele valeu
 type: reference
 escopo: plataforma
 camada: processo
 data: 2026-08-26
-relaciona: [[decision-jira-e-o-registro-publico-da-tarefa]], [[gotcha-board-spr-e-nomeado-pela-vertical]]
+relaciona: [[decision-backlog-e-o-registro-publico-da-tarefa]], [[gotcha-board-spr-e-nomeado-pela-vertical]], [[state-execucao-solo-2026-09-11]]
 ---
+
+**Registro histórico desde 2026-09-11.** O Jira foi abandonado nessa data
+([[decision-backlog-e-o-registro-publico-da-tarefa]]) e os 56 cards foram migrados com corpo integral
+para `docs/backlog/`, que é onde o trabalho vive agora. Nada aqui é instrução: é o que explica de
+onde vêm os identificadores `SPR-<n>` que as fichas e a memória ainda citam. As menções a
+`.claude/rules/jira.md` abaixo apontam para um arquivo removido na mesma data e substituído por
+`.claude/rules/backlog.md`.
 
 - **Site:** `arturjuliao20.atlassian.net` · **`cloudId`:** `47c620c6-728b-44f0-9aad-91240111566b`
 - **Projeto:** `SPR` — "Sistema de Pedido de Restaurantes", team-managed (`next-gen`), id `10000`.

@@ -5,10 +5,19 @@ type: state
 escopo: plataforma
 camada: processo
 data: 2026-08-26
-atualizado: 2026-08-26 (T-0006)
-relaciona: [[reference-jira-projeto-spr]], [[decision-stack-node-typescript-estrito]], [[state-d-02-arranjo-b-ou-d]], [[gotcha-board-spr-e-nomeado-pela-vertical]], [[gotcha-o-titulo-nao-e-o-card]], [[state-pendencias-abertas-2026-08-23]]
-tarefa: T-0006
+atualizado: 2026-08-27 (T-0008 — as 52 issues reescritas de novo contra o esqueleto de duas formas)
+relaciona: [[reference-jira-projeto-spr]], [[decision-stack-node-typescript-estrito]], [[state-d-02-arranjo-b-ou-d]], [[gotcha-board-spr-e-nomeado-pela-vertical]], [[gotcha-o-titulo-nao-e-o-card]], [[state-pendencias-abertas-2026-08-23]], [[gotcha-comentario-de-preservacao-perde-conteudo-na-conversao-adf]], [[gotcha-julgar-o-proprio-texto-nao-pega-erro-de-escopo-ou-de-fato]]
+tarefa: T-0006, T-0007, T-0008
 ---
+
+> **Histórico desde 2026-09-11.** O board externo foi abandonado e os 56 itens estão em
+> `docs/backlog/`, com corpo integral. Este registro continua descrevendo com precisão **como o
+> backlog estava em 2026-08-26** e por que ele tem a forma que tem, e é por isso que ele fica. O que
+> ele **não** descreve mais: os donos (a execução é de uma pessoa, [[state-execucao-solo-2026-09-11]]),
+> as datas (calculadas para três pessoas em paralelo) e a mecânica de board (rótulo, comentário,
+> status), que virou `.claude/rules/backlog.md`. Estado atual de qualquer item:
+> `docs/backlog/INDEX.md` e a ficha em `tarefas/`.
+
 
 Processo do Jira de ponta a ponta em `.claude/rules/jira.md` §8 a §12 (padrão de texto da issue,
 como se marca entregue, mecânica da API, consultas JQL). Este registro é só o **mapa do momento** —
@@ -124,6 +133,70 @@ issue do board com ficha correspondente.
    calendário, não por decisão.
 2. **Três das cinco Epics planejadas nunca foram criadas.** `SPR-25` e `SPR-27` declaram dependência
    para "Epic 3" e "Epic 5", que não existem — dependência para issue inexistente não acusa no board.
-3. **Nove cards seguem lidos só pelo título** (`SPR-35`, `SPR-42`–`SPR-44`, `SPR-47`–`SPR-50`,
-   `SPR-52`). Depois de `SPR-36`, isso deixou de ser risco teórico
-   ([[gotcha-o-titulo-nao-e-o-card]]).
+3. ~~Nove cards seguem lidos só pelo título~~ — **resolvido em T-0007** (Lote 2): as nove
+   (`SPR-35`, `SPR-42`–`SPR-44`, `SPR-47`–`SPR-50`, `SPR-52`) foram lidas inteiras, corpo e
+   comentários. Uma delas (`SPR-47`) tinha de fato a falha que o risco previa — faltava pré-requisito
+   nomeado — e foi corrigida.
+
+## O que mudou em 2026-08-26, à noite (T-0007 · `SPR-55`)
+
+As 52 issues do backlog (`SPR-1`..`SPR-33`, `SPR-35`..`SPR-52`, excluindo `SPR-34`/`SPR-53`/`SPR-54`
+do próprio recorte da tarefa) foram relidas inteiras contra "as quatro perguntas — checagem final" de
+`.claude/rules/produto.md`, em 4 lotes, e verificadas por amostragem independente do thread principal
+(11 issues, >15% do tocado, zero divergência que exigisse reabrir lote).
+
+**Contagem por lote (veredito · card):**
+
+| Lote | Cobertura | REESCRITO | JÁ CONFORME |
+|---|---|---|---|
+| 1 | Epic `SPR-34` + `SPR-14`,`31`–`33`,`36`–`41`,`51`,`52` (13) | 4 (`SPR-14`,`31`,`32`,`33`) | 9 |
+| 2 | Epic `SPR-35` + `SPR-42`–`50` (10) | 1 (`SPR-47`) | 9 |
+| 3 | backlog anterior, parte A — `SPR-1`–`13`,`15` (14) | 13 | 1 (`SPR-13`) |
+| 4 | backlog anterior, parte B — `SPR-16`–`30` (15) | 9 | 6 |
+| **Total** | **52** | **27** | **25** |
+
+Nenhum título mudou (edição de título é pendência humana onde havia disputa — `SPR-32`, `SPR-27` — e
+já estava fora de escopo desde T-0006). Toda edição foi precedida de comentário de preservação
+verbatim, em bloco de código.
+
+**Achado operacional, já registrado:** os quatro primeiros comentários de preservação do Lote 3
+(`SPR-1`–`SPR-4`) saíram com a citação vazia — a conversão markdown→ADF descarta blockquote com
+sub-título e lista aninhados, sem erro — corrigido publicando um segundo comentário em bloco de
+código antes de seguir adiante ([[gotcha-comentario-de-preservacao-perde-conteudo-na-conversao-adf]]).
+Os lotes seguintes já citaram sempre em bloco de código.
+
+**Três perguntas novas foram para a pauta do humano**, não decididas por `produto` nem pelo thread
+principal: paralelismo da Epic `SPR-35` com a Fase 1, papel que autoriza cancelar comanda (`SPR-12`),
+e leitura do aceite de `SPR-48` — ver [[state-pendencias-abertas-2026-08-23]] §0.2.
+
+`SPR-55` (ficha `T-0007`) fechou com a leitura completa das 52 issues confirmada e nenhuma divergência
+bloqueante na amostragem — ver `## Fechamento` da ficha para o detalhe da definição de pronto.
+
+## O que mudou em 2026-08-26/27 (T-0008 · `SPR-56`)
+
+As mesmas 52 issues foram reescritas de novo, agora contra "o esqueleto de um card — duas formas"
+(`.claude/rules/produto.md`), em 4 lotes: Lote 1 (Epic `SPR-34` + 12 issues) rodou com `model: haiku`,
+a pedido do humano; Lotes 2 a 4 rodaram no modelo padrão. 27 issues foram efetivamente **reescritas**
+para a anatomia nova (Objetivo/Escopo/Fora de escopo/Critério de aceite/Depende de/Gate/Referências
+para REGRA; Contexto/O que testar/Entrega/Critério de conclusão para PROVA); as demais já estavam
+conformes ou eram Epic/redirecionamento sem forma própria.
+
+**Verificação independente encontrou 5 defeitos substantivos, todos corrigidos:**
+
+- `SPR-52` (Lote 1) recomendava um framework fora de território de `produto` — removido.
+- `SPR-39` (Lote 1) estava na forma errada (Prova em vez de Decisão) para a convenção `D-04` —
+  reestruturado.
+- `SPR-42` (Lote 2, **modelo padrão**) tratava `D-02` como fechada sem base na fonte citada —
+  corrigido, `D-02` segue aberta.
+- `SPR-40`/`SPR-41` (Lote 1) tinham typo virando palavra sem sentido, contagem errada e anglicismo —
+  corrigidos.
+- `SPR-41`: uma dupla negação no Critério de conclusão do gate de segurança (lida ao pé da letra,
+  invertia o sentido do gate) — corrigida em despacho separado, fora do escopo da correção pontual
+  original que só tratava typo/palavra sem sentido/número errado.
+
+Achado de processo: a verificação por terceiro achou defeito mesmo em lote gerado pelo modelo padrão,
+não só no lote mais barato — [[gotcha-julgar-o-proprio-texto-nao-pega-erro-de-escopo-ou-de-fato]].
+
+**`SPR-56`** (ficha `T-0008`) fechou com o critério de forma atingido; o de profundidade, atingido com
+a ressalva de que forma certa não garantiu conteúdo certo sem a verificação — ver `## Fechamento` da
+ficha.

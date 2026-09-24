@@ -5,9 +5,9 @@ type: convention
 escopo: plataforma
 camada: produto
 data: 2026-08-22
-atualizado: 2026-08-26
-relaciona: [[decision-forja-e-pdv-modular]]
-tarefa: T-0001, T-0006
+atualizado: 2026-09-12
+relaciona: [[decision-forja-e-pdv-modular]], [[decision-capturar-e-o-padrao-nao-capturar-exige-justificativa]]
+tarefa: T-0001, T-0006, T-0010
 ---
 
 O que existe no PDV arcaico normalmente existe porque **atende necessidade real, já validada por
@@ -51,3 +51,14 @@ mecanismo, e passa na revisão porque as quatro partes estão lá.
 **Como conferir:** leia a primeira e a terceira parte juntas, ignorando a segunda. A necessidade da
 primeira continua atendida pelo mecanismo da terceira, com caso concreto? Não continua — é `BLOQUEIO`
 ou é reescrita, nunca "melhor que estava".
+
+**Quando o mecanismo recusado produzia rastro, a terceira parte diz onde o fato foi parar**
+(2026-09-12, varredura do invariante 10). `PN-17` é o exemplar: ele recusa a mensagem técnica na tela
+do caixa e **move** o detalhe em vez de eliminá-lo — "o detalhe técnico não é recusado: muda de
+lugar, vai para o registro interno" —, e o campo `MELHOR EM` fecha com "sem perder informação".
+Recusa que não diz onde o fato foi parar é onde a perda silenciosa nasce, porque ela some junto com o
+mecanismo e ninguém a procura: fato não tem backfill (`CLAUDE.md` §7.10). Segundo exemplar, do outro
+lado do sistema: consolidar dois lançamentos iguais numa linha foi recusado **porque apaga autor e
+instante**, e a necessidade (comanda legível no pico) voltou como agregação de **apresentação** sobre
+fatos que permanecem separados. Ao conferir a primeira contra a terceira parte, confira também a
+captura: o novo mecanismo registra o que o velho registrava, ou o endereço novo está nomeado?

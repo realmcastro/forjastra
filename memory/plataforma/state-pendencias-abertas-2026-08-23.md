@@ -5,8 +5,8 @@ type: state
 escopo: plataforma
 camada: processo
 data: 2026-08-23
-atualizado: 2026-08-26 (T-0006 — fusão da pauta do board)
-tarefa: T-0004, T-0006
+atualizado: 2026-08-27 (T-0008 — resíduo de SPR-41 corrigido pelo thread principal no mesmo dia; item removido)
+tarefa: T-0004, T-0006, T-0007, T-0008
 ---
 
 Substitui a versão de T-0003 (mesma data). A **narrativa** está nas fichas `T-0001` a `T-0004`
@@ -67,6 +67,57 @@ a lacuna deles está só em comentário, e quem olhar o board pelo rótulo não 
   `SPR-6`? Os três vencem em 11-13 com o contador no critério de aceite.
 - **`SPR-25` e `SPR-30` são dois cards ou um?** Descrevem o mesmo mecanismo — retirada autorizada mais
   lançamento novo. A fronteira está declarada nos dois; o recorte é seu.
+
+### 0.3 Cinco perguntas novas de 2026-09-11 — três de modelagem, duas de corpo de prova
+
+Nasceram em `T-0009`, ao escrever a regra do estabelecimento e ao julgar as duas lojas reais. Nenhuma
+bloqueia o trabalho em curso: o recorte do schema de controle exclui exatamente as colunas que elas
+decidem. As três primeiras mordem quando a família de fatos do negócio for modelada.
+
+- **`LACUNA-NUC-041` — a moeda é do cliente ou do estabelecimento?** Existe cliente-alvo com unidades
+  em moedas diferentes? Uma linha fecha. Se for do estabelecimento, a coluna não é do `tenant`, e
+  trocar depois é expand/contract em N schemas. O conflito existia desde sempre e nunca tinha sido
+  perguntado ([[gotcha-moeda-viajou-na-parentese-do-fuso]]).
+- **`LACUNA-NUC-042` — encerrar estabelecimento vai existir como operação?** Se sim: quem encerra, e o
+  que acontece com sessão de caixa aberta, terminal habilitado, faixa não usada e obrigação
+  documental pendente. Hoje a operação **não existe** e segue negada pelo default.
+- **`LACUNA-NUC-043` — um estabelecimento pode mudar de cliente?** Escrito hoje como **não**. O caso
+  que testa isso é venda da loja ou reorganização societária.
+- **A loja de polpa vende por peso aferido na balança, por embalagem fechada, ou os dois?** E ela tem
+  mais de um peso de embalagem por sabor? Decide se o caso dela toca `G-04` ou só o núcleo de
+  quantidade, e se `G-04` ganha loja real atrás em vez do exemplo de bebida.
+- **Na loja de roupa: o operador lança a peça lendo etiqueta ou procurando numa lista na tela? E ela
+  cobra por ajuste de barra, bordado ou embalagem para presente?** A primeira decide `G-03` quase
+  sozinha. A segunda, se for "sim", cria o primeiro adicional fora da alimentação e muda o desenho de
+  `G-05`.
+
+**E uma que não é pergunta, é escolha de prioridade sua:** as duas lojas são **clientes-alvo** ou
+**corpo de prova**? Usá-las como prova não custa nada. Atendê-las de verdade abre a segunda vertical,
+porque a receita base delas liga `EST`, que está fora do MVP 1.
+
+---
+
+### 0.2 Três perguntas novas, achadas lendo os 52 cards contra as quatro perguntas de `produto.md` (T-0007)
+
+Nenhuma das três é `G-0x` nem pendência já catalogada. Nenhuma foi decidida por `produto`: as três
+chegam como acham — o card aponta, não escolhe.
+
+- **A Epic `SPR-35` (SDUI/tokens, código real em `packages/sdui`, prazo 08-26→10-05) corre em paralelo
+  à Fase 1 (`SPR-34`, fecha 10-23) e antes de qualquer Fase 2 — isso é permitido, ou contradiz
+  `CLAUDE.md` §2 ("Só então backend, e só então UI") e `.claude/rules/processo.md:74`?** Isto **não**
+  é fato resolvido: o board já mostra as duas trilhas com donos diferentes (Matheus na Fase 1; Artur e
+  João Marcelo na Epic 35) — [[state-board-spr-2026-08-26]] — o que sugere paralelismo intencional (o
+  SDUI valida contra manifesto fixo/fixture, não depende do modelo de dados real). Se a resposta for
+  "sim, intencional", a leitura literal de §2/`processo.md:74` pede uma nota de exceção explícita —
+  sem ela, o próximo agente que ler as duas regras ao pé da letra vai reabrir esta mesma pergunta.
+- **`SPR-12` (cancelar comanda): qual papel autoriza o cancelamento — garçom, só gerente, ou garçom até
+  um limite?** Pergunta já registrada em comentário da própria issue e nunca respondida; não é nenhuma
+  das dez lacunas do §0.
+- **`SPR-48` ("fechar pagamento... sem um único toque na tela, verificado ponta a ponta"): o aceite
+  descreve fluxo de UI até a submissão — sem exigir o backend de venda/pagamento, que ainda não existe
+  — ou o texto precisa ser reescrito para deixar isso inequívoco?** A seção "Fora de escopo" do card já
+  isola o cálculo ("vem do backend"), o que sustenta a primeira leitura; a ambiguidade, ainda assim, é
+  real.
 
 ---
 
