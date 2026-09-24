@@ -1,0 +1,28 @@
+{
+  "name": "@forja/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "test": "npm run build && node scripts/run-tests.mjs",
+    "test:no-db": "npm run build && node scripts/run-tests.mjs --no-database",
+    "start": "node dist/src/main.js"
+  },
+  "dependencies": {
+    "@fastify/type-provider-typebox": "6.1.0",
+    "@sinclair/typebox": "0.34.52",
+    "fastify": "5.12.4",
+    "kysely": "0.29.5",
+    "pg": "8.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.2",
+    "@types/pg": "8.23.1",
+    "typescript": "7.0.2"
+  }
+}

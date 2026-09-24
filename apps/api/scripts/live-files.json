@@ -1,0 +1,5 @@
+[
+  "app-credential-live.test.js",
+  "delegation-live.test.js",
+  "tenant-role-live.test.js"
+]
