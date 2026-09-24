@@ -1,0 +1,24 @@
+{
+  "name": "@forja/migrator",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "test": "npm run build && node scripts/run-tests.mjs",
+    "test:no-db": "npm run build && node scripts/run-tests.mjs --no-database",
+    "start": "node dist/src/main.js"
+  },
+  "dependencies": {
+    "pg": "8.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.2",
+    "@types/pg": "8.23.1",
+    "typescript": "7.0.2"
+  }
+}

@@ -1,0 +1,23 @@
+[
+  "alcance-e-concedente.test.js",
+  "alcance-lateral.test.js",
+  "alvo.test.js",
+  "cliente-autor-e-configuracao.test.js",
+  "cliente-estabelecimento-terminal.test.js",
+  "cliente-migracao.test.js",
+  "declaracao-hostil.test.js",
+  "estado.test.js",
+  "exclusao-hostil.test.js",
+  "fato-de-recusa.test.js",
+  "imutabilidade.test.js",
+  "migracao.test.js",
+  "motivos-de-divergencia.test.js",
+  "nao-transacional.test.js",
+  "papel-do-cliente.test.js",
+  "piso-de-medicao.test.js",
+  "piso-de-versao.test.js",
+  "provisionamento.test.js",
+  "recusa-de-borda.test.js",
+  "retratacao.test.js",
+  "verificacao.test.js"
+]

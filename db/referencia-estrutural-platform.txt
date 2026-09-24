@@ -1,0 +1,143 @@
+# Referência estrutural do schema platform
+#
+# Gerada pela consulta de impressão de db/migrator/PROVISION-E-VERIFY.md §13.3, contra um banco em que
+# a stream platform inteira foi aplicada do zero. É contra este arquivo que `verify` compara o
+# platform real (§13.2), e é isso que dispensa privilégio de criar banco.
+#
+# Quem escreve migration de platform regenera este arquivo na mesma mudança. Divergir dele sem
+# regenerar é o que o teste de aceite 18 (CONTRATO.md §14) pega.
+#
+# Linhas comecadas por # sao comentario e nao entram na comparacao. O resto e comparado linha a linha,
+# na ordem, com COLLATE "C".
+#
+# Gerado em 2026-09-11, PostgreSQL 16.15, com 0000..0007 aplicadas.
+#
+# Conferido em 2026-09-11 contra um banco com 0000..0010 aplicadas: as 64 linhas saiam identicas.
+# A 0008, a 0009 e a 0010 so semeiam platform.executor_event_kinds, e semente e dado, nao estrutura,
+# por isso nao houve o que regerar.
+#
+# REGERADO em 2026-09-12, PostgreSQL 16.15, com 0000..0012 aplicadas do zero: 78 linhas. A 0011 cria
+# platform.role_declarations, o registro dos papeis que o executor declarou legitimos
+# (db/universo-e-declaracao.md 7.5.4), com o gatilho de imutabilidade da 0002; a 0012 so semeia
+# executor_event_kinds. Migration que mexer em tabela, coluna, restricao, indice, gatilho ou funcao
+# continua obrigada a regerar este arquivo na mesma mudanca.
+#
+# Conferido em 2026-09-12 contra um banco com 0000..0013 aplicadas do zero: as 78 linhas sairam
+# identicas, e o verify saiu 0. A 0013 so semeia executor_event_kinds, entao nao houve o que regerar.
+#
+# A linha "gatilho" termina em habilitacao:<letra>, que e pg_trigger.tgenabled cru: O e o estado de
+# origem, o unico que as migrations produzem. D e desligado, R e so-replica, A e sempre. Qualquer
+# letra diferente de O e divergencia — foi por ela que um DISABLE TRIGGER do dono passou invisivel
+# pela impressao anterior (SEC-02, docs/auditorias/2026-09-11-delta-db-e-borda-api.md). A letra entra
+# crua, e nao traduzida, para que um valor novo do catalogo apareca em vez de virar texto vazio.
+#
+# A linha "visao" termina em md5 de pg_get_viewdef, pela mesma razao da linha "funcao": corpo de view
+# e multilinha e quebraria a comparacao linha a linha. Ela nao aparece neste arquivo porque o schema
+# platform nao tem view nenhuma; ela existe para os schemas de cliente, onde view com security_invoker
+# e o objeto mais barato para atravessar schema — sem o md5, verify aprovava a view de um cliente
+# reapontada para outro (EXE-04, docs/auditorias/2026-09-11-executor-implementado.md).
+#
+# A linha "funcao" carrega md5 de pg_get_functiondef, cujo texto e formatado pelo servidor: trocar de
+# versao MAIOR do Postgres pode mudar o md5 sem que nada no repositorio tenha mudado. Nesse dia o
+# arquivo e regenerado junto da troca, e a troca de versao maior e decisao registrada, nao acidente.
+# Medido em 2026-09-11: entre 15.19 e 16.15 a impressao inteira sai identica, byte a byte — o risco
+# existe e nao se realizou nesta faixa.
+#
+# REGERADO em 2026-09-23, PostgreSQL 16.15, com 0000..0015 aplicadas do zero: 92 linhas. A 0014 cria
+# platform.role_retractions, a retratacao de declaracao escrita pelo operador
+# (db/universo-e-declaracao.md 7.5.4, PAP-30), com o gatilho de imutabilidade da 0002; a 0015 so
+# semeia executor_event_kinds. A impressao ganhou no mesmo dia as linhas "materializada" e "regra"
+# (SUB-09, PROVISION-E-VERIFY.md 13.3), e o platform nao tem nenhuma das duas: as 78 linhas antigas
+# sairam identicas, e as 14 novas sao todas da role_retractions.
+coluna      executor_event_kinds.code text NOT NULL -
+coluna      executor_event_kinds.description text NOT NULL -
+coluna      executor_events.checksum_expected text NULL -
+coluna      executor_events.checksum_found text NULL -
+coluna      executor_events.db_role text NOT NULL -
+coluna      executor_events.detail text NULL -
+coluna      executor_events.event_id uuid NOT NULL -
+coluna      executor_events.kind_code text NOT NULL -
+coluna      executor_events.occurred_at timestamp with time zone NOT NULL -
+coluna      executor_events.received_at timestamp with time zone NOT NULL -
+coluna      executor_events.schema_name text NULL -
+coluna      executor_events.version text NULL -
+coluna      role_declarations.declaration_id uuid NOT NULL -
+coluna      role_declarations.declared_at timestamp with time zone NOT NULL now()
+coluna      role_declarations.declared_by text NOT NULL -
+coluna      role_declarations.role_kind text NOT NULL -
+coluna      role_declarations.role_name text NOT NULL -
+coluna      role_retractions.reason text NOT NULL -
+coluna      role_retractions.retracted_at timestamp with time zone NOT NULL now()
+coluna      role_retractions.retracted_by text NOT NULL CURRENT_USER
+coluna      role_retractions.retraction_id uuid NOT NULL (encode(set_bit(set_bit(OVERLAY(uuid_send(gen_random_uuid()) PLACING SUBSTRING(int8send((floor((EXTRACT(epoch FROM clock_timestamp()) * (1000)::numeric)))::bigint) FROM 3) FROM 1 FOR 6), (52)::bigint, 1), (53)::bigint, 1), 'hex'::text))::uuid
+coluna      role_retractions.role_name text NOT NULL -
+coluna      schema_migrations.applied_at timestamp with time zone NULL -
+coluna      schema_migrations.checksum text NOT NULL -
+coluna      schema_migrations.duration_ms integer NULL -
+coluna      schema_migrations.module text NULL -
+coluna      schema_migrations.schema_name text NOT NULL -
+coluna      schema_migrations.started_at timestamp with time zone NOT NULL -
+coluna      schema_migrations.version text NOT NULL -
+coluna      tenants.created_at timestamp with time zone NOT NULL now()
+coluna      tenants.schema_name text NOT NULL ('t_'::text || slug)
+coluna      tenants.slug text NOT NULL -
+coluna      tenants.tenant_id uuid NOT NULL -
+funcao      reject_ledger_rewrite() md5:e26f31606a8c97143401afb18d1f9aa9
+funcao      reject_mutation() md5:16e0d3208391d4ea493db633fc23c2ce
+gatilho     CREATE TRIGGER executor_event_kinds_reject_mutation BEFORE DELETE OR UPDATE OR TRUNCATE ON executor_event_kinds FOR EACH STATEMENT EXECUTE FUNCTION reject_mutation() habilitacao:O
+gatilho     CREATE TRIGGER executor_events_reject_mutation BEFORE DELETE OR UPDATE OR TRUNCATE ON executor_events FOR EACH STATEMENT EXECUTE FUNCTION reject_mutation() habilitacao:O
+gatilho     CREATE TRIGGER role_declarations_reject_mutation BEFORE DELETE OR UPDATE OR TRUNCATE ON role_declarations FOR EACH STATEMENT EXECUTE FUNCTION reject_mutation() habilitacao:O
+gatilho     CREATE TRIGGER role_retractions_reject_mutation BEFORE DELETE OR UPDATE OR TRUNCATE ON role_retractions FOR EACH STATEMENT EXECUTE FUNCTION reject_mutation() habilitacao:O
+gatilho     CREATE TRIGGER schema_migrations_reject_removal BEFORE DELETE OR TRUNCATE ON schema_migrations FOR EACH STATEMENT EXECUTE FUNCTION reject_mutation() habilitacao:O
+gatilho     CREATE TRIGGER schema_migrations_reject_rewrite BEFORE UPDATE ON schema_migrations FOR EACH ROW EXECUTE FUNCTION reject_ledger_rewrite() habilitacao:O
+gatilho     CREATE TRIGGER tenants_reject_mutation BEFORE DELETE OR UPDATE OR TRUNCATE ON tenants FOR EACH STATEMENT EXECUTE FUNCTION reject_mutation() habilitacao:O
+indice      CREATE INDEX executor_events_kind_code_idx ON executor_events USING btree (kind_code)
+indice      CREATE UNIQUE INDEX executor_event_kinds_pkey ON executor_event_kinds USING btree (code)
+indice      CREATE UNIQUE INDEX executor_events_pkey ON executor_events USING btree (event_id)
+indice      CREATE UNIQUE INDEX role_declarations_pkey ON role_declarations USING btree (declaration_id)
+indice      CREATE UNIQUE INDEX role_declarations_role_name_key ON role_declarations USING btree (role_name)
+indice      CREATE UNIQUE INDEX role_retractions_pkey ON role_retractions USING btree (retraction_id)
+indice      CREATE UNIQUE INDEX role_retractions_role_name_key ON role_retractions USING btree (role_name)
+indice      CREATE UNIQUE INDEX schema_migrations_pkey ON schema_migrations USING btree (schema_name, version)
+indice      CREATE UNIQUE INDEX tenants_pkey ON tenants USING btree (tenant_id)
+indice      CREATE UNIQUE INDEX tenants_slug_key ON tenants USING btree (slug)
+restricao   executor_event_kinds.executor_event_kinds_code_check CHECK ((code ~ '^[a-z][a-z0-9_]{2,40}$'::text))
+restricao   executor_event_kinds.executor_event_kinds_description_check CHECK (((octet_length(description) >= 1) AND (octet_length(description) <= 200)))
+restricao   executor_event_kinds.executor_event_kinds_pkey PRIMARY KEY (code)
+restricao   executor_events.executor_events_checksum_expected_check CHECK (((checksum_expected IS NULL) OR (checksum_expected ~ '^[0-9a-f]{64}$'::text)))
+restricao   executor_events.executor_events_checksum_found_check CHECK (((checksum_found IS NULL) OR (checksum_found ~ '^[0-9a-f]{64}$'::text)))
+restricao   executor_events.executor_events_db_role_check CHECK (((octet_length(db_role) >= 1) AND (octet_length(db_role) <= 63)))
+restricao   executor_events.executor_events_detail_check CHECK (((detail IS NULL) OR ((octet_length(detail) >= 1) AND (octet_length(detail) <= 2000))))
+restricao   executor_events.executor_events_kind_code_fkey FOREIGN KEY (kind_code) REFERENCES executor_event_kinds(code)
+restricao   executor_events.executor_events_pkey PRIMARY KEY (event_id)
+restricao   executor_events.executor_events_received_after_occurred_check CHECK ((received_at >= occurred_at))
+restricao   executor_events.executor_events_schema_name_check CHECK (((schema_name IS NULL) OR ((octet_length(schema_name) >= 1) AND (octet_length(schema_name) <= 63))))
+restricao   executor_events.executor_events_version_check CHECK (((version IS NULL) OR (octet_length(version) > 0)))
+restricao   role_declarations.role_declarations_declared_by_check CHECK (((octet_length(declared_by) >= 1) AND (octet_length(declared_by) <= 63)))
+restricao   role_declarations.role_declarations_pkey PRIMARY KEY (declaration_id)
+restricao   role_declarations.role_declarations_role_kind_check CHECK ((role_kind = ANY (ARRAY['executor'::text, 'app_credential'::text])))
+restricao   role_declarations.role_declarations_role_name_check CHECK (((octet_length(role_name) >= 1) AND (octet_length(role_name) <= 63)))
+restricao   role_declarations.role_declarations_role_name_key UNIQUE (role_name)
+restricao   role_retractions.role_retractions_pkey PRIMARY KEY (retraction_id)
+restricao   role_retractions.role_retractions_reason_check CHECK (((octet_length(reason) >= 1) AND (octet_length(reason) <= 500)))
+restricao   role_retractions.role_retractions_retracted_by_check CHECK (((octet_length(retracted_by) >= 1) AND (octet_length(retracted_by) <= 63)))
+restricao   role_retractions.role_retractions_role_name_fkey FOREIGN KEY (role_name) REFERENCES role_declarations(role_name)
+restricao   role_retractions.role_retractions_role_name_key UNIQUE (role_name)
+restricao   schema_migrations.schema_migrations_checksum_check CHECK ((checksum ~ '^[0-9a-f]{64}$'::text))
+restricao   schema_migrations.schema_migrations_completion_check CHECK (((applied_at IS NULL) = (duration_ms IS NULL)))
+restricao   schema_migrations.schema_migrations_duration_ms_check CHECK (((duration_ms IS NULL) OR (duration_ms >= 0)))
+restricao   schema_migrations.schema_migrations_module_check CHECK (((module IS NULL) OR (octet_length(module) > 0)))
+restricao   schema_migrations.schema_migrations_pkey PRIMARY KEY (schema_name, version)
+restricao   schema_migrations.schema_migrations_schema_name_check CHECK (((octet_length(schema_name) >= 1) AND (octet_length(schema_name) <= 63)))
+restricao   schema_migrations.schema_migrations_version_check CHECK ((octet_length(version) > 0))
+restricao   tenants.tenants_pkey PRIMARY KEY (tenant_id)
+restricao   tenants.tenants_slug_format_check CHECK ((slug ~ '^[a-z][a-z0-9_]{1,40}$'::text))
+restricao   tenants.tenants_slug_key UNIQUE (slug)
+restricao   tenants.tenants_slug_length_check CHECK ((octet_length(slug) <= 40))
+restricao   tenants.tenants_slug_reserved_check CHECK (((slug <> ALL (ARRAY['platform'::text, 'public'::text, 'information_schema'::text])) AND (slug !~ '^pg_'::text) AND (slug !~ '^verify_'::text)))
+tabela      executor_event_kinds
+tabela      executor_events
+tabela      role_declarations
+tabela      role_retractions
+tabela      schema_migrations
+tabela      tenants
