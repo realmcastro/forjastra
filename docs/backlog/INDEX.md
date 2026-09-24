@@ -58,7 +58,7 @@ inteiro, e o escopo normativo que mora **fora** de `docs/produto/**` nunca entro
 | [F-027](F-027-gesto-do-operador-que-nao-vira-operacao-deixa-fato.md) | Comportamento | a fazer | — | F-001 | captura | O gesto do operador que não chega a operação passa a deixar fato |
 | [F-028](F-028-leitura-recusada-em-camada-modal-vira-fato.md) | Comportamento | **absorvido em `F-007`** 2026-09-23 → [`backlog-recortes.md`](../produto/backlog-recortes.md) | — | F-001 | captura | Leitura recusada durante camada modal passa a produzir fato |
 | [F-029](F-029-superficie-por-momento-nomeia-a-fonte-do-registro.md) | Comportamento | a fazer | — | F-001 | captura | A superfície por momento passa a dizer as três fontes do registro, e não só a atribuição |
-| [F-030](F-030-modulo-de-ponto-fixo-de-dinheiro-e-quantidade.md) | Comportamento | **em execução** desde 2026-09-23 → [T-0021](../../tarefas/T-0021-modulo-de-ponto-fixo.md) | — | — | — | Módulo de ponto fixo de dinheiro e quantidade, em `packages/contracts/` |
+| [F-030](F-030-modulo-de-ponto-fixo-de-dinheiro-e-quantidade.md) | Comportamento | **fechada** 2026-09-23 → [T-0021](../../tarefas/T-0021-modulo-de-ponto-fixo.md) | — | — | — | Módulo de ponto fixo de dinheiro e quantidade, em `packages/contracts/` |
 | [SPR-1](SPR-1-recortar-o-escopo-do-ponto-de-venda-presencial-o-que-e-nucle.md) | Spike | Em andamento | 2026-09-30 | — | — | Recortar o escopo do ponto de venda presencial: o que é núcleo e o que é módulo |
 | [SPR-2](SPR-2-modulo-de-pedido-pelo-cliente-final.md) | Spike | A fazer | 2026-11-30 | — | — | Módulo de Pedido pelo Cliente-Final |
 | [SPR-3](SPR-3-modulo-de-entrega-de-pedidos.md) | Spike | A fazer | 2026-11-30 | — | — | Módulo de Entrega de Pedidos |
