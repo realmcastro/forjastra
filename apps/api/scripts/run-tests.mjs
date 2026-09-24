@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 /**
@@ -37,17 +37,19 @@ const CHAVE_DO_BANCO = 'FORJA_TEST_DATABASE_URL';
  * por teste nenhum e o gate concordava. Contar testes não vê isso, porque o total cai junto.
  *
  * Nome, e não número: um piso de testes envelhece, e um nome de arquivo muda quando alguém o muda
- * de propósito, no mesmo diff em que esta lista precisa mudar. Em modo de gate, arquivo desta lista
- * que não produziu nenhum teste executado reprova, seja por ter saído do glob, por ter sido
- * renomeado ou por ter pulado tudo.
+ * de propósito, no mesmo diff em que esta lista precisa mudar. A lista mora em `live-files.json`,
+ * relativa a `dist/test`, para que o teste do próprio executor (`test/test-runner.test.ts`) a leia
+ * sem rodar este script.
+ *
+ * **A marca de quem fala com o banco é a chave dele.** Um teste desta suíte só alcança Postgres
+ * lendo `FORJA_TEST_DATABASE_URL`, e o nome sobrevive à compilação. Do lado de `db/migrator` a
+ * marca é a importação do apoio de Postgres, que aqui não existe; a conferência é a mesma.
  */
-const ARQUIVOS_VIVOS = [
-  'dist/test/app-credential-live.test.js',
-  'dist/test/delegation-live.test.js',
-  'dist/test/tenant-role-live.test.js',
-];
+const ARQUIVOS_VIVOS = JSON.parse(
+  readFileSync(fileURLToPath(new URL('./live-files.json', import.meta.url)), 'utf8'),
+);
+const PASTA_DE_TESTES = 'dist/test';
 
-const RAIZ_DO_PACOTE = fileURLToPath(new URL('..', import.meta.url));
 const RELATOR_DO_GATE = fileURLToPath(new URL('./gate-reporter.mjs', import.meta.url));
 
 const bancoServido = (process.env[CHAVE_DO_BANCO] ?? '').trim() !== '';
@@ -117,19 +119,42 @@ const placar =
   `${total} testes · ${passaram} passando · ${falharam} falhando · ${cancelados} cancelados · ` +
   `${pulados} pulados · ${pendentes} todo`;
 
-/** Quantos testes cada arquivo vivo **executou** de fato: nem pulado, nem `todo`. */
-function executadosPorArquivoVivo() {
-  const contagem = new Map(ARQUIVOS_VIVOS.map((arquivo) => [join(RAIZ_DO_PACOTE, arquivo), 0]));
+/** Quantos testes cada arquivo **executou** de fato, pelo nome relativo a `dist/test`. */
+function executadosPorArquivo() {
+  const contagem = new Map();
   for (const linha of linhasPorTeste.split('\n')) {
     if (linha.trim() === '') continue;
-    const teste = JSON.parse(linha);
-    if (teste.outcome !== 'pass' || teste.skip || teste.todo) continue;
-    if (contagem.has(teste.file)) contagem.set(teste.file, contagem.get(teste.file) + 1);
+    const { file } = JSON.parse(linha);
+    if (typeof file !== 'string') continue;
+    const nome = relative(resolve(PASTA_DE_TESTES), file).split('\\').join('/');
+    contagem.set(nome, (contagem.get(nome) ?? 0) + 1);
   }
-  return ARQUIVOS_VIVOS.map((arquivo) => ({
-    arquivo,
-    executados: contagem.get(join(RAIZ_DO_PACOTE, arquivo)),
-  }));
+  return contagem;
+}
+
+/**
+ * Todo `.js` da árvore de `dist/test` que carrega a marca do banco, e não só o que o glob casa,
+ * porque é fora dele que o arquivo some. Um apoio que leia a chave em nome de outros arquivos também
+ * cai aqui como fora do alvo, de propósito: ele esconderia a marca de quem o importa, e a marca
+ * precisa mudar junto com ele.
+ */
+function arquivosQueFalamComBanco(pastaRaiz) {
+  const achados = [];
+  const visitar = (pastaAtual) => {
+    for (const entrada of readdirSync(pastaAtual, { withFileTypes: true })) {
+      const caminho = join(pastaAtual, entrada.name);
+      if (entrada.isDirectory()) {
+        visitar(caminho);
+        continue;
+      }
+      if (!entrada.name.endsWith('.js')) continue;
+      if (readFileSync(caminho, 'utf8').includes(CHAVE_DO_BANCO)) {
+        achados.push(relative(pastaRaiz, caminho).split('\\').join('/'));
+      }
+    }
+  };
+  visitar(pastaRaiz);
+  return achados;
 }
 
 /**
@@ -163,14 +188,14 @@ if (falharam > 0 || cancelados > 0 || filho.status !== 0) {
   process.exit(filho.status === 0 ? 1 : (filho.status ?? 1));
 }
 
-const vivos = executadosPorArquivoVivo();
-const vivosSemExecucao = vivos.filter((vivo) => vivo.executados === 0).map((vivo) => vivo.arquivo);
+const executados = executadosPorArquivo();
+const naoExecutados = ARQUIVOS_VIVOS.filter((nome) => (executados.get(nome) ?? 0) === 0);
 
 if (MODO_PARCIAL) {
   process.stdout.write(
     `\nmodo parcial (--no-database): ${placar}.\n` +
       `${pulados} teste(s) não rodaram, e entre eles está a pergunta ao catálogo sobre a própria\n` +
-      `credencial. Arquivos que exercem o banco e não executaram nada: ${vivosSemExecucao.join(', ') || '—'}.\n` +
+      `credencial. Arquivos que exercem o banco e não executaram nada: ${naoExecutados.join(', ') || '—'}.\n` +
       'Isto NÃO é o gate: um verde aqui não prova o isolamento entre clientes.\n',
   );
   process.exit(0);
@@ -200,15 +225,34 @@ if (pendentes > 0 || passaram !== total) {
   process.exit(1);
 }
 
-if (vivosSemExecucao.length > 0) {
+/**
+ * Os três jeitos de um arquivo que fala com o banco não ter sido exercido, e o gate recusa os três,
+ * na mesma forma de `db/migrator/scripts/run-tests.mjs`. Medido em 2026-09-23 contra a versão
+ * anterior, que só conferia a lista: um arquivo novo lendo a chave do banco e fora da lista saía
+ * `0`, e o arquivo vivo esvaziado também.
+ */
+const vivosNaArvore = arquivosQueFalamComBanco(PASTA_DE_TESTES);
+const foraDoAlvo = vivosNaArvore.filter((nome) => !nome.endsWith('.test.js'));
+const naoDeclarados = vivosNaArvore.filter(
+  (nome) => nome.endsWith('.test.js') && !ARQUIVOS_VIVOS.includes(nome),
+);
+
+if (ARQUIVOS_VIVOS.length === 0 || foraDoAlvo.length + naoDeclarados.length + naoExecutados.length > 0) {
+  const linhas = [
+    ...(ARQUIVOS_VIVOS.length === 0 ? ['  - scripts/live-files.json está vazio'] : []),
+    ...foraDoAlvo.map((nome) => `  - fora do alvo "${ALVO}": ${nome} fala com o banco e não roda`),
+    ...naoDeclarados.map(
+      (nome) => `  - não declarado: ${nome} fala com o banco e não está em scripts/live-files.json`,
+    ),
+    ...naoExecutados.map((nome) => `  - não executado: ${nome} está na lista e não rodou teste nenhum`),
+  ];
   process.stderr.write(
     `\ngate reprovado: ${placar}.\n` +
-      `Arquivo que exerce o banco sem nenhum teste executado: ${vivosSemExecucao.join(', ')}.\n` +
-      `Ou ele saiu do alvo "${ALVO}" (nome, rootDir, outDir, include), ou foi renomeado sem que a\n` +
-      'lista ARQUIVOS_VIVOS deste script mudasse junto. Sem ele, a consulta ao catálogo não é\n' +
-      'executada e o total cai sem acusar nada.\n',
+      'Nem todo arquivo que fala com o banco foi exercido, e o placar sozinho não mostra isso: a\n' +
+      'suíte fecha a conta sobre o que rodou, não sobre o que deveria ter rodado (SUB-10).\n' +
+      `${linhas.join('\n')}\n`,
   );
   process.exit(1);
 }
 
-process.stdout.write(`\ngate: ${placar} · arquivos vivos: ${vivos.map((v) => `${v.arquivo} (${v.executados})`).join(', ')}.\n`);
+process.stdout.write(`\ngate: ${placar} · ${ARQUIVOS_VIVOS.length} arquivos vivos exercidos.\n`);

@@ -30,12 +30,14 @@ segurança.
 **E o gate exige `passando = total` e os arquivos vivos por nome** (`SUB-10`, na terceira auditoria,
 2026-09-23). `todo` roda o teste e descarta a falha dele, e com ele o gate saía `0` com uma asserção
 falhando. Com os arquivos que exercem o banco fora do glob o total caía junto e o gate também saía
-`0`, sem teste nenhum tocando o banco. `scripts/run-tests.mjs` nomeia esses arquivos
-(`ARQUIVOS_VIVOS`) e reprova o que não executou nenhum teste; renomear um deles é mudar a lista no
-mesmo diff.
+`0`, sem teste nenhum tocando o banco. `scripts/live-files.json` nomeia esses arquivos, e o gate
+reprova pelas duas pontas, na mesma forma de `db/migrator`: arquivo da lista que não executou teste
+nenhum, e arquivo de `dist/test` que lê `FORJA_TEST_DATABASE_URL` fora da lista ou fora do glob.
+O teste que o `node --test` inventa para arquivo sem caso nenhum não conta como execução, então o
+arquivo vivo esvaziado reprova. Renomear, criar ou esvaziar um deles é mudar a lista no mesmo diff.
 
 ```
-npm run test:no-db       # modo parcial, declarado: 99 testes, 31 pulados
+npm run test:no-db       # modo parcial, declarado: 105 testes, 31 pulados
 ```
 
 O modo parcial existe porque iterar em lógica pura sem subir banco é trabalho legítimo. Ele é uma
@@ -44,7 +46,7 @@ bandeira na linha de comando, nunca variável de ambiente, e diz em voz alta o q
 A variável aponta para o **operador** do cluster — o papel que faz `db/papel-do-cliente.md` §7.2, e
 que é superusuário. O teste cria a credencial, os papéis e os schemas que mede, todos com sufixo
 sorteado, e derruba só o que criou. Aponte para banco descartável, nunca para banco com dado.
-Com banco: 99 testes, nenhum pulado. `test/delegation-live.test.ts` cria um banco próprio e o
+Com banco: 105 testes, nenhum pulado. `test/delegation-live.test.ts` cria um banco próprio e o
 derruba no fim, porque a pergunta de delegação olha o banco inteiro e o estado hostil de um arquivo
 derrubaria a subida de outro que rodasse ao lado.
 
