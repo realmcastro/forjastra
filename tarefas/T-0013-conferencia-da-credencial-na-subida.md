@@ -1047,3 +1047,70 @@ Paths: `/home/mcastro/work/freelas/forja/tarefas/T-0013-conferencia-da-credencia
 ## thread — 2026-09-23
 
 Segunda tentativa interrompida pelo classificador, mesmo com a permissão dada pelo humano na conversa: a permissão da conversa não muda o classificador. Não redespachei a auditoria. Despachado em seu lugar o conserto defensivo das duas divergências de gate que a leitura estática achou.
+
+## backend — 2026-09-23 (gate da suíte alinhado ao do migrator)
+
+## RELATÓRIO — backend — T-0013
+STATUS: OK. O ponto opcional (`delegation`) foi medido e a mudança pedida não foi aplicada, porque não teve efeito mensurável (ver DECISÕES).
+
+FEITO:
+- Relator do gate (`apps/api/scripts/gate-reporter.mjs`) reescrito na forma de `db/migrator/scripts/relator-por-arquivo.mjs`. Ele emite `{file}` só para `test:pass` com `details.type === 'test'`, sem `skip`/`todo`, e descarta o teste que o `node --test` inventa para arquivo sem caso nenhum (`resolve(name) === file`). Isso corrige a divergência 1.
+- Executor (`apps/api/scripts/run-tests.mjs`): a lista saiu do script e foi para `scripts/live-files.json`, com nomes relativos a `dist/test`. O gate agora percorre `dist/test` inteiro e reprova na mesma forma do migrator: lista vazia, arquivo fora do glob, arquivo não declarado e arquivo não executado. A contagem por arquivo passou a ser relativa ao `cwd`, e não mais à raiz do pacote. Isso corrige a divergência 2.
+- Criado `test/test-runner.test.ts`, com 6 casos sobre uma árvore de mentira: esvaziado, ausente, novo fora da lista, fora do glob, a contraprova e a lista não vazia.
+- `README.md` atualizado: nova descrição do gate e contagem de 99 para 105.
+
+ARQUIVOS:
+- apps/api/scripts/gate-reporter.mjs (editado)
+- apps/api/scripts/run-tests.mjs (editado, 258 linhas)
+- apps/api/scripts/live-files.json (novo)
+- apps/api/test/test-runner.test.ts (novo)
+- apps/api/README.md (editado)
+- db/migrator/scripts/* (só leitura)
+- apps/api/src/db/credential-query.ts (só leitura)
+
+NÃO FEITO: —
+
+DECISÕES:
+- **Marca de "fala com o banco" = a string `FORJA_TEST_DATABASE_URL` no `.js` compilado.** O migrator usa como marca a importação de `support/postgres.js`, que não existe em `apps/api`. Os três arquivos vivos leem a chave diretamente, e ela sobrevive à compilação (conferido: só esses três em `dist/`). Não exclui pasta `support`: um apoio que leia a chave em nome de outros cai como "fora do alvo", de propósito, porque esconderia a marca de quem o importa. O teste monta a chave em pedaços para não se autoclassificar (0 ocorrências no `.js` compilado).
+- **Modo parcial mantido como estava**: roda tudo e os vivos pulam. Não adotei o alvo derivado do migrator porque isso ficava fora das duas divergências do brief.
+- **`delegation`: não apliquei o filtro do lado dependente.** Medi em PG 16.15, com 602 schemas × (11 tabelas com PK, FK, CHECK e DEFAULT, 10 índices, 1 view), 139.562 linhas em `pg_depend`. São mais linhas que as 111 mil do README, porque não reproduzi a carga exata. Cada consulta foi a primeira de uma sessão nova, 7 rodadas cada, só a subconsulta de delegação, como superusuário:
+  - atual: 316–343 ms;
+  - com o filtro do lado dependente em CTE antes da junção: 316–344 ms, sem ganho. Cerca de 75% dos objetos com namespace já estão em schema protegido, então o filtro corta pouco. O restante é `pg_toast`;
+  - `objetos AS NOT MATERIALIZED`, com ou sem o filtro: 147–160 ms. Porém, com `max_parallel_workers_per_gather = 0` volta a 325–363 ms. O ganho é só paralelismo: a inclinação não muda, e ele some em servidor sem workers.
+  - `work_mem` de 64 MB também não muda nada (282–323 ms), embora o plano atual tenha ordenação que vai para disco.
+  - Não apliquei nenhuma das duas mudanças: a primeira não tem efeito, e a segunda depende de configuração do servidor, numa consulta de segurança. Não medi a consulta inteira pelo caminho real da credencial.
+
+RISCOS:
+- **HEAD está inconsistente.** O commit `1d84811` ("Estabelecer a fundação do servidor em apps/api"), feito por outra sessão durante esta tarefa, capturou `scripts/live-files.json` e `test/test-runner.test.ts` junto com as versões antigas de `run-tests.mjs` e `gate-reporter.mjs`. Nesse commit, `test-runner.test.ts` falha 5 de 6. Os scripts corrigidos estão só na working tree (`M`). Não mexi em git.
+- `dist/` não é limpo pelo `tsc`: um `.test.ts` apagado deixa o `.js` antigo rodando no glob. Vale nas duas suítes, e está fora do escopo.
+- Divergências restantes entre as duas suítes, fora do brief:
+  - no api, `todo` só reprova no gate; no migrator, reprova nos dois modos;
+  - no api, o modo parcial não confere `passaram + pulados === total`;
+  - no api, falha na leitura do resumo não imprime o motivo.
+- `apps/api/.env.example` está sem rastreio na árvore e não é meu.
+
+PERGUNTAS:
+- para orquestrador/performance: aceitar `NOT MATERIALIZED` em `objetos`? A semântica é a mesma (um snapshot só), e o ganho de cerca de 2× depende de workers paralelos. Ou abrir item próprio para uma reformulação que reduza o custo serial?
+
+VERIFICAÇÃO:
+- **Antes**, com os scripts antigos numa árvore de mentira que tem `scripts/` e `dist/test`: arquivo vivo esvaziado saiu `0`; arquivo novo lendo a chave fora da lista saiu `0`. O `test-runner.test.ts` contra os scripts antigos deu 1 de 6 passando.
+- **Depois**, na mesma árvore: esvaziado saiu `1` ("não executado: delegation-live.test.js"); novo saiu `1` ("não declarado: novo-live.test.js"); limpo saiu `0`. O `test-runner.test.ts` deu 6 de 6.
+- **Árvore real `dist/test`, com banco**:
+  - cópia `extra-live.test.js` → saída `1`, não declarado;
+  - `tenant-role-live.test.js` esvaziado → saída `1`, não executado;
+  - depois de recompilar com `tsc` → saída `0`.
+- `npm run typecheck` → `0`.
+- `npm run test:no-db` → `0`, com 105 testes, 74 passando e 31 pulados.
+- `npm test` sem banco → `1`.
+- **Gate completo** com Postgres 16.15 descartável `forja-b13-pg16` em 127.0.0.1:55520 → `0`, com 105 de 105 passando e 3 arquivos vivos exercidos.
+- O contêiner foi removido. A porta 5432 não foi tocada.
+
+MEMÓRIA SUGERIDA:
+- type=gotcha escopo=plataforma slug=gotcha-node-test-inventa-teste-para-arquivo-vazio — arquivo de teste sem caso sai como `test:pass` com o nome do próprio arquivo e `type: 'test'`; relator por arquivo precisa descartar `resolve(name) === file` (Node 22.23.1, 2026-09-23).
+- type=gotcha escopo=plataforma slug=gotcha-delegation-custo-e-paralelismo-nao-filtro — filtrar o lado dependente não barateia a pergunta `delegation` (75% dos objetos são protegidos); `NOT MATERIALIZED` corta cerca de 2× só com workers paralelos, e o custo serial fica em cerca de 330 ms com 139 mil linhas em `pg_depend`.
+
+PRÓXIMO PASSO SUGERIDO: seguranca — conferir o gate novo de `apps/api` (a marca pela chave do banco e as três recusas por arquivo) e o estado do HEAD `1d84811` antes do próximo commit.
+
+## thread — 2026-09-23
+
+`NOT MATERIALIZED` recusado: o ganho depende de workers paralelos, numa consulta de segurança. O custo serial (~330 ms com 139 mil linhas em `pg_depend`) fica abaixo do teto de 1 s; medir no pior cliente é do gate de `performance` da Fase 2. O HEAD publicado (`1d84811`) tem os scripts antigos com o teste novo, que falha 5 de 6; o próximo commit corrige.
