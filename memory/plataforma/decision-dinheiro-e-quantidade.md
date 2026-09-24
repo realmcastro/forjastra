@@ -37,5 +37,7 @@ Custo aceito, medido: `sum()` cerca de 1,5× mais lento que em `bigint` (410 con
 
 **Como aplicar:** o `.claude/rules/dados.md` §3 ainda diz "centavos ou `numeric(14,2)`". Esta decisão
 supera o texto literal até a regra ser atualizada (edição de `.claude/**` negada por permissão em
-2026-09-23). A primeira migration de cliente (`F-021`) cria os domínios com guarda de existência
-(`CREATE DOMAIN` não tem `IF NOT EXISTS`) e registra a convenção em `db/convencoes.md`.
+2026-09-23). A primeira migration de cliente (`tenant/0001`, `T-0022`) cria os domínios **sem guarda de existência**:
+o bloco `DO` é recusado pelo carregador, e a retomada é garantida pela transação (a tentativa que falha não
+deixa domínio). Uma guarda que pulasse em silêncio aceitaria domínio já existente com outro envelope.
+`unit_price` tem teto `< 1e12`, o mesmo de `money_amount`. A convenção está em `db/convencoes.md` §10.
